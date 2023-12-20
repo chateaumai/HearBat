@@ -10,35 +10,38 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int selectedIndex = 0;
+  NavigationDestinationLabelBehavior labelBehavior =
+    NavigationDestinationLabelBehavior.onlyShowSelected;
+
   // pages on bottom bar
   final List<Widget> pages = [
     PracticePage(),
     ProfilePage(),
   ];
 
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+      bottomNavigationBar: NavigationBar(
+        labelBehavior: labelBehavior,
+        selectedIndex: selectedIndex,
+        onDestinationSelected: (int index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        destinations: const <Widget>[
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Practice',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.face),
             label: 'Profile',
           ),
         ],
-        currentIndex: selectedIndex,
-        onTap: onItemTapped,
       ),
     );
   }
