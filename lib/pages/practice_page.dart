@@ -1,7 +1,10 @@
-import 'package:hearbat/utils/audio_util.dart';
 import 'package:flutter/material.dart';
+import 'package:hearbat/utils/audio_util.dart';
+import 'package:hearbat/models/word_audio_pair.dart';
+import '../widgets/word_pair_row.dart';
 
 class PracticePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,35 +27,14 @@ class PracticePage extends StatelessWidget {
             ],
           ),
           Center(
-            child: WordCard(
-              word: "Hi",
-              audioFile: "audio/words/hi.mp3",
+            child: WordPairRow(
+              wordPairs: [
+                WordAudio("Tim", "audio/words/tim.mp3"),
+                WordAudio("Tin", "audio/words/tin.mp3"),
+              ]
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class WordCard extends StatelessWidget {
-  final String word;
-  final String audioFile;
-
-  WordCard({
-    required this.word,
-    required this.audioFile,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => AudioUtil.playWordSound(audioFile),
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Text(word, style: TextStyle(fontSize: 24)),
-        ),
       ),
     );
   }
