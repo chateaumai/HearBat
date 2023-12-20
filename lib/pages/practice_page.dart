@@ -1,14 +1,35 @@
-
-import 'package:audioplayers/audioplayers.dart';
+import 'package:hearbat/utils/audio_util.dart';
 import 'package:flutter/material.dart';
 
 class PracticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: WordCard(
-        word: "Hi",
-        audioFile: "audio/hi.mp3",
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          // Row for buttons that will add background noise
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () => AudioUtil.toggleBackgroundSound("audio/background/coffee.mp3"),
+                child: const Text('Coffee Shop'),
+              ),
+              ElevatedButton(
+                onPressed: () => AudioUtil.toggleBackgroundSound("audio/background/fireplace.mp3"),
+                child: const Text('Fireplace'),
+              ),
+            ],
+          ),
+          Center(
+            child: WordCard(
+              word: "Hi",
+              audioFile: "audio/words/hi.mp3",
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -23,16 +44,10 @@ class WordCard extends StatelessWidget {
     required this.audioFile,
   });
 
-  void playSound() async {
-    AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.setSource(AssetSource(audioFile));
-    await audioPlayer.resume();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => playSound(),
+      onTap: () => AudioUtil.playWordSound(audioFile),
       child: Card(
         child: Padding(
           padding: EdgeInsets.all(20),
