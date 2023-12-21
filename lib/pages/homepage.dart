@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'practice_page.dart';
+import 'train_page.dart';
 import 'profile_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,7 +15,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // pages on bottom bar
   final List<Widget> pages = [
-    PracticePage(),
+    TrainPage(),
     ProfilePage(),
   ];
 
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Practice',
+            label: 'Train',
           ),
           NavigationDestination(
             icon: Icon(Icons.face),
