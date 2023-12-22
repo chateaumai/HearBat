@@ -49,7 +49,8 @@ class _WordPairRowState extends State<WordPairRow> {
             );
           }),
         ),
-        // can prob refactor this out
+
+        // can prob refactor this out (this is the check button)
         ElevatedButton(
           onPressed: selectedButtonIndex != null ? () {
             // only executes if selectedButtonIndex is not null
