@@ -68,4 +68,14 @@ class GoogleTTS {
       client.close();
     }
   }
+
+  Future<void> playVoice(String text, String voiceType) async {
+    try {
+      await speak(text, voiceType);
+      // Add logic or UI update to indicate success if necessary
+    } catch (e) {
+      print("Error in playVoice: $e");
+      // Add logic or UI update to indicate failure if necessary
+    }
+  }
 }
