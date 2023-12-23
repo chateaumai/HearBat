@@ -27,13 +27,13 @@ class WordPath extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () =>
-                  playVoice("Hello World", "en-US-Standard-B"), // First button
+                  playVoice("Hello World", "en-US-Studio-O"), // First button
               child: Text('Play "Hello"'),
             ),
             SizedBox(height: 20), // Adds space between the buttons
             ElevatedButton(
-              onPressed: () => playVoice(
-                  "Goodbye World", "en-US-Standard-B"), // Second button
+              onPressed: () =>
+                  playVoice("Goodbye World", "en-US-Studio-Q"), // Second button
               child: Text('Play "Goodbye"'),
             ),
             // Add more buttons or functionality as needed
