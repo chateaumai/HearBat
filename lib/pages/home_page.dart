@@ -19,7 +19,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ProfilePage(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

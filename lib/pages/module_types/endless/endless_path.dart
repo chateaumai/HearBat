@@ -1,16 +1,17 @@
+
 import 'package:flutter/material.dart';
 
-class NoteModules extends StatelessWidget {
-  const NoteModules({super.key});
+class EndlessPath extends StatelessWidget {
+  const EndlessPath({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Note Modules'),
+        title: Text('Endless Path'),
       ),
       body: Center(
-        child: Text('Note Modules'),
+        child: Text('Endless Path'),
       ),
     );
   }

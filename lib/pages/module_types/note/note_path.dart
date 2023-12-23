@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SoundModules extends StatelessWidget {
-  const SoundModules({super.key});
+class NotePath extends StatelessWidget {
+  const NotePath({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sound Modules'),
+        title: Text('Note Path'),
       ),
       body: Center(
-        child: Text('Sound Modules'),
+        child: Text('Note Path'),
       ),
     );
   }
