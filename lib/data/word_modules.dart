@@ -16,14 +16,14 @@ final Map<String, List<WordPair>> wordModules = {
 
   'Module2': [
     WordPair('Mood', 'Mud'),
-    WordPair('Beach', 'Beech'),
+    WordPair('Beach', 'Teach'),
     WordPair('Fail', 'Veil'),
     WordPair('Thick', 'Sick'),
     WordPair('Heart', 'Hurt'),
     WordPair('Cord', 'Card'),
-    WordPair('Mail', 'Male'),
-    WordPair('Peace', 'Piece'),
-    WordPair('Whole', 'Hole'),
-    WordPair('Tale', 'Tail'),
+    WordPair('Mail', 'Snail'),
+    WordPair('Peace', 'Niece'),
+    WordPair('Whole', 'Role'),
+    WordPair('Tale', 'Hail'),
   ],
 };
