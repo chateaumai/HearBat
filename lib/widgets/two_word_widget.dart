@@ -6,8 +6,7 @@ import 'package:hearbat/utils/google_tts.dart';
   class TwoWordWidget extends StatefulWidget {
     
     final GoogleTTS googleTTS = GoogleTTS();
-    final List<WordPair> wordPairs; // list like this 
-    late final String correctWord;
+    final List<WordPair> wordPairs; 
 
   TwoWordWidget({Key? key, required this.wordPairs}) : super(key: key);
 

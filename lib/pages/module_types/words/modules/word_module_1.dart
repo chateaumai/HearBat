@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:hearbat/utils/google_tts.dart';
 import '../../../../widgets/two_word_widget.dart';
-import '../../../../data/word_modules.dart';
+import '../../../../data/word_modules_data.dart';
 
 class WordModule1 extends StatelessWidget {
 
