@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/models/word_audio_pair.dart';
+import 'package:hearbat/models/word_pair.dart';
 import 'package:hearbat/utils/audio_util.dart';
 import "dart:math";
 

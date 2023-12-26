@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/utils/google_tts.dart';
+import '../../../../widgets/two_word_widget.dart';
+import '../../../../data/word_modules.dart';
 
 class WordModule2 extends StatelessWidget {
 
@@ -8,24 +10,15 @@ class WordModule2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Word Module 2'),
+        title: Text('Word Module 1', ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () =>
-                  googleTTS.playVoice("Tim", "en-US-Studio-O"), // First button "en-US-Polyglot-1"
-              child: Text('Play "Tim"'),
+            TwoWordWidget(
+              wordPairs: wordModules['Module2'] ?? [],
             ),
-            SizedBox(height: 20), // Adds space between the buttons
-            ElevatedButton(
-              onPressed: () =>
-                  googleTTS.playVoice("Tin", "en-US-Studio-Q"), // Second button
-              child: Text('Play "Tin"'),
-            ),
-            // Add more buttons or functionality as needed
           ],
         ),
       ),
