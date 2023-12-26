@@ -8,8 +8,8 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
         title: 'HearBat',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 67, 0, 99)),
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 67, 0, 99)),
         ),
         home: MyHomePage(),
       ),

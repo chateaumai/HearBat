@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'module_types/words/word_path.dart';
 import 'module_types/sound/sound_path.dart';
-import 'module_types/note/note_path.dart';
+import 'module_types/matching/memory_path.dart';
 import 'module_types/endless/endless_path.dart';
 
 class TrainPage extends StatelessWidget {
@@ -31,9 +31,9 @@ class TrainPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NotePath()),
+              MaterialPageRoute(builder: (context) => MemoryMatchPath()),
             ),
-            child: Text('Train Notes'),
+            child: Text('Matching Mode'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.push(

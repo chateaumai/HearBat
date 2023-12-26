@@ -12,6 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.0.0
   http: ^1.1.2
   googleapis_auth: ^1.4.1
   googleapis: ^12.0.0
