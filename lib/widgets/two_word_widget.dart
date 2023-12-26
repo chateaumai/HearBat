@@ -4,11 +4,11 @@ import 'package:hearbat/models/word_pair.dart';
 import 'package:hearbat/utils/google_tts.dart';
 
   class TwoWordWidget extends StatefulWidget {
-    
     final GoogleTTS googleTTS = GoogleTTS();
     final List<WordPair> wordPairs; 
+    final VoidCallback onCompletion;
 
-  TwoWordWidget({Key? key, required this.wordPairs}) : super(key: key);
+  TwoWordWidget({Key? key, required this.wordPairs, required this.onCompletion}) : super(key: key);
 
   @override
   State<TwoWordWidget> createState() => _TwoWordWidgetState();
@@ -40,13 +40,13 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   }
 
   void checkAnswer() {
+    if (remainingPairs.isEmpty) widget.onCompletion();
+
     if (selectedWord == correctWord) {
       print("Correct");
     } else {
       print("Incorrect");
     }
-
-    if (remainingPairs.isEmpty) Navigator.pop(context);
     isCheckingAnswer = false; // time to go to next pair
   }
 

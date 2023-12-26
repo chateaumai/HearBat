@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/module_types/words/modules/word_module_1.dart';
-import '../pages/module_types/words/modules/word_module_2.dart';
+import '../pages/module_types/words/modules/word_modules.dart';
 
 abstract class Module {
   String get title;
