@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hearbat/models/word_pair.dart';
 import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
+import '../widgets/incorrect_card_widget.dart';
 import 'package:hearbat/utils/google_tts.dart';
 
   class TwoWordWidget extends StatefulWidget {
@@ -22,6 +23,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   late String correctWord;
   String? selectedWord;
   bool isCheckingAnswer = true;
+  bool isAnswerFalse = false;
 
   // choosing random word
   @override
@@ -39,6 +41,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     correctWord = Random().nextBool() ? currentPair.wordA : currentPair.wordB;
     selectedWord = null;
     isCheckingAnswer = true;
+    isAnswerFalse = false;
   }
 
   void handleSelection(String word) {
@@ -48,13 +51,13 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   }
 
   void checkAnswer() {
-    if (remainingPairs.isEmpty) widget.onCompletion();
-
     if (selectedWord == correctWord) {
       print("Correct");
     } else {
       print("Incorrect");
+      isAnswerFalse = true;
     }
+    if (remainingPairs.isEmpty) widget.onCompletion();
     isCheckingAnswer = false; // time to go to next pair
   }
 
@@ -82,6 +85,11 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
               onSelected: handleSelection,
             ),
             SizedBox(height: 20),
+            if (isAnswerFalse) 
+            IncorrectCardWidget(
+              wordPair: currentPair,
+              correctWord: correctWord,
+            ),
             CheckButtonWidget(
               isCheckingAnswer: isCheckingAnswer,
               isSelectedWordValid: selectedWord != null,
