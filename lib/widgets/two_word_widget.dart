@@ -1,6 +1,8 @@
 import "dart:math";
 import 'package:flutter/material.dart';
 import 'package:hearbat/models/word_pair.dart';
+import '../widgets/word_button_widget.dart';
+import '../widgets/check_button_widget.dart';
 import 'package:hearbat/utils/google_tts.dart';
 
   class TwoWordWidget extends StatefulWidget {
@@ -39,6 +41,12 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     isCheckingAnswer = true;
   }
 
+  void handleSelection(String word) {
+    setState(() {
+      selectedWord = word;
+    });
+  }
+
   void checkAnswer() {
     if (remainingPairs.isEmpty) widget.onCompletion();
 
@@ -62,61 +70,29 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // word A button - these should be abstracted out
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  selectedWord = currentPair.wordA;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor : selectedWord == currentPair.wordA 
-                  ? Colors.grey
-                  : Colors.white,
-              ),
-              child: Text(
-                currentPair.wordA,
-                style: TextStyle(color: Colors.black),
-              ),
+            WordButton(
+              word: currentPair.wordA,
+              selectedWord: selectedWord ?? '',
+              onSelected: handleSelection,
             ),
             // word B
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  selectedWord = currentPair.wordB;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor : selectedWord == currentPair.wordB 
-                  ? Colors.grey
-                  : Colors.white,
-              ),
-              child: Text(
-                currentPair.wordB,
-                style: TextStyle(color: Colors.black),
-              ),
+            WordButton(
+              word: currentPair.wordB,
+              selectedWord: selectedWord ?? '',
+              onSelected: handleSelection,
             ),
             SizedBox(height: 20),
-            // can prob refactor this out (this is the check button)
-            ElevatedButton(
-              onPressed: selectedWord != null ? () {
+            CheckButtonWidget(
+              isCheckingAnswer: isCheckingAnswer,
+              isSelectedWordValid: selectedWord != null,
+              onPressed: () {
                 if (isCheckingAnswer) {
                   checkAnswer();
                 } else {
                   setNextPair();
                 }
                 setState(() {});
-              } : null, // if null then disable
-              style: ElevatedButton.styleFrom(
-                backgroundColor: selectedWord != null
-                ? Colors.lightGreen
-                : Colors.grey,
-                disabledBackgroundColor: Colors.grey,
-              ),
-              child: Text(
-                isCheckingAnswer ? 'Check' : 'Next',
-                style: TextStyle(color: Colors.black),
-              ),
+              },
             ),
           ],
         ),
