@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/models/word_pair.dart';
+import '../../../../widgets/word_module_widget.dart';
 
 class DisplayModuleScreen extends StatelessWidget {
   final String moduleName;
@@ -9,19 +10,10 @@ class DisplayModuleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(moduleName), // Display the module name
-      ),
-      body: ListView.builder(
-        itemCount: wordPairs.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title:
-                Text('${wordPairs[index].wordA} - ${wordPairs[index].wordB}'),
-          );
-        },
-      ),
+    return WordModuleWidget(
+      title: moduleName,
+      wordPairs: wordPairs,
     );
-  }
+  } 
 }
+
