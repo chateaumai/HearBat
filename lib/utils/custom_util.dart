@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/widgets/user_module_manager.dart';
+import 'package:hearbat/utils/user_module_util.dart';
 import 'package:hearbat/models/word_pair.dart';
 
-class CustomModuleScreen extends StatefulWidget {
+class CustomUtil extends StatefulWidget {
   final Function(String) onModuleSaved;
 
-  CustomModuleScreen({required this.onModuleSaved});
+  CustomUtil({required this.onModuleSaved});
 
   @override
-  CustomModuleScreenState createState() => CustomModuleScreenState();
+  CustomUtilState createState() => CustomUtilState();
 }
 
-class CustomModuleScreenState extends State<CustomModuleScreen> {
+class CustomUtilState extends State<CustomUtil> {
   List<TextEditingController> _controllers =
       List.generate(4, (index) => TextEditingController());
   TextEditingController _moduleNameController = TextEditingController();
@@ -27,7 +27,7 @@ class CustomModuleScreenState extends State<CustomModuleScreen> {
     }
 
     if (wordPairs.length == 2 && _moduleNameController.text.trim().isNotEmpty) {
-      await UserModuleManager.saveCustomModule(
+      await UserModuleUtil.saveCustomModule(
           _moduleNameController.text.trim(), wordPairs);
       widget.onModuleSaved(_moduleNameController.text.trim());
     } else {

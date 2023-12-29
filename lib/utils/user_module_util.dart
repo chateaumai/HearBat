@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/models/word_pair.dart';
 
-class UserModuleManager {
+class UserModuleUtil {
   static const String _storageKey = 'userCustomModules';
 
   // Save a new custom module

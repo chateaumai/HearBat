@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'modules/custom_module_screen.dart';
-import 'package:hearbat/widgets/user_module_manager.dart';
-import 'modules/display_module_screen.dart';
+import '../../../utils/custom_util.dart';
+import 'package:hearbat/utils/user_module_util.dart';
+import 'modules/custom_modules.dart';
 
 class CustomPath extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class CustomPathState extends State<CustomPath> {
   }
 
   void _loadModules() async {
-    var modules = await UserModuleManager.getAllCustomModules();
+    var modules = await UserModuleUtil.getAllCustomModules();
     if (!mounted) return;
     setState(() {
       moduleNames = modules.keys.toList();
@@ -26,7 +26,7 @@ class CustomPathState extends State<CustomPath> {
   }
 
   void _addModuleAndPop(String moduleName) async {
-    await UserModuleManager.getAllCustomModules();
+    await UserModuleUtil.getAllCustomModules();
     if (!mounted) return;
     _loadModules(); // Refresh the module list immediately after adding
     Navigator.of(context).pop();
@@ -36,26 +36,25 @@ class CustomPathState extends State<CustomPath> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              CustomModuleScreen(onModuleSaved: _addModuleAndPop)),
+          builder: (context) => CustomUtil(onModuleSaved: _addModuleAndPop)),
     );
   }
 
   void _deleteModule(String moduleName) async {
-    await UserModuleManager.deleteCustomModule(moduleName);
+    await UserModuleUtil.deleteCustomModule(moduleName);
     if (!mounted) return;
     _loadModules(); // Refresh the module list
   }
 
   void _showModule(String moduleName) async {
-    var modules = await UserModuleManager.getAllCustomModules();
+    var modules = await UserModuleUtil.getAllCustomModules();
     if (!mounted) return;
     var wordPairs = modules[moduleName] ?? [];
 
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DisplayModuleScreen(
+        builder: (context) => CustomModule(
           moduleName: moduleName,
           wordPairs: wordPairs,
         ),

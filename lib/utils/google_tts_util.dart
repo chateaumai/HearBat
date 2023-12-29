@@ -8,7 +8,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
 
-class GoogleTTS {
+class GoogleTTSUtil {
   final AudioPlayer audioPlayer = AudioPlayer();
 
   Future<String> _loadCredentials() async {
@@ -62,8 +62,8 @@ class GoogleTTS {
             "Failed to get a valid response from the API: ${response.statusCode}");
       }
     } catch (e) {
-      print("Error in GoogleTTS.speak: $e");
-      throw Exception("Error occurred in GoogleTTS.speak: $e");
+      print("Error in GoogleTTSUtil.speak: $e");
+      throw Exception("Error occurred in GoogleTTSUtil.speak: $e");
     } finally {
       client.close();
     }

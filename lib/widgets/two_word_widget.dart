@@ -4,14 +4,15 @@ import 'package:hearbat/models/word_pair.dart';
 import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
 import '../widgets/incorrect_card_widget.dart';
-import 'package:hearbat/utils/google_tts.dart';
+import 'package:hearbat/utils/google_tts_util.dart';
 
-  class TwoWordWidget extends StatefulWidget {
-    final GoogleTTS googleTTS = GoogleTTS();
-    final List<WordPair> wordPairs; 
-    final VoidCallback onCompletion;
+class TwoWordWidget extends StatefulWidget {
+  final GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
+  final List<WordPair> wordPairs;
+  final VoidCallback onCompletion;
 
-  TwoWordWidget({Key? key, required this.wordPairs, required this.onCompletion}) : super(key: key);
+  TwoWordWidget({Key? key, required this.wordPairs, required this.onCompletion})
+      : super(key: key);
 
   @override
   State<TwoWordWidget> createState() => _TwoWordWidgetState();
@@ -36,7 +37,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   void setNextPair() {
     int index = Random().nextInt(remainingPairs.length);
     currentPair = remainingPairs[index];
-    remainingPairs.removeAt(index);  //so the randomly chosen pair doesnt repeat
+    remainingPairs.removeAt(index); //so the randomly chosen pair doesnt repeat
 
     correctWord = Random().nextBool() ? currentPair.wordA : currentPair.wordB;
     selectedWord = null;
@@ -66,7 +67,8 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     return Column(
       children: [
         FilledButton.icon(
-          onPressed: () => widget.googleTTS.playVoice(correctWord, "en-US-Studio-O"),
+          onPressed: () =>
+              widget.googleTTSUtil.playVoice(correctWord, "en-US-Studio-O"),
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
@@ -85,11 +87,11 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
               onSelected: handleSelection,
             ),
             SizedBox(height: 20),
-            if (isAnswerFalse) 
-            IncorrectCardWidget(
-              wordPair: currentPair,
-              correctWord: correctWord,
-            ),
+            if (isAnswerFalse)
+              IncorrectCardWidget(
+                wordPair: currentPair,
+                correctWord: correctWord,
+              ),
             CheckButtonWidget(
               isCheckingAnswer: isCheckingAnswer,
               isSelectedWordValid: selectedWord != null,
