@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'module_types/words/word_path.dart';
 import 'module_types/sound/sound_path.dart';
-import 'module_types/matching/memory_path.dart';
 import 'module_types/custom/custom_path.dart';
 
 class TrainPage extends StatelessWidget {
@@ -27,13 +26,6 @@ class TrainPage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => SoundPath()),
             ),
             child: Text('Train Sounds'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MemoryMatchPath()),
-            ),
-            child: Text('Matching Mode'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.push(

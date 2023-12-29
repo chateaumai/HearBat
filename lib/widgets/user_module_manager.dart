@@ -1,7 +1,6 @@
-// user_module_manager.dart
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hearbat/models/word_pair.dart'; // Update the path as needed to where your WordPair class is located
+import 'package:hearbat/models/word_pair.dart';
 
 class UserModuleManager {
   static const String _storageKey = 'userCustomModules';
