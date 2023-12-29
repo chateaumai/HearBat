@@ -12,9 +12,27 @@ class CustomUtil extends StatefulWidget {
 }
 
 class CustomUtilState extends State<CustomUtil> {
-  List<TextEditingController> _controllers =
-      List.generate(4, (index) => TextEditingController());
-  TextEditingController _moduleNameController = TextEditingController();
+  List<TextEditingController> _controllers = [
+    TextEditingController(), // Word A
+    TextEditingController(), // Word B
+  ];
+  TextEditingController _moduleNameController =
+      TextEditingController(); // Controller for module name
+
+  void _addNewPair() {
+    setState(() {
+      _controllers.addAll([TextEditingController(), TextEditingController()]);
+    });
+  }
+
+  void _removePair(int index) {
+    if (_controllers.length > 2) {
+      setState(() {
+        _controllers.removeAt(index + 1); // Remove Word B
+        _controllers.removeAt(index); // Remove Word A
+      });
+    }
+  }
 
   void _saveModule() async {
     List<WordPair> wordPairs = [];
@@ -26,10 +44,12 @@ class CustomUtilState extends State<CustomUtil> {
       }
     }
 
-    if (wordPairs.length == 2 && _moduleNameController.text.trim().isNotEmpty) {
-      await UserModuleUtil.saveCustomModule(
-          _moduleNameController.text.trim(), wordPairs);
-      widget.onModuleSaved(_moduleNameController.text.trim());
+    String moduleName = _moduleNameController.text.trim();
+    if (moduleName.isNotEmpty &&
+        wordPairs.isNotEmpty &&
+        wordPairs.length % 2 == 0) {
+      await UserModuleUtil.saveCustomModule(moduleName, wordPairs);
+      widget.onModuleSaved(moduleName);
     } else {
       // Handle error or notify the user
     }
@@ -53,32 +73,48 @@ class CustomUtilState extends State<CustomUtil> {
               ),
             ),
           ),
-          ...List.generate(
-              2,
-              (index) => Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: TextField(
-                            controller: _controllers[index * 2],
-                            decoration: InputDecoration(
-                                labelText: 'Word ${index + 1}A',
-                                border: OutlineInputBorder()),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: TextField(
-                            controller: _controllers[index * 2 + 1],
-                            decoration: InputDecoration(
-                                labelText: 'Word ${index + 1}B',
-                                border: OutlineInputBorder()),
-                          ),
-                        ),
-                      ],
+          for (int i = 0; i < _controllers.length; i += 2)
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: _controllers[i],
+                      decoration: InputDecoration(
+                        labelText: 'Word ${i ~/ 2 + 1}A',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  )),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _controllers[i + 1],
+                      decoration: InputDecoration(
+                        labelText: 'Word ${i ~/ 2 + 1}B',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _removePair(i),
+                  ),
+                ],
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: _addNewPair,
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(40, 40),
+                backgroundColor: Colors.green,
+              ),
+              child: Icon(Icons.add),
+            ),
+          ),
           ElevatedButton(
             onPressed: _saveModule,
             child: Text("Save Module"),
