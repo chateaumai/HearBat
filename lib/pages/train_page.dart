@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'module_types/words/word_path.dart';
 import 'module_types/sound/sound_path.dart';
 import 'module_types/matching/memory_path.dart';
-import 'module_types/endless/endless_path.dart';
+import 'module_types/custom/custom_path.dart';
 
 class TrainPage extends StatelessWidget {
   const TrainPage({super.key});
@@ -38,9 +38,9 @@ class TrainPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EndlessPath()),
+              MaterialPageRoute(builder: (context) => CustomPath()),
             ),
-            child: Text('Endless Mode'),
+            child: Text('Custom Mode'),
           ),
         ],
       ),

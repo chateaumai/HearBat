@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../data/word_modules_data.dart';
+
 class WordsList extends StatelessWidget {
   WordsList({super.key});
 
