@@ -13,18 +13,20 @@ class CustomUtil extends StatefulWidget {
 
 class CustomUtilState extends State<CustomUtil> {
   List<TextEditingController> _controllers = [
-    TextEditingController(), // Word A
-    TextEditingController(), // Word B
+    TextEditingController(), // Initial Word A
+    TextEditingController(), // Initial Word B
   ];
   TextEditingController _moduleNameController =
       TextEditingController(); // Controller for module name
 
+  // Function to add a new word pair
   void _addNewPair() {
     setState(() {
       _controllers.addAll([TextEditingController(), TextEditingController()]);
     });
   }
 
+  // Function to remove a specific word pair
   void _removePair(int index) {
     if (_controllers.length > 2) {
       setState(() {
@@ -45,13 +47,19 @@ class CustomUtilState extends State<CustomUtil> {
     }
 
     String moduleName = _moduleNameController.text.trim();
-    if (moduleName.isNotEmpty &&
-        wordPairs.isNotEmpty &&
-        wordPairs.length % 2 == 0) {
-      await UserModuleUtil.saveCustomModule(moduleName, wordPairs);
-      widget.onModuleSaved(moduleName);
+    if (moduleName.isNotEmpty && wordPairs.isNotEmpty) {
+      try {
+        await UserModuleUtil.saveCustomModule(moduleName, wordPairs);
+        if (!mounted) return;
+        // Trigger the parent's callback logic, potentially handling navigation
+        widget.onModuleSaved(moduleName);
+      } catch (e) {
+        // Log or handle the error
+        print("Failed to save module: $e");
+      }
     } else {
-      // Handle error or notify the user
+      // Show an error message or alert dialog here
+      print("Incomplete input. Ensure all fields are filled and try again.");
     }
   }
 
@@ -73,37 +81,40 @@ class CustomUtilState extends State<CustomUtil> {
               ),
             ),
           ),
-          for (int i = 0; i < _controllers.length; i += 2)
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: _controllers[i],
-                      decoration: InputDecoration(
-                        labelText: 'Word ${i ~/ 2 + 1}A',
-                        border: OutlineInputBorder(),
-                      ),
+          ...List.generate(
+              _controllers.length ~/ 2,
+              (index) => Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            controller: _controllers[index * 2],
+                            decoration: InputDecoration(
+                              labelText: 'Word ${index + 1}A',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextField(
+                            controller: _controllers[index * 2 + 1],
+                            decoration: InputDecoration(
+                              labelText: 'Word ${index + 1}B',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        if (_controllers.length >
+                            2) // Allow deletion if more than one pair exists
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () => _removePair(index * 2),
+                          ),
+                      ],
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: _controllers[i + 1],
-                      decoration: InputDecoration(
-                        labelText: 'Word ${i ~/ 2 + 1}B',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => _removePair(i),
-                  ),
-                ],
-              ),
-            ),
+                  )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
