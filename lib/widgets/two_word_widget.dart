@@ -4,15 +4,21 @@ import 'package:hearbat/models/word_pair.dart';
 import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
 import '../widgets/incorrect_card_widget.dart';
-import 'package:hearbat/utils/google_tts_util.dart';
+import 'package:hearbat/utils/google_tts_util.dart'; // Ensure this is the correct path to your GoogleTTSUtil
 
 class TwoWordWidget extends StatefulWidget {
-  final GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
+  final GoogleTTSUtil googleTTSUtil; // Instance of GoogleTTSUtil
   final List<WordPair> wordPairs;
   final VoidCallback onCompletion;
+  final String voiceType; // Accept voiceType as a parameter
 
-  TwoWordWidget({Key? key, required this.wordPairs, required this.onCompletion})
-      : super(key: key);
+  TwoWordWidget({
+    Key? key,
+    required this.wordPairs,
+    required this.onCompletion,
+    required this.voiceType, // Ensure voiceType is required
+  })  : googleTTSUtil = GoogleTTSUtil(), // Initialize or pass GoogleTTSUtil
+        super(key: key);
 
   @override
   State<TwoWordWidget> createState() => _TwoWordWidgetState();
@@ -26,7 +32,6 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   bool isCheckingAnswer = true;
   bool isAnswerFalse = false;
 
-  // choosing random word
   @override
   void initState() {
     super.initState();
@@ -37,7 +42,8 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   void setNextPair() {
     int index = Random().nextInt(remainingPairs.length);
     currentPair = remainingPairs[index];
-    remainingPairs.removeAt(index); //so the randomly chosen pair doesnt repeat
+    remainingPairs
+        .removeAt(index); // So the randomly chosen pair doesn't repeat
 
     correctWord = Random().nextBool() ? currentPair.wordA : currentPair.wordB;
     selectedWord = null;
@@ -59,16 +65,16 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
       isAnswerFalse = true;
     }
     if (remainingPairs.isEmpty) widget.onCompletion();
-    isCheckingAnswer = false; // time to go to next pair
+    isCheckingAnswer = false; // Time to go to the next pair
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        FilledButton.icon(
+        ElevatedButton.icon(
           onPressed: () =>
-              widget.googleTTSUtil.playVoice(correctWord, "en-US-Studio-O"),
+              widget.googleTTSUtil.playVoice(correctWord, widget.voiceType),
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
@@ -80,7 +86,6 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
               selectedWord: selectedWord ?? '',
               onSelected: handleSelection,
             ),
-            // word B
             WordButton(
               word: currentPair.wordB,
               selectedWord: selectedWord ?? '',
