@@ -4,12 +4,15 @@ import 'package:hearbat/models/modules.dart';
 import '../words/words_list_page.dart';
 
 class WordPath extends StatelessWidget {
+  final String chapter;
+
+  WordPath({Key? key, required this.chapter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Word Modules'),
+        title: Text('Word Modules - $chapter'),
       ),
       body: Column(
         children: [
@@ -23,9 +26,9 @@ class WordPath extends StatelessWidget {
             child: Text('View All Words'),
           ),
           Expanded(
-            child: ModuleListWidget(modules: wordModules)
+            child: ModuleListWidget(modules: wordModules),
           ),
-        ],      
+        ],
       ),
     );
   }
