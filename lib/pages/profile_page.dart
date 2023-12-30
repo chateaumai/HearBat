@@ -7,7 +7,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  String _voicePreference = "en-US-Studio-O"; // Default to female voice
+  String? _voicePreference;
 
   @override
   void initState() {
@@ -37,25 +37,37 @@ class ProfilePageState extends State<ProfilePage> {
         title: Text('Profile'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text("Select Voice Type",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge),
+          ),
           ListTile(
             title: const Text('Female'),
-            leading: Radio(
+            leading: Radio<String>(
               value: "en-US-Studio-O",
               groupValue: _voicePreference,
-              onChanged: (String? value) {
-                _updateVoicePreference(value!);
-              },
+              onChanged: _voicePreference == null
+                  ? null
+                  : (String? value) {
+                      _updateVoicePreference(value!);
+                    },
             ),
           ),
           ListTile(
             title: const Text('Male'),
-            leading: Radio(
+            leading: Radio<String>(
               value: "en-US-Studio-Q",
               groupValue: _voicePreference,
-              onChanged: (String? value) {
-                _updateVoicePreference(value!);
-              },
+              onChanged: _voicePreference == null
+                  ? null
+                  : (String? value) {
+                      _updateVoicePreference(value!);
+                    },
             ),
           ),
         ],

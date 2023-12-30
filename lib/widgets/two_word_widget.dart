@@ -4,20 +4,20 @@ import 'package:hearbat/models/word_pair.dart';
 import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
 import '../widgets/incorrect_card_widget.dart';
-import 'package:hearbat/utils/google_tts_util.dart'; // Ensure this is the correct path to your GoogleTTSUtil
+import 'package:hearbat/utils/google_tts_util.dart';
 
 class TwoWordWidget extends StatefulWidget {
-  final GoogleTTSUtil googleTTSUtil; // Instance of GoogleTTSUtil
+  final GoogleTTSUtil googleTTSUtil;
   final List<WordPair> wordPairs;
   final VoidCallback onCompletion;
-  final String voiceType; // Accept voiceType as a parameter
+  final String voiceType;
 
   TwoWordWidget({
     Key? key,
     required this.wordPairs,
     required this.onCompletion,
-    required this.voiceType, // Ensure voiceType is required
-  })  : googleTTSUtil = GoogleTTSUtil(), // Initialize or pass GoogleTTSUtil
+    required this.voiceType,
+  })  : googleTTSUtil = GoogleTTSUtil(),
         super(key: key);
 
   @override
