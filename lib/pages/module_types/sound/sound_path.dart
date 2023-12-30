@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SoundPath extends StatelessWidget {
-  const SoundPath({super.key});
+  final String chapter; // Accepts a chapter identifier
+
+  SoundPath({Key? key, required this.chapter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sound Path'),
+        title: Text('Sound Modules - $chapter'),
       ),
       body: Center(
-        child: Text('Sound Path'),
+        child: Text("Content for Sound Modules - $chapter"),
       ),
     );
   }

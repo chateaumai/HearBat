@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'word_path.dart';
+import 'sound_path.dart';
 
-class WordChapters extends StatelessWidget {
+class SoundChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> chapters = [
@@ -14,7 +14,7 @@ class WordChapters extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Word Chapters"),
+        title: Text("Sound Chapters"),
       ),
       body: ListView(
         children: List.generate(chapters.length, (index) {
@@ -23,7 +23,7 @@ class WordChapters extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => WordPath(chapter: chapters[index])),
+                    builder: (context) => SoundPath(chapter: chapters[index])),
               );
             },
             child: Text(chapters[index]),
