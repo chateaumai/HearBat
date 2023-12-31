@@ -5,11 +5,16 @@ import 'package:hearbat/models/word_pair.dart';
 class IncorrectCardWidget extends StatelessWidget {
   final WordPair wordPair;
   final String correctWord;
+  final String voiceType;
   final GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
 
   IncorrectCardWidget(
-      {Key? key, required this.wordPair, required this.correctWord})
+      {Key? key,
+      required this.wordPair,
+      required this.correctWord,
+      required this.voiceType})
       : super(key: key);
+
   String get incorrectWord =>
       correctWord == wordPair.wordA ? wordPair.wordB : wordPair.wordA;
 
@@ -18,19 +23,18 @@ class IncorrectCardWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        // correct word
+        // Correct word
         Expanded(
-          child: FilledButton.icon(
-            onPressed: () =>
-                googleTTSUtil.playVoice(correctWord, "en-US-Studio-O"),
+          child: ElevatedButton.icon(
+            onPressed: () => googleTTSUtil.playVoice(correctWord, voiceType),
             icon: Icon(Icons.volume_up),
             label: Text('Correct Answer: $correctWord'),
           ),
         ),
+        // Incorrect word
         Expanded(
-          child: FilledButton.icon(
-            onPressed: () =>
-                googleTTSUtil.playVoice(incorrectWord, "en-US-Studio-O"),
+          child: ElevatedButton.icon(
+            onPressed: () => googleTTSUtil.playVoice(incorrectWord, voiceType),
             icon: Icon(Icons.volume_up),
             label: Text('Incorrect Answer: $incorrectWord'),
           ),

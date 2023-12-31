@@ -96,6 +96,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
               IncorrectCardWidget(
                 wordPair: currentPair,
                 correctWord: correctWord,
+                voiceType: widget.voiceType,
               ),
             CheckButtonWidget(
               isCheckingAnswer: isCheckingAnswer,
