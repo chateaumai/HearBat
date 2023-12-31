@@ -27,6 +27,7 @@ class TrainPage extends StatelessWidget {
             ),
             child: Text('Train Sounds'),
           ),
+          /*
           ElevatedButton(
             onPressed: () => Navigator.push(
               context,
@@ -34,6 +35,7 @@ class TrainPage extends StatelessWidget {
             ),
             child: Text('Custom Mode'),
           ),
+          */
         ],
       ),
     );
