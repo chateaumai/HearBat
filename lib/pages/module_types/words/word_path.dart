@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/widgets/module_list_widget.dart';
-import 'package:hearbat/models/modules.dart';
-import '../words/words_list_page.dart';
+import 'words_list_page.dart';
+import 'package:hearbat/data/answer_pair.dart';
+import '../../../utils/module_util.dart';
+import '../../../widgets/module_list_widget.dart';
 
 class WordPath extends StatelessWidget {
   final String chapter;
 
   WordPath({Key? key, required this.chapter}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
+    Map<String, List<AnswerGroup>> modules = getModulesForChapter(chapter);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Word Modules - $chapter'),
@@ -20,16 +23,18 @@ class WordPath extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WordsList()),
+                MaterialPageRoute(builder: (context) => WordsList()), // where the user can view all of the words in the chapter
               );
             },
             child: Text('View All Words'),
           ),
           Expanded(
-            child: ModuleListWidget(modules: wordModules),
+            child: ModuleListWidget(modules: modules), // all of the modules for the chapter
           ),
         ],
       ),
     );
   }
+
+
 }

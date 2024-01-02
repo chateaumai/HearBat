@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/models/modules.dart';
+import 'package:hearbat/data/answer_pair.dart';
+import 'word_module_widget.dart';
 class ModuleListWidget extends StatelessWidget {
 
-  final List<Module> modules;
+  final Map<String, List<AnswerGroup>> modules;
 
   ModuleListWidget({Key? key, required this.modules}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var moduleList = modules.entries.toList();
+
     return ListView.builder(
-      itemCount: modules.length,
+      itemCount: moduleList.length,
       itemBuilder: (context, index) {
-        final module = modules[index];
+        final module = moduleList[index];
         return GestureDetector(
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => module.page),
+            MaterialPageRoute(builder: (context) => WordModuleWidget(
+              title: module.key,
+              answerGroups: module.value,
+            )),
           ),
           child: Container(
             width: 150, // Circle diameter
@@ -27,7 +33,7 @@ class ModuleListWidget extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                module.title,
+                module.key,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

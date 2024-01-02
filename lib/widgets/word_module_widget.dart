@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hearbat/data/answer_pair.dart';
 import '../../../../widgets/two_word_widget.dart';
-import 'package:hearbat/models/word_pair.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WordModuleWidget extends StatefulWidget {
   final String title;
-  final List<WordPair> wordPairs;
+  final List<AnswerGroup> answerGroups;
 
-  WordModuleWidget({Key? key, required this.title, required this.wordPairs})
+  WordModuleWidget({Key? key, required this.title, required this.answerGroups})
       : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _WordModulePageState extends State<WordModuleWidget> {
 
   Widget buildModuleContent() {
     return TwoWordWidget(
-      wordPairs: widget.wordPairs,
+      answerGroups: widget.answerGroups,
       onCompletion: () => setState(() => moduleCompleted = true),
       voiceType: voiceType,
     );

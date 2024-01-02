@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/models/sound_pair.dart';
+import 'package:hearbat/data/answer_pair.dart';
 import '../../../data/sound_modules_data.dart';
 
 class SoundPath extends StatelessWidget {
@@ -9,7 +9,7 @@ class SoundPath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<SoundGroup> soundGroups = getSoundGroupsForChapter(chapter);
+    List<AnswerGroup> soundGroups = getSoundGroupsForChapter(chapter);
 
     return Scaffold(
       appBar: AppBar(
@@ -18,17 +18,21 @@ class SoundPath extends StatelessWidget {
       body: ListView.builder(
         itemCount: soundGroups.length,
         itemBuilder: (context, index) {
-          SoundGroup group = soundGroups[index];
+          AnswerGroup group = soundGroups[index];
           return Card(
             child: ListTile(
               title: Text('Sound Group'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Sound 1: ${group.sound1.name} (${group.sound1.path})'),
-                  Text('Sound 2: ${group.sound2.name} (${group.sound2.path})'),
-                  Text('Sound 3: ${group.sound3.name} (${group.sound3.path})'),
-                  Text('Sound 4: ${group.sound4.name} (${group.sound4.path})'),
+                  Text(
+                      'Sound 1: ${group.answer1.answer} (${group.answer1.path})'),
+                  Text(
+                      'Sound 2: ${group.answer2.answer} (${group.answer2.path})'),
+                  Text(
+                      'Sound 3: ${group.answer3.answer} (${group.answer3.path})'),
+                  Text(
+                      'Sound 4: ${group.answer4.answer} (${group.answer4.path})'),
                 ],
               ),
             ),
@@ -38,11 +42,11 @@ class SoundPath extends StatelessWidget {
     );
   }
 
-  List<SoundGroup> getSoundGroupsForChapter(String chapter) {
+  List<AnswerGroup> getSoundGroupsForChapter(String chapter) {
     if (chapter == "Chapter 1") {
-      return module1SoundGroups;
+      return chapter1module1SoundGroups + chapter1module2SoundGroups;
     } else if (chapter == "Chapter 2") {
-      return module2SoundGroups;
+      return chapter1module2SoundGroups;
     }
     return [];
   }
