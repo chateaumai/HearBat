@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../pages/module_types/words/word_path.dart';
 import 'module_types/words/word_chapters.dart';
 import 'module_types/sound/sound_chapters.dart';
 import 'module_types/custom/custom_path.dart';
@@ -17,7 +16,7 @@ class TrainPage extends StatelessWidget {
           ElevatedButton(
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => WordPath(chapter: 'Chapter 1')),
+              MaterialPageRoute(builder: (context) => WordChapters()),
             ),
             child: Text('Train Words'),
           ),

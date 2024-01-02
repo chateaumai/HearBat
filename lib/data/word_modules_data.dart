@@ -68,7 +68,6 @@ final Map<String, List<AnswerGroup>> chapter1wordModules = {
 };
 
 final Map<String, List<AnswerGroup>> chapter2wordModules = {
-  'Module1': chapter1module1WordGroups,
-  'Module2': chapter1module2WordGroups,
+  'ModuleTEST': chapter1module2WordGroups,
   // Add more modules as needed
 };
