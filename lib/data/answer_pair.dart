@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Answer {
   final String answer;
   final String path;
@@ -43,5 +45,23 @@ class AnswerGroup {
       Answer.fromJson(json['answer3'] as Map<String, dynamic>),
       Answer.fromJson(json['answer4'] as Map<String, dynamic>),
     );
+  }
+
+  Answer getRandomAnswer(AnswerGroup currentGroup) {
+    Random random = Random();
+    int number = random.nextInt(4);
+
+    switch (number) {
+      case 0:
+        return currentGroup.answer1;
+      case 1:
+        return currentGroup.answer2;
+      case 2:
+        return currentGroup.answer3;
+      case 3:
+        return currentGroup.answer4;
+      default:
+        return currentGroup.answer1;
+    }
   }
 }
