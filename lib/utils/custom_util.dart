@@ -1,7 +1,6 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:hearbat/utils/user_module_util.dart';
-import 'package:hearbat/models/word_pair.dart';
+import 'package:hearbat/data/answer_pair.dart';
 
 class CustomUtil extends StatefulWidget {
   final Function(String) onModuleSaved;
@@ -14,52 +13,64 @@ class CustomUtil extends StatefulWidget {
 
 class CustomUtilState extends State<CustomUtil> {
   List<TextEditingController> _controllers = [
-    TextEditingController(), // Initial Word A
-    TextEditingController(), // Initial Word B
+    TextEditingController(), // Initial Word A1
+    TextEditingController(), // Initial Word A2
+    TextEditingController(), // Initial Word A3
+    TextEditingController(), // Initial Word A4
   ];
-  TextEditingController _moduleNameController =
-      TextEditingController(); // Controller for module name
+  TextEditingController _moduleNameController = TextEditingController();
 
-  // Function to add a new word pair
   void _addNewPair() {
     setState(() {
-      _controllers.addAll([TextEditingController(), TextEditingController()]);
+      _controllers.addAll([
+        TextEditingController(),
+        TextEditingController(),
+        TextEditingController(),
+        TextEditingController(),
+      ]);
     });
   }
 
-  // Function to remove a specific word pair
   void _removePair(int index) {
-    if (_controllers.length > 2) {
+    if (_controllers.length > 4) {
       setState(() {
-        _controllers.removeAt(index + 1); // Remove Word B
-        _controllers.removeAt(index); // Remove Word A
+        _controllers.removeRange(index, index + 4);
       });
     }
   }
 
   void _saveModule() async {
-    List<WordPair> wordPairs = [];
-    for (int i = 0; i < _controllers.length; i += 2) {
-      String wordA = _controllers[i].text.trim();
-      String wordB = _controllers[i + 1].text.trim();
-      if (wordA.isNotEmpty && wordB.isNotEmpty) {
-        wordPairs.add(WordPair(wordA, wordB));
+    List<AnswerGroup> answerGroups = [];
+    for (int i = 0; i < _controllers.length; i += 4) {
+      String answer1 = _controllers[i].text.trim();
+      String answer2 = _controllers[i + 1].text.trim();
+      String answer3 = _controllers[i + 2].text.trim();
+      String answer4 = _controllers[i + 3].text.trim();
+      if (answer1.isNotEmpty &&
+          answer2.isNotEmpty &&
+          answer3.isNotEmpty &&
+          answer4.isNotEmpty) {
+        AnswerGroup group = AnswerGroup(
+          Answer(answer1, ""),
+          Answer(answer2, ""),
+          Answer(answer3, ""),
+          Answer(answer4, ""),
+        );
+        answerGroups.add(group);
       }
     }
 
     String moduleName = _moduleNameController.text.trim();
-    if (moduleName.isNotEmpty && wordPairs.isNotEmpty) {
+    if (moduleName.isNotEmpty && answerGroups.isNotEmpty) {
       try {
-        await UserModuleUtil.saveCustomModule(moduleName, wordPairs);
+        await UserModuleUtil.saveCustomModule(moduleName, answerGroups);
         if (!mounted) return;
-        // Trigger the parent's callback logic, potentially handling navigation
         widget.onModuleSaved(moduleName);
+        print("Module saved successfully!");
       } catch (e) {
-        // Log or handle the error
         print("Failed to save module: $e");
       }
     } else {
-      // Show an error message or alert dialog here
       print("Incomplete input. Ensure all fields are filled and try again.");
     }
   }
@@ -83,39 +94,68 @@ class CustomUtilState extends State<CustomUtil> {
             ),
           ),
           ...List.generate(
-              _controllers.length ~/ 2,
-              (index) => Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: TextField(
-                            controller: _controllers[index * 2],
-                            decoration: InputDecoration(
-                              labelText: 'Word ${index + 1}A',
-                              border: OutlineInputBorder(),
-                            ),
+            _controllers.length ~/ 4,
+            (index) => Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          controller: _controllers[index * 4],
+                          decoration: InputDecoration(
+                            labelText: '${index + 1}A',
+                            border: OutlineInputBorder(),
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: TextField(
-                            controller: _controllers[index * 2 + 1],
-                            decoration: InputDecoration(
-                              labelText: 'Word ${index + 1}B',
-                              border: OutlineInputBorder(),
-                            ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _controllers[index * 4 + 1],
+                          decoration: InputDecoration(
+                            labelText: '${index + 1}B',
+                            border: OutlineInputBorder(),
                           ),
                         ),
-                        if (_controllers.length >
-                            2) // Allow deletion if more than one pair exists
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () => _removePair(index * 2),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _controllers[index * 4 + 2],
+                          decoration: InputDecoration(
+                            labelText: '${index + 1}C',
+                            border: OutlineInputBorder(),
                           ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _controllers[index * 4 + 3],
+                          decoration: InputDecoration(
+                            labelText: '${index + 1}D',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_controllers.length > 4)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => _removePair(index * 4),
+                        ),
                       ],
                     ),
-                  )),
+                ],
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
@@ -136,4 +176,3 @@ class CustomUtilState extends State<CustomUtil> {
     );
   }
 }
-*/

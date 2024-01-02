@@ -1,14 +1,13 @@
-/*
 import 'package:flutter/material.dart';
-import 'package:hearbat/models/word_pair.dart';
+import 'package:hearbat/data/answer_pair.dart';
 import '../../../../widgets/word_module_widget.dart';
 // import '../../../../utils/gemini_util.dart';
 
 class CustomModule extends StatelessWidget {
   final String moduleName;
-  final List<WordPair> wordPairs;
+  final List<AnswerGroup> answerGroups;
 
-  CustomModule({required this.moduleName, required this.wordPairs});
+  CustomModule({required this.moduleName, required this.answerGroups});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,7 @@ class CustomModule extends StatelessWidget {
     */
     return WordModuleWidget(
       title: moduleName,
-      wordPairs: wordPairs,
+      answerGroups: answerGroups,
     );
   }
 }
-*/

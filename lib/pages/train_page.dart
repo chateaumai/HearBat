@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'module_types/words/word_chapters.dart';
 import 'module_types/sound/sound_chapters.dart';
-// import 'module_types/custom/custom_path.dart';
+import 'module_types/custom/custom_path.dart';
 
 class TrainPage extends StatelessWidget {
   const TrainPage({super.key});
@@ -27,7 +27,6 @@ class TrainPage extends StatelessWidget {
             ),
             child: Text('Train Sounds'),
           ),
-          /*
           ElevatedButton(
             onPressed: () => Navigator.push(
               context,
@@ -35,7 +34,6 @@ class TrainPage extends StatelessWidget {
             ),
             child: Text('Custom Mode'),
           ),
-          */
         ],
       ),
     );

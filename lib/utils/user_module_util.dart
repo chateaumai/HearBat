@@ -1,46 +1,60 @@
-/*
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hearbat/models/word_pair.dart';
+import 'package:hearbat/data/answer_pair.dart';
 
 class UserModuleUtil {
   static const String _storageKey = 'userCustomModules';
 
   // Save a new custom module
   static Future<void> saveCustomModule(
-      String moduleName, List<WordPair> wordPairs) async {
+      String moduleName, List<AnswerGroup> answerGroups) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? currentModulesJson = prefs.getString(_storageKey);
     Map<String, dynamic> currentModules =
         currentModulesJson != null ? json.decode(currentModulesJson) : {};
 
-    List<Map> savableWordPairs = wordPairs.map((wp) => wp.toJson()).toList();
+    List<Map> savableAnswerGroups =
+        answerGroups.map((ag) => ag.toJson()).toList();
 
-    currentModules[moduleName] = savableWordPairs;
+    currentModules[moduleName] = savableAnswerGroups;
 
     await prefs.setString(_storageKey, json.encode(currentModules));
   }
 
   // Retrieve all custom modules
-  static Future<Map<String, List<WordPair>>> getAllCustomModules() async {
+  static Future<Map<String, List<AnswerGroup>>> getAllCustomModules() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? modulesJson = prefs.getString(_storageKey);
-    if (modulesJson == null) return {};
+    if (modulesJson == null) {
+      return {}; // Return an empty map when data is null
+    }
 
-    Map<String, dynamic> modulesData = json.decode(modulesJson);
-    Map<String, List<WordPair>> modules = {};
+    try {
+      Map<String, dynamic> modulesData = json.decode(modulesJson);
 
-    modulesData.forEach((key, value) {
-      List<dynamic> wordPairsData = value;
-      List<WordPair> wordPairs = wordPairsData
-          .map((wpData) => WordPair.fromJson(Map<String, dynamic>.from(wpData)))
-          .toList();
-      modules[key] = wordPairs;
-    });
+      Map<String, List<AnswerGroup>> modules = {};
 
-    return modules;
+      modulesData.forEach((key, value) {
+        if (value is List<dynamic>) {
+          List<AnswerGroup> answerGroups = value
+              .map((agData) =>
+                  AnswerGroup.fromJson(Map<String, dynamic>.from(agData)))
+              .toList();
+          modules[key] = answerGroups;
+        } else {
+          // Handle unexpected data format here
+          print('Unexpected data format for module: $key');
+        }
+      });
+
+      return modules;
+    } catch (e) {
+      // Handle JSON decoding error
+      print('Error decoding JSON data: $e');
+      return {};
+    }
   }
 
   // Delete a custom module
@@ -55,4 +69,3 @@ class UserModuleUtil {
     }
   }
 }
-*/

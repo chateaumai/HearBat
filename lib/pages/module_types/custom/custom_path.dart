@@ -1,6 +1,5 @@
-/*
 import 'package:flutter/material.dart';
-import '../../../utils/custom_util.dart';
+import 'package:hearbat/utils/custom_util.dart';
 import 'package:hearbat/utils/user_module_util.dart';
 import 'modules/custom_modules.dart';
 
@@ -29,7 +28,7 @@ class CustomPathState extends State<CustomPath> {
   void _addModuleAndPop(String moduleName) async {
     await UserModuleUtil.getAllCustomModules();
     if (!mounted) return;
-    _loadModules(); // Refresh the module list immediately after adding
+    _loadModules();
     Navigator.of(context).pop();
   }
 
@@ -44,20 +43,20 @@ class CustomPathState extends State<CustomPath> {
   void _deleteModule(String moduleName) async {
     await UserModuleUtil.deleteCustomModule(moduleName);
     if (!mounted) return;
-    _loadModules(); // Refresh the module list
+    _loadModules();
   }
 
   void _showModule(String moduleName) async {
     var modules = await UserModuleUtil.getAllCustomModules();
     if (!mounted) return;
-    var wordPairs = modules[moduleName] ?? [];
+    var answerGroups = modules[moduleName] ?? [];
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CustomModule(
           moduleName: moduleName,
-          wordPairs: wordPairs,
+          answerGroups: answerGroups,
         ),
       ),
     );
@@ -70,7 +69,7 @@ class CustomPathState extends State<CustomPath> {
         title: Text("Custom Modules"),
       ),
       body: ListView.builder(
-        itemCount: moduleNames.length + 1, // Module names + create button
+        itemCount: moduleNames.length + 1,
         itemBuilder: (context, index) {
           if (index < moduleNames.length) {
             String moduleName = moduleNames[index];
@@ -80,11 +79,9 @@ class CustomPathState extends State<CustomPath> {
                 icon: Icon(Icons.delete),
                 onPressed: () => _deleteModule(moduleName),
               ),
-              onTap: () =>
-                  _showModule(moduleName), // Navigate to show module details
+              onTap: () => _showModule(moduleName),
             );
           } else {
-            // The last item is the "Create Custom Module" button
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -98,4 +95,3 @@ class CustomPathState extends State<CustomPath> {
     );
   }
 }
-*/
