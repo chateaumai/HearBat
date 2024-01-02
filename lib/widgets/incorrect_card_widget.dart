@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../utils/google_tts_util.dart';
+import 'package:hearbat/data/answer_pair.dart';
+import '../utils/audio_util.dart';
 
 class IncorrectCardWidget extends StatelessWidget {
-  final String? incorrectWord;
-  final String correctWord;
+  final Answer incorrectWord;
+  final Answer correctWord;
   final String voiceType;
-  final GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
 
   IncorrectCardWidget(
       {Key? key,
@@ -23,7 +23,7 @@ class IncorrectCardWidget extends StatelessWidget {
         // Correct word
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () => googleTTSUtil.playVoice(correctWord, voiceType),
+            onPressed: () => AudioUtil.playWordSound(correctWord.path),
             icon: Icon(Icons.volume_up),
             label: Text('Correct Answer: $correctWord'),
           ),
@@ -31,7 +31,7 @@ class IncorrectCardWidget extends StatelessWidget {
         // Incorrect word
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () => googleTTSUtil.playVoice(incorrectWord!, voiceType),
+            onPressed: () => AudioUtil.playWordSound(incorrectWord.path),
             icon: Icon(Icons.volume_up),
             label: Text('Incorrect Answer: $incorrectWord'),
           ),

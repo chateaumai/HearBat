@@ -27,8 +27,8 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   late List<AnswerGroup> answerGroups;
   late AnswerGroup currentGroup;
   late Answer correctWord;
-  String? incorrectWord;
-  String? selectedWord;
+  Answer? incorrectWord;
+  Answer? selectedWord;
   bool isCheckingAnswer = true;
   bool isAnswerFalse = false;
 
@@ -51,14 +51,14 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     isAnswerFalse = false;
   }
 
-  void handleSelection(String word) {
+  void handleSelection(Answer word) {
     setState(() {
       selectedWord = word;
     });
   }
 
   void checkAnswer() {
-    if (selectedWord == correctWord.answer) {
+    if (selectedWord!.answer == correctWord.answer) {
       print("Correct");
     } else {
       print("Incorrect");
@@ -75,7 +75,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
       children: [
         ElevatedButton.icon(
           onPressed: () =>
-          AudioUtil.playWordSound('audio/words/hi.mp3'),
+          AudioUtil.playWordSound(selectedWord!.path),
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
@@ -83,32 +83,35 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             WordButton(
-              word: currentGroup.answer1.answer,
-              selectedWord: selectedWord ?? '',
+              word: currentGroup.answer1,
+              selectedWord: selectedWord!,
               onSelected: handleSelection,
             ),
             WordButton(
-              word: currentGroup.answer2.answer,
-              selectedWord: selectedWord ?? '',
+              word: currentGroup.answer2,
+              selectedWord: selectedWord!,
               onSelected: handleSelection,
             ),
             WordButton(
-              word: currentGroup.answer3.answer,
-              selectedWord: selectedWord ?? '',
+              word: currentGroup.answer3,
+              selectedWord: selectedWord!,
               onSelected: handleSelection,
             ),
             WordButton(
-              word: currentGroup.answer4.answer,
-              selectedWord: selectedWord ?? '',
+              word: currentGroup.answer4,
+              selectedWord: selectedWord!,
               onSelected: handleSelection,
             ),
+
             SizedBox(height: 20),
+
             if (isAnswerFalse)
               IncorrectCardWidget(
-                incorrectWord: incorrectWord,
-                correctWord: correctWord.answer,
+                incorrectWord: incorrectWord!,
+                correctWord: correctWord,
                 voiceType: widget.voiceType,
               ),
+
             CheckButtonWidget(
               isCheckingAnswer: isCheckingAnswer,
               isSelectedWordValid: selectedWord != null,
