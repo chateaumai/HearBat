@@ -5,6 +5,7 @@ import 'package:hearbat/data/answer_pair.dart';
 import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
 import '../widgets/incorrect_card_widget.dart';
+import '../utils/google_tts_util.dart';
 
 class TwoWordWidget extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
@@ -24,6 +25,7 @@ class TwoWordWidget extends StatefulWidget {
 }
 
 class _TwoWordWidgetState extends State<TwoWordWidget> {
+  GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
   late List<AnswerGroup> answerGroups;
   late AnswerGroup currentGroup;
   late Answer correctWord;
@@ -75,7 +77,8 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
       children: [
         ElevatedButton.icon(
           onPressed: () =>
-          AudioUtil.playWordSound(selectedWord!.path),
+          // AudioUtil.playWordSound(correctWord!.path),
+          googleTTSUtil.playVoice(correctWord.answer, 'en-US-Studio-O'),
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
@@ -84,22 +87,22 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
           children: [
             WordButton(
               word: currentGroup.answer1,
-              selectedWord: selectedWord!,
+              selectedWord: selectedWord,
               onSelected: handleSelection,
             ),
             WordButton(
               word: currentGroup.answer2,
-              selectedWord: selectedWord!,
+              selectedWord: selectedWord,
               onSelected: handleSelection,
             ),
             WordButton(
               word: currentGroup.answer3,
-              selectedWord: selectedWord!,
+              selectedWord: selectedWord,
               onSelected: handleSelection,
             ),
             WordButton(
               word: currentGroup.answer4,
-              selectedWord: selectedWord!,
+              selectedWord: selectedWord,
               onSelected: handleSelection,
             ),
 

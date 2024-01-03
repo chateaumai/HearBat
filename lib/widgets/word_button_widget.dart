@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 class WordButton extends StatelessWidget {
   final Answer word;
-  final Answer selectedWord;
+  final Answer? selectedWord;
   final ValueChanged<Answer> onSelected;
 
   const WordButton({
