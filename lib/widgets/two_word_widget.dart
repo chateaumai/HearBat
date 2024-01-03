@@ -38,21 +38,21 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     super.initState();
     answerGroups = List<AnswerGroup>.from(widget.answerGroups);
     setNextPair();
-
-    // Call downloadMP3 for the correct word when the widget is initialized
-    googleTTSUtil.downloadMP3(correctWord.answer, widget.voiceType);
   }
 
   void setNextPair() {
-    int index = Random().nextInt(answerGroups.length);
-    currentGroup = answerGroups[index];
-    answerGroups.removeAt(index); // So the randomly chosen pair doesn't repeat
+    if (answerGroups.isNotEmpty) {
+      int index = Random().nextInt(answerGroups.length);
+      currentGroup = answerGroups[index];
+      answerGroups
+          .removeAt(index); // So the randomly chosen pair doesn't repeat
 
-    correctWord = currentGroup.getRandomAnswer(currentGroup);
-    selectedWord = null;
-    isCheckingAnswer = true;
-    isAnswerFalse = false;
-    readyForCompletion = false;
+      correctWord = currentGroup.getRandomAnswer(currentGroup);
+      selectedWord = null;
+      isCheckingAnswer = true;
+      isAnswerFalse = false;
+      readyForCompletion = false;
+    }
   }
 
   void handleSelection(Answer word) {

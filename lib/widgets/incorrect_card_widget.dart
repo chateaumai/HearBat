@@ -24,9 +24,6 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
   @override
   void initState() {
     super.initState();
-    // Download MP3 for both correct and incorrect words when the widget is built
-    googleTTSUtil.downloadMP3(widget.correctWord.answer, widget.voiceType);
-    googleTTSUtil.downloadMP3(widget.incorrectWord.answer, widget.voiceType);
   }
 
   @override
@@ -34,7 +31,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        // Correct word
+        // Correct word button
         Expanded(
           child: ElevatedButton.icon(
             onPressed: () => googleTTSUtil.speak(
@@ -43,7 +40,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
             label: Text('Correct Answer: ${widget.correctWord.answer}'),
           ),
         ),
-        // Incorrect word
+        // Incorrect word button
         Expanded(
           child: ElevatedButton.icon(
             onPressed: () => googleTTSUtil.speak(

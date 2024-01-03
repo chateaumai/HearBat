@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/utils/custom_util.dart';
 import 'package:hearbat/utils/user_module_util.dart';
 import 'modules/custom_modules.dart';
@@ -10,11 +11,13 @@ class CustomPath extends StatefulWidget {
 
 class CustomPathState extends State<CustomPath> {
   List<String> moduleNames = [];
+  String? _voiceType;
 
   @override
   void initState() {
     super.initState();
     _loadModules();
+    _loadVoiceType();
   }
 
   void _loadModules() async {
@@ -22,6 +25,14 @@ class CustomPathState extends State<CustomPath> {
     if (!mounted) return;
     setState(() {
       moduleNames = modules.keys.toList();
+    });
+  }
+
+  void _loadVoiceType() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _voiceType = prefs.getString('voicePreference') ??
+          "en-US-Studio-O"; // Default voice type
     });
   }
 
@@ -51,15 +62,20 @@ class CustomPathState extends State<CustomPath> {
     if (!mounted) return;
     var answerGroups = modules[moduleName] ?? [];
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CustomModule(
-          moduleName: moduleName,
-          answerGroups: answerGroups,
+    if (_voiceType != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomModule(
+            moduleName: moduleName,
+            answerGroups: answerGroups,
+            voiceType: _voiceType!,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      print("Voice type is not loaded yet");
+    }
   }
 
   @override

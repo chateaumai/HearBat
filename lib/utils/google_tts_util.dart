@@ -19,14 +19,11 @@ class GoogleTTSUtil {
   Future<void> speak(String text, String voicetype) async {
     String? audioPath = cache["${text}_$voicetype"];
 
-    if (audioPath != null) {
-      // MP3 is already in cache, play it
+    if (audioPath != null && await File(audioPath).exists()) {
       await audioPlayer.play(DeviceFileSource(audioPath));
     } else {
-      // MP3 not in cache, download it
       await downloadMP3(text, voicetype);
 
-      // Check if download was successful
       audioPath = cache["${text}_$voicetype"];
       if (audioPath != null) {
         await audioPlayer.play(DeviceFileSource(audioPath));
@@ -37,6 +34,15 @@ class GoogleTTSUtil {
   }
 
   Future<void> downloadMP3(String text, String voicetype) async {
+    String dir = (await getTemporaryDirectory()).path;
+    String filePath = "$dir/${text}_$voicetype.mp3";
+    File file = File(filePath);
+
+    if (await file.exists()) {
+      cache["${text}_$voicetype"] = filePath;
+      return;
+    }
+
     http.Client client = http.Client();
     try {
       String jsonString = await _loadCredentials();
@@ -72,11 +78,9 @@ class GoogleTTSUtil {
         String audioBase64 = jsonData['audioContent'];
 
         Uint8List bytes = base64Decode(audioBase64);
-        String dir = (await getApplicationDocumentsDirectory()).path;
-        File file = File("$dir/${text}_$voicetype.mp3");
         await file.writeAsBytes(bytes);
 
-        cache["${text}_$voicetype"] = file.path;
+        cache["${text}_$voicetype"] = filePath;
       } else {
         throw Exception(
             "Failed to get a valid response from the API: ${response.statusCode}");
