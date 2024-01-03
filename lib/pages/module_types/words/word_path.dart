@@ -8,14 +8,14 @@ class WordPath extends StatelessWidget {
   final String chapter;
 
   WordPath({Key? key, required this.chapter}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     Map<String, List<AnswerGroup>> modules = getModulesForChapter(chapter);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Word Modules - $chapter'),
+        title: Text(chapter),
       ),
       body: Column(
         children: [
@@ -23,18 +23,19 @@ class WordPath extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WordsList()), // where the user can view all of the words in the chapter
+                MaterialPageRoute(
+                    builder: (context) =>
+                        WordsList()), // where the user can view all of the words in the chapter
               );
             },
             child: Text('View All Words'),
           ),
           Expanded(
-            child: ModuleListWidget(modules: modules), // all of the modules for the chapter
+            child: ModuleListWidget(
+                modules: modules), // all of the modules for the chapter
           ),
         ],
       ),
     );
   }
-
-
 }

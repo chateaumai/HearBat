@@ -2,7 +2,7 @@ import 'dart:math';
 
 class Answer {
   final String answer;
-  final String path;
+  final String? path;
 
   Answer(this.answer, this.path);
 
@@ -16,7 +16,7 @@ class Answer {
   static Answer fromJson(Map<String, dynamic> json) {
     return Answer(
       json['answer'] as String,
-      json['path'] as String,
+      json['path'] as String?,
     );
   }
 }
