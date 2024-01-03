@@ -1,6 +1,5 @@
 import "dart:math";
 import 'package:flutter/material.dart';
-import '../utils/audio_util.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
@@ -17,8 +16,7 @@ class TwoWordWidget extends StatefulWidget {
     required this.answerGroups,
     required this.onCompletion,
     required this.voiceType,
-  })  :
-        super(key: key);
+  }) : super(key: key);
 
   @override
   State<TwoWordWidget> createState() => _TwoWordWidgetState();
@@ -39,13 +37,15 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     super.initState();
     answerGroups = List<AnswerGroup>.from(widget.answerGroups);
     setNextPair();
+
+    // Call downloadMP3 for the correct word when the widget is initialized
+    googleTTSUtil.downloadMP3(correctWord.answer, widget.voiceType);
   }
 
   void setNextPair() {
     int index = Random().nextInt(answerGroups.length);
     currentGroup = answerGroups[index];
-    answerGroups
-        .removeAt(index); // So the randomly chosen pair doesn't repeat
+    answerGroups.removeAt(index); // So the randomly chosen pair doesn't repeat
 
     correctWord = currentGroup.getRandomAnswer(currentGroup);
     selectedWord = null;
@@ -77,8 +77,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
       children: [
         ElevatedButton.icon(
           onPressed: () =>
-          // AudioUtil.playWordSound(correctWord!.path),
-          googleTTSUtil.playVoice(correctWord.answer, 'en-US-Studio-O'),
+              googleTTSUtil.speak(correctWord.answer, widget.voiceType),
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
@@ -105,16 +104,13 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
               selectedWord: selectedWord,
               onSelected: handleSelection,
             ),
-
             SizedBox(height: 20),
-
             if (isAnswerFalse)
               IncorrectCardWidget(
                 incorrectWord: incorrectWord!,
                 correctWord: correctWord,
                 voiceType: widget.voiceType,
               ),
-
             CheckButtonWidget(
               isCheckingAnswer: isCheckingAnswer,
               isSelectedWordValid: selectedWord != null,

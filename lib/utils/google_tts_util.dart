@@ -10,42 +10,50 @@ import 'package:googleapis/texttospeech/v1.dart' as tts;
 
 class GoogleTTSUtil {
   final AudioPlayer audioPlayer = AudioPlayer();
+  final Map<String, String> cache = {};
 
   Future<String> _loadCredentials() async {
     return await rootBundle.loadString('hearbat-408909-40d76f6c489d.json');
   }
 
-  Future<String> _getCacheFilePath(String text) async {
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    return "$dir/${text.hashCode}.mp3"; // Use text's hashcode as the file name
+  Future<void> speak(String text, String voicetype) async {
+    String? audioPath = cache["${text}_$voicetype"];
+
+    if (audioPath != null) {
+      // MP3 is already in cache, play it
+      await audioPlayer.play(DeviceFileSource(audioPath));
+    } else {
+      // MP3 not in cache, download it
+      await downloadMP3(text, voicetype);
+
+      // Check if download was successful
+      audioPath = cache["${text}_$voicetype"];
+      if (audioPath != null) {
+        await audioPlayer.play(DeviceFileSource(audioPath));
+      } else {
+        throw Exception("Failed to download MP3 for: $text");
+      }
+    }
   }
 
-  Future<void> speak(String text, String voicetype) async {
+  Future<void> downloadMP3(String text, String voicetype) async {
     http.Client client = http.Client();
     try {
-      String cacheFilePath = await _getCacheFilePath(text);
-
-      // Check if the cached MP3 file exists
-      if (await File(cacheFilePath).exists()) {
-        await audioPlayer.play(DeviceFileSource(cacheFilePath));
-        return; // Return if the cached file is played
-      }
-
       String jsonString = await _loadCredentials();
       var jsonCredentials = jsonDecode(jsonString);
 
       final accountCredentials =
           ServiceAccountCredentials.fromJson(jsonCredentials);
       AccessCredentials credentials =
-          await obtainAccessCredentialsViaServiceAccount(accountCredentials,
-              [tts.TexttospeechApi.cloudPlatformScope], client);
+          await obtainAccessCredentialsViaServiceAccount(
+        accountCredentials,
+        [tts.TexttospeechApi.cloudPlatformScope],
+        http.Client(),
+      );
+
       String url = "https://texttospeech.googleapis.com/v1/text:synthesize";
       var body = json.encode({
-        "audioConfig": {
-          "audioEncoding": "LINEAR16",
-          "pitch": 0,
-          "speakingRate": 1
-        },
+        "audioConfig": {"audioEncoding": "MP3", "pitch": 0, "speakingRate": 1},
         "input": {"text": text},
         "voice": {"languageCode": "en-US", "name": voicetype}
       });
@@ -64,31 +72,20 @@ class GoogleTTSUtil {
         String audioBase64 = jsonData['audioContent'];
 
         Uint8List bytes = base64Decode(audioBase64);
+        String dir = (await getApplicationDocumentsDirectory()).path;
+        File file = File("$dir/${text}_$voicetype.mp3");
+        await file.writeAsBytes(bytes);
 
-        // Save the generated audio to the cache file
-        File cacheFile = File(cacheFilePath);
-        await cacheFile.writeAsBytes(bytes);
-
-        await audioPlayer.play(DeviceFileSource(cacheFilePath));
+        cache["${text}_$voicetype"] = file.path;
       } else {
         throw Exception(
             "Failed to get a valid response from the API: ${response.statusCode}");
       }
     } catch (e) {
-      print("Error in GoogleTTSUtil.speak: $e");
-      throw Exception("Error occurred in GoogleTTSUtil.speak: $e");
+      print("Error in GoogleTTSUtil.downloadMP3: $e");
+      throw Exception("Error occurred in GoogleTTSUtil.downloadMP3: $e");
     } finally {
       client.close();
-    }
-  }
-
-  Future<void> playVoice(String text, String voiceType) async {
-    try {
-      await speak(text, voiceType);
-      // Add logic or UI update to indicate success if necessary
-    } catch (e) {
-      print("Error in playVoice: $e");
-      // Add logic or UI update to indicate failure if necessary
     }
   }
 }
