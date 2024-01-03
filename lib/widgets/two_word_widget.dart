@@ -31,6 +31,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
   Answer? selectedWord;
   bool isCheckingAnswer = true;
   bool isAnswerFalse = false;
+  bool readyForCompletion = false;
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     selectedWord = null;
     isCheckingAnswer = true;
     isAnswerFalse = false;
+    readyForCompletion = false;
   }
 
   void handleSelection(Answer word) {
@@ -67,7 +69,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
       incorrectWord = selectedWord;
       isAnswerFalse = true;
     }
-    if (answerGroups.isEmpty) widget.onCompletion();
+    if (answerGroups.isEmpty) readyForCompletion = true;
     isCheckingAnswer = false; // Time to go to the next pair
   }
 
@@ -117,6 +119,8 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
               onPressed: () {
                 if (isCheckingAnswer) {
                   checkAnswer();
+                } else if (readyForCompletion) {
+                  widget.onCompletion();
                 } else {
                   setNextPair();
                 }
