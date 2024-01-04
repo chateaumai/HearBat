@@ -6,8 +6,9 @@ class AudioUtil {
   static bool _isPlaying = false;
   static String _currentFile = '';
 
+
   static Future<void> playSound(String audioFilePath) async {
-    await _wordAudioPlayer.play(AssetSource(audioFilePath));
+    await _wordAudioPlayer.play(AssetSource(audioFilePath), mode: PlayerMode.lowLatency);
   }
 
   static Future<void> toggleBackgroundSound(String audioFilePath) async {
