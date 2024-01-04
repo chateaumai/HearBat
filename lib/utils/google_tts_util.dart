@@ -61,7 +61,7 @@ class GoogleTTSUtil {
       var body = json.encode({
         "audioConfig": {"audioEncoding": "MP3", "pitch": 0, "speakingRate": 1},
         "input": {"text": text},
-        "voice": {"languageCode": "en-US", "name": voicetype}
+        "voice": {"languageCode": voicetype.substring(0, 5), "name": voicetype}
       });
 
       final response = await http.post(

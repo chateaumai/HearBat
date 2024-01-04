@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/google_tts_util.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -8,11 +9,40 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   String? _voicePreference;
+  final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
+  bool isCaching = false;
+
+  List<String> voiceTypes = [
+    "en-US-Studio-O", //US1 Female
+    "en-US-Neural2-C", //US2 Female
+    "en-GB-Neural2-C", // UK Female
+    "en-IN-Neural2-A", // IN Female
+    "en-AU-Neural2-C", // AU Female
+    "en-US-Studio-Q", // US1 Male
+    "en-US-Neural2-D", // US2 Male
+    "en-GB-Neural2-B", // UK Male
+    "en-IN-Neural2-B", // IN Male
+    "en-AU-Neural2-B", // AU Male
+  ];
+
+  Map<String, String> voiceTypeTitles = {
+    "en-US-Studio-O": "US1 Female",
+    "en-US-Neural2-C": "US2 Female",
+    "en-GB-Neural2-C": "UK Female",
+    "en-IN-Neural2-A": "IN Female",
+    "en-AU-Neural2-C": "AU Female",
+    "en-US-Studio-Q": "US1 Male",
+    "en-US-Neural2-D": "US2 Male",
+    "en-GB-Neural2-B": "UK Male",
+    "en-IN-Neural2-B": "IN Male",
+    "en-AU-Neural2-B": "AU Male",
+  };
 
   @override
   void initState() {
     super.initState();
     _loadVoicePreference();
+    _cacheVoiceTypes();
   }
 
   _loadVoicePreference() async {
@@ -30,8 +60,47 @@ class ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> _cacheVoiceTypes() async {
+    setState(() {
+      isCaching = true;
+    });
+
+    String phraseToCache = "Hello this is how I sound";
+
+    List<Future> downloadFutures = [];
+
+    for (String voiceType in voiceTypes) {
+      downloadFutures.add(
+          _googleTTSUtil.downloadMP3(phraseToCache, voiceType).catchError((e) {
+        print("Error downloading for voice type $voiceType: $e");
+      }));
+    }
+
+    await Future.wait(downloadFutures);
+
+    setState(() {
+      isCaching = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isCaching) {
+      return Scaffold(
+        body: Center(
+          child: AlertDialog(
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 10),
+                Text("Loading..."),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -42,33 +111,70 @@ class ProfilePageState extends State<ProfilePage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text("Select Voice Type",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge),
-          ),
-          ListTile(
-            title: const Text('Female'),
-            leading: Radio<String>(
-              value: "en-US-Studio-O",
-              groupValue: _voicePreference,
-              onChanged: _voicePreference == null
-                  ? null
-                  : (String? value) {
-                      _updateVoicePreference(value!);
-                    },
+            child: Text(
+              "Select Voice Type",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          ListTile(
-            title: const Text('Male'),
-            leading: Radio<String>(
-              value: "en-US-Studio-Q",
-              groupValue: _voicePreference,
-              onChanged: _voicePreference == null
-                  ? null
-                  : (String? value) {
-                      _updateVoicePreference(value!);
-                    },
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                if (_voicePreference != null) {
+                  _googleTTSUtil.speak(
+                      "Hello this is how I sound", _voicePreference!);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Please select a voice preference first"),
+                    ),
+                  );
+                }
+              },
+              child: Text('Test Audio'),
             ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    for (int i = 0; i < 5; i++)
+                      ListTile(
+                        title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
+                        leading: Radio<String>(
+                          value: voiceTypes[i],
+                          groupValue: _voicePreference,
+                          onChanged: _voicePreference == null
+                              ? null
+                              : (String? value) {
+                                  _updateVoicePreference(value!);
+                                },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    for (int i = 5; i < 10; i++)
+                      ListTile(
+                        title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
+                        leading: Radio<String>(
+                          value: voiceTypes[i],
+                          groupValue: _voicePreference,
+                          onChanged: _voicePreference == null
+                              ? null
+                              : (String? value) {
+                                  _updateVoicePreference(value!);
+                                },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
