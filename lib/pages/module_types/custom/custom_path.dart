@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/utils/custom_util.dart';
 import 'package:hearbat/utils/user_module_util.dart';
-import 'modules/custom_modules.dart';
+import '../../../utils/custom_modules_util.dart';
 
 class CustomPath extends StatefulWidget {
   @override
