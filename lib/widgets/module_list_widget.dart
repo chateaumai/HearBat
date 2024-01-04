@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'word_module_widget.dart';
+import 'module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
 
 class ModuleListWidget extends StatefulWidget {
@@ -65,7 +65,7 @@ class ModuleListWidgetState extends State<ModuleListWidget> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WordModuleWidget(
+        builder: (context) => ModuleWidget(
           title: moduleName,
           answerGroups: answerGroups,
           isWord: true,

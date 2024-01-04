@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../../../data/sound_modules_data.dart';
+import 'package:hearbat/widgets/sound_module_list_widget.dart';
 import '../../../utils/module_util.dart';
-import '../../../widgets/module_list_widget.dart';
 
 class SoundPath extends StatelessWidget {
   final String chapter;
@@ -31,20 +30,11 @@ class SoundPath extends StatelessWidget {
             child: Text('View All Words'),
           ),*/
           Expanded(
-            child: ModuleListWidget(
+            child: SoundModuleListWidget(
                 modules: modules), // all of the modules for the chapter
           ),
         ],
       ),
     );
-  }
-
-  List<AnswerGroup> getSoundGroupsForChapter(String chapter) {
-    if (chapter == "Chapter 1") {
-      return chapter1module1SoundGroups + chapter1module2SoundGroups;
-    } else if (chapter == "Chapter 2") {
-      return chapter1module2SoundGroups;
-    }
-    return [];
   }
 }

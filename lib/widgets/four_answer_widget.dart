@@ -5,24 +5,27 @@ import '../widgets/word_button_widget.dart';
 import '../widgets/check_button_widget.dart';
 import '../widgets/incorrect_card_widget.dart';
 import '../utils/google_tts_util.dart';
+import '../utils/audio_util.dart';
 
-class TwoWordWidget extends StatefulWidget {
+class FourAnswerWidget extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
   final VoidCallback onCompletion;
   final String voiceType;
+  final bool isWord;
 
-  TwoWordWidget({
+  FourAnswerWidget({
     Key? key,
     required this.answerGroups,
     required this.onCompletion,
     required this.voiceType,
+    required this.isWord,
   }) : super(key: key);
 
   @override
-  State<TwoWordWidget> createState() => _TwoWordWidgetState();
+  State<FourAnswerWidget> createState() => _FourAnswerWidgetState();
 }
 
-class _TwoWordWidgetState extends State<TwoWordWidget> {
+class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
   late List<AnswerGroup> answerGroups;
   late AnswerGroup currentGroup;
@@ -73,13 +76,21 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
     isCheckingAnswer = false; // Time to go to the next pair
   }
 
+  void playAnswer() {
+    if (widget.isWord) {
+      googleTTSUtil.speak(correctWord.answer, widget.voiceType);
+    }
+    else {
+      AudioUtil.playSound(correctWord.path!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ElevatedButton.icon(
-          onPressed: () =>
-              googleTTSUtil.speak(correctWord.answer, widget.voiceType),
+          onPressed: () => playAnswer(),
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
@@ -112,6 +123,7 @@ class _TwoWordWidgetState extends State<TwoWordWidget> {
                 incorrectWord: incorrectWord!,
                 correctWord: correctWord,
                 voiceType: widget.voiceType,
+                isWord: widget.isWord,
               ),
             CheckButtonWidget(
               isCheckingAnswer: isCheckingAnswer,

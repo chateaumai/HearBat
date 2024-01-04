@@ -6,7 +6,7 @@ class AudioUtil {
   static bool _isPlaying = false;
   static String _currentFile = '';
 
-  static Future<void> playWordSound(String audioFilePath) async {
+  static Future<void> playSound(String audioFilePath) async {
     await _wordAudioPlayer.play(AssetSource(audioFilePath));
   }
 

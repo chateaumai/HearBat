@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../../../../widgets/word_module_widget.dart';
+import '../../../../widgets/module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
 // import '../../../../utils/gemini_util.dart';
 
@@ -62,7 +62,7 @@ class CustomModuleState extends State<CustomModule> {
       );
     }
     // Once caching is done, show the WordModuleWidget
-    return WordModuleWidget(
+    return ModuleWidget(
       title: widget.moduleName,
       answerGroups: widget.answerGroups,
       isWord: true,

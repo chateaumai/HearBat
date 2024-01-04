@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../../../../widgets/two_word_widget.dart';
+import '../../../../widgets/four_answer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WordModuleWidget extends StatefulWidget {
+class ModuleWidget extends StatefulWidget {
   final String title;
   final List<AnswerGroup> answerGroups;
   final bool isWord;
-  WordModuleWidget({Key? key, required this.title, required this.answerGroups, required this.isWord})
+  ModuleWidget({Key? key, required this.title, required this.answerGroups, required this.isWord})
       : super(key: key);
 
   @override
-  State createState() => _WordModulePageState();
+  State createState() => _ModulePageState();
 }
 
-class _WordModulePageState extends State<WordModuleWidget> {
+class _ModulePageState extends State<ModuleWidget> {
   bool moduleCompleted = false;
   String voiceType = "en-US-Studio-O";
 
@@ -31,7 +31,9 @@ class _WordModulePageState extends State<WordModuleWidget> {
   @override
   void initState() {
     super.initState();
-    getVoiceType();
+    if (widget.isWord) {
+      getVoiceType();
+    }
   }
 
   @override
@@ -47,10 +49,11 @@ class _WordModulePageState extends State<WordModuleWidget> {
   }
 
   Widget buildModuleContent() {
-    return TwoWordWidget(
+    return FourAnswerWidget(
       answerGroups: widget.answerGroups,
       onCompletion: () => setState(() => moduleCompleted = true),
       voiceType: voiceType,
+      isWord: widget.isWord,
     );
   }
 

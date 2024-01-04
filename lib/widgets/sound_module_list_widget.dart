@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'word_module_widget.dart';
+import 'module_widget.dart';
 
 class SoundModuleListWidget extends StatelessWidget {
   final Map<String, List<AnswerGroup>> modules;
@@ -20,7 +20,7 @@ class SoundModuleListWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => WordModuleWidget(
+              builder: (context) => ModuleWidget(
                 title: module.key,
                 answerGroups: module.value,
                 isWord: isWord,
