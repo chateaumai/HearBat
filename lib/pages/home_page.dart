@@ -1,44 +1,38 @@
 import 'package:flutter/material.dart';
-import 'train_page.dart';
-import 'profile_page.dart';
+import 'module_types/words/word_chapters.dart';
+import 'module_types/sound/sound_chapters.dart';
+import 'module_types/custom/custom_path.dart';
 
-class MyHomePage extends StatefulWidget {
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  int selectedIndex = 0;
-  NavigationDestinationLabelBehavior labelBehavior =
-    NavigationDestinationLabelBehavior.onlyShowSelected;
-
-  // pages on bottom bar
-  final List<Widget> pages = [
-    TrainPage(),
-    ProfilePage(),
-  ];
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: labelBehavior,
-        selectedIndex: selectedIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Train',
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WordChapters()),
+            ),
+            child: Text('Train Words'),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.face),
-            label: 'Profile',
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SoundChapters()),
+            ),
+            child: Text('Train Sounds'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CustomPath()),
+            ),
+            child: Text('Custom Mode'),
           ),
         ],
       ),

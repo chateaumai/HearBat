@@ -68,6 +68,7 @@ class ModuleListWidgetState extends State<ModuleListWidget> {
         builder: (context) => WordModuleWidget(
           title: moduleName,
           answerGroups: answerGroups,
+          isWord: true,
         ),
       ),
     );

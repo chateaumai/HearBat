@@ -5,7 +5,7 @@ class SoundChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> chapters = [
-      "Chapter 1",
+      "Home Sounds",
       "Chapter 2",
       "Chapter 3",
       "Chapter 4",

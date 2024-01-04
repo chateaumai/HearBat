@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../../data/sound_modules_data.dart';
+import '../../../utils/module_util.dart';
+import '../../../widgets/module_list_widget.dart';
 
 class SoundPath extends StatelessWidget {
   final String chapter;
@@ -9,35 +11,30 @@ class SoundPath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<AnswerGroup> soundGroups = getSoundGroupsForChapter(chapter);
+    Map<String, List<AnswerGroup>> modules = getModulesForChapter(chapter);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Sound Modules - $chapter'),
       ),
-      body: ListView.builder(
-        itemCount: soundGroups.length,
-        itemBuilder: (context, index) {
-          AnswerGroup group = soundGroups[index];
-          return Card(
-            child: ListTile(
-              title: Text('Sound Group'),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      'Sound 1: ${group.answer1.answer} (${group.answer1.path})'),
-                  Text(
-                      'Sound 2: ${group.answer2.answer} (${group.answer2.path})'),
-                  Text(
-                      'Sound 3: ${group.answer3.answer} (${group.answer3.path})'),
-                  Text(
-                      'Sound 4: ${group.answer4.answer} (${group.answer4.path})'),
-                ],
-              ),
-            ),
-          );
-        },
+      body: Column(
+        children: [
+          /* ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        WordsList()), // where the user can view all of the words in the chapter
+              );
+            },
+            child: Text('View All Words'),
+          ),*/
+          Expanded(
+            child: ModuleListWidget(
+                modules: modules), // all of the modules for the chapter
+          ),
+        ],
       ),
     );
   }

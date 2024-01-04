@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class WordModuleWidget extends StatefulWidget {
   final String title;
   final List<AnswerGroup> answerGroups;
-
-  WordModuleWidget({Key? key, required this.title, required this.answerGroups})
+  final bool isWord;
+  WordModuleWidget({Key? key, required this.title, required this.answerGroups, required this.isWord})
       : super(key: key);
 
   @override

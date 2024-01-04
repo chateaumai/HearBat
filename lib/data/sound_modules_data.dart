@@ -1,69 +1,68 @@
 import 'answer_pair.dart';
-
 final List<AnswerGroup> chapter1module1SoundGroups = [
   AnswerGroup(
-      Answer("Bird Chirping", "sounds/bird_chirping.mp3"),
-      Answer("Car Horn", "sounds/car_horn.mp3"),
-      Answer("Rain Noise", "sounds/rain_noise.mp3"),
-      Answer("Dog Barking", "sounds/dog_barking.mp3")),
+    Answer("Door Close", "assets/audio/sounds/home/door close.wav"),
+    Answer("Kettle Whistling", "assets/audio/sounds/home/kettle whistling.wav"),
+    Answer("Cat Meow", "assets/audio/sounds/home/cat meow.wav"),
+    Answer("Printer", "assets/audio/sounds/home/printer.wav")),
   AnswerGroup(
-      Answer("Wind Blowing", "sounds/wind_blowing.mp3"),
-      Answer("Traffic", "sounds/traffic.mp3"),
-      Answer("Cat Meowing", "sounds/cat_meowing.mp3"),
-      Answer("Door Knocking", "sounds/door_knocking.mp3")),
+    Answer("Toilet Flush", "assets/audio/sounds/home/toilet flush.wav"),
+    Answer("Wind Chimes", "assets/audio/sounds/home/wind chimes.wav"),
+    Answer("Telephone Ringing", "assets/audio/sounds/home/telephone ringing.wav"),
+    Answer("Vacuum", "assets/audio/sounds/home/vacuum.wav")),
   AnswerGroup(
-      Answer("Alarm Ringing", "sounds/alarm_ringing.mp3"),
-      Answer("Water Dropping", "sounds/water_dropping.mp3"),
-      Answer("Footsteps", "sounds/footsteps.mp3"),
-      Answer("Phone Ringing", "sounds/phone_ringing.mp3")),
+    Answer("Dog Bark", "assets/audio/sounds/home/dog bark.wav"),
+    Answer("Microwave", "assets/audio/sounds/home/microwave.wav"),
+    Answer("Pencil Writing", "assets/audio/sounds/home/pencil writing.wav"),
+    Answer("Clock Ticking", "assets/audio/sounds/home/clock ticking.wav")),
   AnswerGroup(
-      Answer("Typing", "sounds/typing.mp3"),
-      Answer("Bell Ringing", "sounds/bell_ringing.mp3"),
-      Answer("Airplane Flying", "sounds/airplane_flying.mp3"),
-      Answer("Bicycle Bell", "sounds/bicycle_bell.mp3")),
+    Answer("Alarm Clock Beep", "assets/audio/sounds/home/alarm clock beep.wav"),
+    Answer("Garbage Disposal", "assets/audio/sounds/home/garbage disposal.wav"),
+    Answer("Doorbell", "assets/audio/sounds/home/doorbell.wav"),
+    Answer("Washing Machine", "assets/audio/sounds/home/washing machine.wav")),
   AnswerGroup(
-      Answer("Clock Ticking", "sounds/clock_ticking.mp3"),
-      Answer("Fire Crackling", "sounds/fire_crackling.mp3"),
-      Answer("Heartbeat", "sounds/heartbeat.mp3"),
-      Answer("Sneezing", "sounds/sneezing.mp3")),
+    Answer("Computer Keyboard Clicking", "assets/audio/sounds/home/computer keyboard clicking.wav"),
+    Answer("Shower Curtains", "assets/audio/sounds/home/shower curtains.mp3"),
+    Answer("Knife Sharpen", "assets/audio/sounds/home/knife sharpen.wav"),
+    Answer("Ice Dispenser", "assets/audio/sounds/home/ice dispenser.wav")),
   AnswerGroup(
-      Answer("Thunder", "sounds/thunder.mp3"),
-      Answer("Toilet Flushing", "sounds/toilet_flushing.mp3"),
-      Answer("Train Whistle", "sounds/train_whistle.mp3"),
-      Answer("Vacuum Cleaner", "sounds/vacuum_cleaner.mp3")),
+    Answer("Electric Shaver", "assets/audio/sounds/home/electric shaver.wav"),
+    Answer("Cutting Paper", "assets/audio/sounds/home/cutting paper.wav"),
+    Answer("Book Page Flipping", "assets/audio/sounds/home/book page flipping.wav"),
+    Answer("Mouse Click", "assets/audio/sounds/home/mouse click.wav")),
   AnswerGroup(
-      Answer("Children Playing", "sounds/children_playing.mp3"),
-      Answer("Glass Breaking", "sounds/glass_breaking.mp3"),
-      Answer("Leaves Rustling", "sounds/leaves_rustling.mp3"),
-      Answer("Stream Flowing", "sounds/stream_flowing.mp3")),
+    Answer("Toothbrush Brushing", "assets/audio/sounds/home/toothbrush brushing.wav"),
+    Answer("Telephone Ringing", "assets/audio/sounds/home/telephone ringing.wav"),
+    Answer("Dog Bark", "assets/audio/sounds/home/dog bark.wav"),
+    Answer("Printer", "assets/audio/sounds/home/printer.wav")),
   AnswerGroup(
-      Answer("Crowd Cheering", "sounds/crowd_cheering.mp3"),
-      Answer("Dogs Howling", "sounds/dogs_howling.mp3"),
-      Answer("Elevator Ding", "sounds/elevator_ding.mp3"),
-      Answer("Police Siren", "sounds/police_siren.mp3")),
+    Answer("Door Close", "assets/audio/sounds/home/door close.wav"),
+    Answer("Kettle Whistling", "assets/audio/sounds/home/kettle whistling.wav"),
+    Answer("Alarm Clock Beep", "assets/audio/sounds/home/alarm clock beep.wav"),
+    Answer("Wind Chimes", "assets/audio/sounds/home/wind chimes.wav")),
   AnswerGroup(
-      Answer("Basketball Dribbling", "sounds/basketball_dribbling.mp3"),
-      Answer("Bee Buzzing", "sounds/bee_buzzing.mp3"),
-      Answer("Birds Singing", "sounds/birds_singing.mp3"),
-      Answer("Cash Register", "sounds/cash_register.mp3")),
+    Answer("Microwave", "assets/audio/sounds/home/microwave.wav"),
+    Answer("Vacuum", "assets/audio/sounds/home/vacuum.wav"),
+    Answer("Clock Ticking", "assets/audio/sounds/home/clock ticking.wav"),
+    Answer("Pencil Writing", "assets/audio/sounds/home/pencil writing.wav")),
   AnswerGroup(
-      Answer("Chainsaw", "sounds/chainsaw.mp3"),
-      Answer("Church Bells", "sounds/church_bells.mp3"),
-      Answer("Drum Roll", "sounds/drum_roll.mp3"),
-      Answer("Frog Croaking", "sounds/frog_croaking.mp3")),
+    Answer("Cat Meow", "assets/audio/sounds/home/cat meow.wav"),
+    Answer("Garbage Disposal", "assets/audio/sounds/home/garbage disposal.wav"),
+    Answer("Washing Machine", "assets/audio/sounds/home/washing machine.wav"),
+    Answer("Computer Keyboard Clicking", "assets/audio/sounds/home/computer keyboard clicking.wav")),
 ];
 
 final List<AnswerGroup> chapter1module2SoundGroups = [
   AnswerGroup(
-      Answer("TEST", "sounds/bird_chirping.mp3"),
-      Answer("Car Horn", "sounds/car_horn.mp3"),
-      Answer("Rain Noise", "sounds/rain_noise.mp3"),
-      Answer("Dog Barking", "sounds/dog_barking.mp3")),
+      Answer("TEST", "assets/audio/sounds/home/cat meow.wav"),
+      Answer("Car Horn", "assets/audio/sounds/home/cat meow.wav"),
+      Answer("mungy", "assets/audio/sounds/home/cat meow.wav"),
+      Answer("oooohhh aaaa", "assets/audio/sounds/home/cat meow.wav")),
 ];
 
 // Map of sound modules
 final Map<String, List<AnswerGroup>> chapter1soundModules = {
-  'Module1': chapter1module1SoundGroups,
-  'Module2': chapter1module2SoundGroups,
+  'Module 1': chapter1module1SoundGroups,
+  'Module 2': chapter1module2SoundGroups,
   // Add more modules as needed
 };

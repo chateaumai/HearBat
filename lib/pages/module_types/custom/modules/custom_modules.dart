@@ -65,6 +65,7 @@ class CustomModuleState extends State<CustomModule> {
     return WordModuleWidget(
       title: widget.moduleName,
       answerGroups: widget.answerGroups,
+      isWord: true,
     );
   }
 }
