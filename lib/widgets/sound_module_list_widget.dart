@@ -29,11 +29,11 @@ class SoundModuleListWidget extends StatelessWidget {
           ),
           child: Container(
             width: 150, // Circle diameter
-            height: 150, // Circle diameter
-            margin: EdgeInsets.symmetric(vertical: 20), // Space between circles
+            height: 150, 
+            margin: EdgeInsets.symmetric(vertical: 20), // space between circles
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.blue, // Change as needed
+              color: Colors.blue, 
             ),
             child: Center(
               child: Text(
@@ -42,7 +42,7 @@ class SoundModuleListWidget extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12,
-                ), // Text color
+                ), 
               ),
             ),
           ),
