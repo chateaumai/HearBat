@@ -14,7 +14,7 @@ class SoundPath extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sound Modules - $chapter'),
+        title: Text(chapter),
       ),
       body: Column(
         children: [
