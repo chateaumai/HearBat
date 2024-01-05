@@ -7,7 +7,7 @@ class SoundChapters extends StatelessWidget {
     List<String> chapters = [
       "Home Sounds",
       "Music Sounds",
-      "Chapter 3",
+      "Nature Sounds",
     ];
 
     return Scaffold(

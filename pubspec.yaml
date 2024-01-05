@@ -39,6 +39,7 @@ flutter:
   assets:
     - assets/audio/sounds/home/
     - assets/audio/sounds/music/
+    - assets/audio/sounds/nature/
     - hearbat-408909-40d76f6c489d.json
 
   #   - images/a_dot_burr.jpeg
