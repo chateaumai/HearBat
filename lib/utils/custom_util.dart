@@ -82,23 +82,28 @@ class CustomUtilState extends State<CustomUtil> {
 
         String llmOutput = await GeminiUtil.generateContent(wordsToBeCompared);
         print("printing llm output\n\n$llmOutput\n");
-        RegExp exp = RegExp(r'\{(.*?)\}');
-        Iterable<RegExpMatch> matches = exp.allMatches(llmOutput);
+        List<String> words = llmOutput.split('\n');
 
-        for (final match in matches) {
-          String word = match.group(1)!; 
-          print("llm word: $word");
-          wordsToBeCompared.add(word); 
+        for (String word in words) {
+          String trimmedWord = word.trim();
+          if (trimmedWord.isNotEmpty) {
+            print("llm word: $trimmedWord");
+            wordsToBeCompared.add(trimmedWord); 
+          }
         }
-
-        AnswerGroup group = AnswerGroup(
-          Answer(wordsToBeCompared[0], ""),
-          Answer(wordsToBeCompared[1], ""),
-          Answer(wordsToBeCompared[2], ""),
-          Answer(wordsToBeCompared[3], ""),
-        );
-        print("adding llm group\n");
-        answerGroups.add(group);
+        if (wordsToBeCompared.length == 4) {
+          AnswerGroup group = AnswerGroup(
+            Answer(wordsToBeCompared[0], ""),
+            Answer(wordsToBeCompared[1], ""),
+            Answer(wordsToBeCompared[2], ""),
+            Answer(wordsToBeCompared[3], ""),
+          );
+          print("adding llm group\n");
+          answerGroups.add(group);
+        }
+        else {
+          print("not enough words");
+        }
       }
     }
 

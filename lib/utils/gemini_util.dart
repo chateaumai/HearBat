@@ -26,7 +26,7 @@ class GeminiUtil {
       String url = 
       "https://us-west1-aiplatform.googleapis.com/v1/projects/$projectId/locations/us-west1/publishers/google/models/gemini-pro:streamGenerateContent";
 
-      String wordInput = wordsToBeCompared.map((word) => '{$word}').join(' ');
+      String wordInput = wordsToBeCompared.join(' ');
       int wordsNeeded = 4 - wordsToBeCompared.length;
       String prompt = getPrompt(wordsNeeded, wordInput);
       print("Prompt\n $prompt");
