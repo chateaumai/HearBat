@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/utils/user_module_util.dart';
 import 'package:hearbat/data/answer_pair.dart';
+import '../utils/gemini_util.dart';
 
 class CustomUtil extends StatefulWidget {
   final Function(String) onModuleSaved;
@@ -46,6 +47,7 @@ class CustomUtilState extends State<CustomUtil> {
       String answer2 = _controllers[i + 1].text.trim();
       String answer3 = _controllers[i + 2].text.trim();
       String answer4 = _controllers[i + 3].text.trim();
+      // good input
       if (answer1.isNotEmpty &&
           answer2.isNotEmpty &&
           answer3.isNotEmpty &&
@@ -56,6 +58,44 @@ class CustomUtilState extends State<CustomUtil> {
           Answer(answer3, ""),
           Answer(answer4, ""),
         );
+        answerGroups.add(group);
+      }
+      // input has holes, llm comes in
+      else if (answer1.isNotEmpty ||
+               answer2.isNotEmpty ||
+               answer3.isNotEmpty ||
+               answer4.isNotEmpty) {
+
+        List<String> wordsToBeCompared = [];
+        if (answer1.isNotEmpty) {
+          wordsToBeCompared.add(answer1);
+        }
+        if (answer2.isNotEmpty) {
+          wordsToBeCompared.add(answer2);
+        }
+        if (answer3.isNotEmpty) {
+          wordsToBeCompared.add(answer3);
+        }
+        if (answer4.isNotEmpty) {
+          wordsToBeCompared.add(answer4);
+        }
+
+        String llmOutput = await GeminiUtil.generateContent(wordsToBeCompared);
+        RegExp exp = RegExp(r'\{(.*?)\}');
+        Iterable<RegExpMatch> matches = exp.allMatches(llmOutput);
+
+        for (final match in matches) {
+          String word = match.group(1)!; 
+          wordsToBeCompared.add(word); 
+        }
+
+        AnswerGroup group = AnswerGroup(
+          Answer(wordsToBeCompared[0], ""),
+          Answer(wordsToBeCompared[1], ""),
+          Answer(wordsToBeCompared[2], ""),
+          Answer(wordsToBeCompared[3], ""),
+        );
+        print("adding llm group\n");
         answerGroups.add(group);
       }
     }

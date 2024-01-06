@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart';
+import '../utils/text_util.dart';
 
 class GeminiUtil {
   static Future<String> _loadCredentials() async {
     return await rootBundle.loadString('hearbat-408909-40d76f6c489d.json');
   }
 
-  static Future<String> generateContent(String word) async {
+  static Future<String> generateContent(List<String> wordsToBeCompared) async {
     http.Client client = http.Client();
     try {
       String jsonString = await _loadCredentials();
@@ -25,13 +26,17 @@ class GeminiUtil {
       String url = 
       "https://us-west1-aiplatform.googleapis.com/v1/projects/$projectId/locations/us-west1/publishers/google/models/gemini-pro:streamGenerateContent";
 
+      String wordInput = wordsToBeCompared.map((word) => '{$word}').join(' ');
+      int wordsNeeded = 4 - wordsToBeCompared.length;
+      String prompt = getPrompt(wordsNeeded, wordInput);
+
       var body = json.encode({
         "contents": [
           {
             "role": "USER",
             "parts": [
               {
-                "text": "what are words that sound similar to $word"
+                "text": prompt
               }
             ]
           }
