@@ -35,7 +35,7 @@ String getPrompt(int wordsNeeded, String wordInput) {
     """;
 
   return prompt;*/
-  String prompt = 
+  /* String prompt = 
   """
   Create exactly $wordsNeeded unique words for a cochlear implant rehabilitation module. Each word must be:
 
@@ -43,7 +43,7 @@ String getPrompt(int wordsNeeded, String wordInput) {
   2. Not a repetition of any other generated word or the input words.
   3. Similar to at least one of the words given.
   4. Listed on a new line.
-  4. NOT A REPETITION OF INPUT WORDS OR GENERATED WORDS.
+  5. NOT A REPETITION OF INPUT WORDS OR GENERATED WORDS.
 
   Input Words: $wordInput
 
@@ -70,7 +70,46 @@ String getPrompt(int wordsNeeded, String wordInput) {
 
   return prompt;
 
+}*/
+
+String prompt = 
+  """
+  Generate exactly $wordsNeeded unique words. Each generated word must meet these properties:
+
+  1. Audibly distinct: Avoid homophones (e.g., 'too' and 'two' should not both appear).
+  2. NEVER BE a repetition of any other generated word or the input words.
+  3. Sound similar to at least one of the words given (rhyming and/or start with the same letter).
+  4. Listed on a new line break.
+  5. NOT A REPETITION OF INPUT WORDS OR GENERATED WORDS.
+  6. Be the same number of syllables as at least one of the input words.
+
+  Input Words: $wordInput
+
+  Here are some examples of valid inputs:
+
+  Input Words: Tin Tim
+  Generated Words: 
+  Teeth
+  Ten
+  
+  Input Words: Patch
+  Generated Words: 
+  Latch
+  Poach
+  Match
+
+  Input Words: Brag Boat Drag
+  Generated Words: 
+  Float
+
+  No matter what, always generate $wordsNeeded word(s), even if the inputted words don't sound similar.
+  REMINDER: Generated Words are not REPETITIONS of input words or generated words.
+  Your Output:
+  """;
+
+  return prompt;
 }
+
 
 String stripNonAlphaCharacters(String input) {
   // Regular expression pattern to match any non-alphabetic character and non-space character

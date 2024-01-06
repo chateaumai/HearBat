@@ -95,34 +95,37 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
           label: Text('Play'),
         ),
         Expanded(
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, 
-              crossAxisSpacing: 10, // Horizontal spacing between items
-              mainAxisSpacing: 10, // Vertical spacing between items
-              childAspectRatio: 150 / 180, // Aspect ratio of each item (width / height)
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, 
+                crossAxisSpacing: 10, // horizontal spacing
+                mainAxisSpacing: 10, // vertical spacing 
+                childAspectRatio: 150 / 180, 
+              ),
+              itemCount: 4, 
+              itemBuilder: (BuildContext context, int index) {
+                Answer word;
+                switch (index) {
+                  case 0:
+                    word = currentGroup.answer1;
+                  case 1:
+                    word = currentGroup.answer2;
+                  case 2:
+                    word = currentGroup.answer3;
+                  case 3:
+                    word = currentGroup.answer4;
+                  default:
+                    word = currentGroup.answer1; 
+                }
+                return WordButton(
+                  word: word,
+                  selectedWord: selectedWord,
+                  onSelected: handleSelection,
+                );
+              },
             ),
-            itemCount: 4, 
-            itemBuilder: (BuildContext context, int index) {
-              Answer word;
-              switch (index) {
-                case 0:
-                  word = currentGroup.answer1;
-                case 1:
-                  word = currentGroup.answer2;
-                case 2:
-                  word = currentGroup.answer3;
-                case 3:
-                  word = currentGroup.answer4;
-                default:
-                  word = currentGroup.answer1; 
-              }
-              return WordButton(
-                word: word,
-                selectedWord: selectedWord,
-                onSelected: handleSelection,
-              );
-            },
           ),
         ),
         SizedBox(height: 20),

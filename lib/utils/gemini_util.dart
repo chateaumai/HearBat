@@ -60,13 +60,13 @@ class GeminiUtil {
           },
         ],
         "generationConfig": {
-          "temperature": 0.1,
+          "temperature": 0.9,
           "candidateCount": 1,
           "maxOutputTokens": 50,
           "topP": 0.0,
         }
       });
-
+      // print(prompt);
       final response = await http.post(
         Uri.parse(url),
         headers: {
@@ -78,6 +78,7 @@ class GeminiUtil {
       
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
+        print(jsonData);
         return jsonData[0]['candidates'][0]['content']['parts'][0]['text'];
 
       } else {
