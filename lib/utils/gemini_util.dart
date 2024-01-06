@@ -29,7 +29,6 @@ class GeminiUtil {
       String wordInput = wordsToBeCompared.join(' ');
       int wordsNeeded = 4 - wordsToBeCompared.length;
       String prompt = getPrompt(wordsNeeded, wordInput);
-      print("Prompt\n $prompt");
 
       var body = json.encode({
         "contents": [
@@ -79,7 +78,6 @@ class GeminiUtil {
       
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        print(jsonData);
         return jsonData[0]['candidates'][0]['content']['parts'][0]['text'];
 
       } else {

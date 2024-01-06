@@ -22,14 +22,16 @@ class CustomUtilState extends State<CustomUtil> {
   TextEditingController _moduleNameController = TextEditingController();
 
   void _addNewPair() {
-    setState(() {
-      _controllers.addAll([
-        TextEditingController(),
-        TextEditingController(),
-        TextEditingController(),
-        TextEditingController(),
-      ]);
-    });
+    if (_controllers.length < 40) {
+      setState(() {
+        _controllers.addAll([
+          TextEditingController(),
+          TextEditingController(),
+          TextEditingController(),
+          TextEditingController(),
+        ]);
+      });
+    }
   }
 
   void _removePair(int index) {
@@ -47,7 +49,7 @@ class CustomUtilState extends State<CustomUtil> {
       String answer2 = _controllers[i + 1].text.trim();
       String answer3 = _controllers[i + 2].text.trim();
       String answer4 = _controllers[i + 3].text.trim();
-      // good input
+      
       if (answer1.isNotEmpty &&
           answer2.isNotEmpty &&
           answer3.isNotEmpty &&
@@ -59,12 +61,10 @@ class CustomUtilState extends State<CustomUtil> {
           Answer(answer4, ""),
         );
         answerGroups.add(group);
-      }
-      // input has holes, llm comes in
-      else if (answer1.isNotEmpty ||
-               answer2.isNotEmpty ||
-               answer3.isNotEmpty ||
-               answer4.isNotEmpty) {
+      } else if (answer1.isNotEmpty ||
+          answer2.isNotEmpty ||
+          answer3.isNotEmpty ||
+          answer4.isNotEmpty) {
 
         List<String> wordsToBeCompared = [];
         if (answer1.isNotEmpty) {
@@ -81,13 +81,11 @@ class CustomUtilState extends State<CustomUtil> {
         }
 
         String llmOutput = await GeminiUtil.generateContent(wordsToBeCompared);
-        print("printing llm output\n\n$llmOutput\n");
         List<String> words = llmOutput.split('\n');
 
         for (String word in words) {
           String trimmedWord = word.trim();
           if (trimmedWord.isNotEmpty) {
-            print("llm word: $trimmedWord");
             wordsToBeCompared.add(trimmedWord); 
           }
         }
@@ -98,11 +96,10 @@ class CustomUtilState extends State<CustomUtil> {
             Answer(wordsToBeCompared[2], ""),
             Answer(wordsToBeCompared[3], ""),
           );
-          print("adding llm group\n");
           answerGroups.add(group);
         }
         else {
-          print("not enough words");
+          print("Not enough words");
         }
       }
     }
@@ -203,15 +200,16 @@ class CustomUtilState extends State<CustomUtil> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: _addNewPair,
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(40, 40),
-                backgroundColor: Colors.green,
-              ),
-              child: Icon(Icons.add),
+          if (_controllers.length < 40)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: _addNewPair,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(40, 40),
+                  backgroundColor: Colors.green,
+                ),
+                child: Icon(Icons.add),
             ),
           ),
           ElevatedButton(
