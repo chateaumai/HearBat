@@ -81,11 +81,13 @@ class CustomUtilState extends State<CustomUtil> {
         }
 
         String llmOutput = await GeminiUtil.generateContent(wordsToBeCompared);
+        print("printing llm output\n\n$llmOutput\n");
         RegExp exp = RegExp(r'\{(.*?)\}');
         Iterable<RegExpMatch> matches = exp.allMatches(llmOutput);
 
         for (final match in matches) {
           String word = match.group(1)!; 
+          print("llm word: $word");
           wordsToBeCompared.add(word); 
         }
 

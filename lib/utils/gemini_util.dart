@@ -29,6 +29,7 @@ class GeminiUtil {
       String wordInput = wordsToBeCompared.map((word) => '{$word}').join(' ');
       int wordsNeeded = 4 - wordsToBeCompared.length;
       String prompt = getPrompt(wordsNeeded, wordInput);
+      print("Prompt\n $prompt");
 
       var body = json.encode({
         "contents": [
