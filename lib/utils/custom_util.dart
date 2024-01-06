@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hearbat/utils/user_module_util.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../utils/gemini_util.dart';
+import '../utils/text_util.dart';
 
 class CustomUtil extends StatefulWidget {
   final Function(String) onModuleSaved;
@@ -85,6 +86,7 @@ class CustomUtilState extends State<CustomUtil> {
 
         for (String word in words) {
           String trimmedWord = word.trim();
+          trimmedWord = stripNonAlphaCharacters(trimmedWord);
           if (trimmedWord.isNotEmpty) {
             wordsToBeCompared.add(trimmedWord); 
           }
