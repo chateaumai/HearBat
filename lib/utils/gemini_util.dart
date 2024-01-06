@@ -60,10 +60,10 @@ class GeminiUtil {
           },
         ],
         "generationConfig": {
-          "temperature": 0.6,
+          "temperature": 0.1,
           "candidateCount": 1,
           "maxOutputTokens": 50,
-
+          "topP": 0.0,
         }
       });
 
@@ -90,6 +90,4 @@ class GeminiUtil {
       client.close();
     }
   }
-
-
 }

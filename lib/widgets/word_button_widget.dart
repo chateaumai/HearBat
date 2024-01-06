@@ -20,6 +20,9 @@ class WordButton extends StatelessWidget {
         backgroundColor : selectedWord == word
           ? Colors.grey
           : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
       child: Text(
         word.answer,

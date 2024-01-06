@@ -41,7 +41,9 @@ String getPrompt(int wordsNeeded, String wordInput) {
 
   1. Audibly distinct: Avoid homophones (e.g., 'too' and 'two' should not both appear).
   2. Not a repetition of any other generated word or the input words.
-  3. Listed on a new line.
+  3. Similar to at least one of the words given.
+  4. Listed on a new line.
+  4. NOT A REPETITION OF INPUT WORDS OR GENERATED WORDS.
 
   Input Words: $wordInput
 
@@ -50,18 +52,19 @@ String getPrompt(int wordsNeeded, String wordInput) {
   Input: Tin Tim
   Output: 
   Teeth
-  Grim
+  Ten
   
   Input: Patch
   Expected Output: 
   Latch
   Poach
-  Elapse
+  Match
 
   Input: Brag Boat Drag
   Expected Output: 
   Float
 
+  No matter what, always generate $wordsNeeded word(s), even if the inputted words don't sound similar.
   Your Output:
   """;
 

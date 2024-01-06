@@ -94,52 +94,58 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
           icon: Icon(Icons.volume_up),
           label: Text('Play'),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            WordButton(
-              word: currentGroup.answer1,
-              selectedWord: selectedWord,
-              onSelected: handleSelection,
+        Expanded(
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, 
+              crossAxisSpacing: 10, // Horizontal spacing between items
+              mainAxisSpacing: 10, // Vertical spacing between items
+              childAspectRatio: 150 / 180, // Aspect ratio of each item (width / height)
             ),
-            WordButton(
-              word: currentGroup.answer2,
-              selectedWord: selectedWord,
-              onSelected: handleSelection,
-            ),
-            WordButton(
-              word: currentGroup.answer3,
-              selectedWord: selectedWord,
-              onSelected: handleSelection,
-            ),
-            WordButton(
-              word: currentGroup.answer4,
-              selectedWord: selectedWord,
-              onSelected: handleSelection,
-            ),
-            SizedBox(height: 20),
-            if (isAnswerFalse)
-              IncorrectCardWidget(
-                incorrectWord: incorrectWord!,
-                correctWord: correctWord,
-                voiceType: widget.voiceType,
-                isWord: widget.isWord,
-              ),
-            CheckButtonWidget(
-              isCheckingAnswer: isCheckingAnswer,
-              isSelectedWordValid: selectedWord != null,
-              onPressed: () {
-                if (isCheckingAnswer) {
-                  checkAnswer();
-                } else if (readyForCompletion) {
-                  widget.onCompletion();
-                } else {
-                  setNextPair();
-                }
-                setState(() {});
-              },
-            ),
-          ],
+            itemCount: 4, 
+            itemBuilder: (BuildContext context, int index) {
+              Answer word;
+              switch (index) {
+                case 0:
+                  word = currentGroup.answer1;
+                case 1:
+                  word = currentGroup.answer2;
+                case 2:
+                  word = currentGroup.answer3;
+                case 3:
+                  word = currentGroup.answer4;
+                default:
+                  word = currentGroup.answer1; 
+              }
+              return WordButton(
+                word: word,
+                selectedWord: selectedWord,
+                onSelected: handleSelection,
+              );
+            },
+          ),
+        ),
+        SizedBox(height: 20),
+        if (isAnswerFalse)
+          IncorrectCardWidget(
+            incorrectWord: incorrectWord!,
+            correctWord: correctWord,
+            voiceType: widget.voiceType,
+            isWord: widget.isWord,
+          ),
+        CheckButtonWidget(
+          isCheckingAnswer: isCheckingAnswer,
+          isSelectedWordValid: selectedWord != null,
+          onPressed: () {
+            if (isCheckingAnswer) {
+              checkAnswer();
+            } else if (readyForCompletion) {
+              widget.onCompletion();
+            } else {
+              setNextPair();
+            }
+            setState(() {});
+          },
         ),
       ],
     );
