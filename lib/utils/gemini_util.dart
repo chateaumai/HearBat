@@ -42,6 +42,24 @@ class GeminiUtil {
             ]
           }
         ],
+        "safetySettings": [
+          {
+            "category" : "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold" : "BLOCK_NONE"
+          },
+          {
+            "category" : "HARM_CATEGORY_HATE_SPEECH",
+            "threshold" : "BLOCK_NONE"
+          },
+          {
+            "category" : "HARM_CATEGORY_HARASSMENT",
+            "threshold" : "BLOCK_NONE"
+          },
+          {
+            "category" : "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold" : "BLOCK_NONE"
+          },
+        ],
         "generationConfig": {
           "temperature": 0.6,
           "candidateCount": 1,
@@ -61,6 +79,7 @@ class GeminiUtil {
       
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
+        print(jsonData);
         return jsonData[0]['candidates'][0]['content']['parts'][0]['text'];
 
       } else {

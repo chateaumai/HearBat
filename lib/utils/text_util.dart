@@ -2,30 +2,32 @@ String lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
 
 String getPrompt(int wordsNeeded, String wordInput) {
   String prompt = 
-  """
-  You will be assisting in creating rehabilitation content modules for people with cochlear implants. The user will listen to a word, and have 4 words presented
-  in front of them (with one of those words being the one that was played) and then they have to guess what the word was.
-  This will help them improve their hearing ability.
+    """
+    Your task involves creating rehabilitation content modules for individuals with cochlear implants. The output format must strictly adhere to the provided structure. Ensure there is no deviation from this format, as consistency is key.
 
-  The word(s) that you come up with must make sense in the context of the words given (for the purpose of improving their hearing).
-  The format in which you should return will be the same as the format given. DO NOT DEVIATE FROM THIS.
+    Examples to demonstrate the required format:
 
-  Here is an example of some inputs:
+    Input: {Tin}{Tim}
+    Expected Output: {Teeth}{Grim}
 
-  input : {Tin}{Tim}
-  output (you) : {Teeth}{Grim}
+    Input: {Patch}
+    Expected Output: {Latch}{Match}{Catch}
 
-  input : {Patch}
-  output (you) : {Latch}{Match}{Catch}
+    Input: {Brag}{Stag}{Drag}
+    Expected Output: {Flag}
 
-  input : {Brag}{Stag}{Drag}
-  output (you) : {Flag}
+    Now, for the provided input word(s), you are to generate exactly $wordsNeeded distinct words. Each word must be completely unique and not replicate the other generated words. Emphasize on audible distinction while maintaining a slight similarity in sound.
 
+    Please ensure:
+    1. Format each generated word within a single set of curly braces, like {word}. Do not group words together or use double braces.
+    2. No repetition of the input word(s).
+    3. Each word in your output is distinct and does not repeat any of the other generated words.
 
-  Generate $wordsNeeded words ONLY.
-  Now, here are the input word(s),
-  _______________________________
-  $wordInput
-  """;
+    Inputted word(s) for context (Do not repeat these words, but generate $wordsNeeded distinct words):
+    $wordInput
+
+    Note: Strictly maintain the format with each word enclosed within individual curly braces, ensuring all $wordsNeeded words are unique and different from the input.
+    """;
+
   return prompt;
 }
