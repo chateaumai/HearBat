@@ -49,11 +49,14 @@ class _ModulePageState extends State<ModuleWidget> {
   }
 
   Widget buildModuleContent() {
-    return FourAnswerWidget(
-      answerGroups: widget.answerGroups,
-      onCompletion: () => setState(() => moduleCompleted = true),
-      voiceType: voiceType,
-      isWord: widget.isWord,
+    return Container(
+      color: Color.fromARGB(255, 232, 218, 255),
+      child: FourAnswerWidget(
+        answerGroups: widget.answerGroups,
+        onCompletion: () => setState(() => moduleCompleted = true),
+        voiceType: voiceType,
+        isWord: widget.isWord,
+      ),
     );
   }
 

@@ -23,10 +23,15 @@ class WordButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
+        elevation: 6,
+        shadowColor: Colors.grey[900],
       ),
       child: Text(
         word.answer,
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 40,
+        ),
       ),
     );
   }

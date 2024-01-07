@@ -89,22 +89,38 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 20),
+        // play button
         ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 7, 45, 78),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            minimumSize: Size(355, 90),
+          ),
           onPressed: () => playAnswer(),
-          icon: Icon(Icons.volume_up),
-          label: Text('Play'),
+          icon: Icon(
+            Icons.volume_up,
+            color: Colors.white,
+            size: 50,
+          ),
+          label: Text(''),
         ),
+        // space between play button and 4 cards
+        SizedBox(height: 20),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, 
-                crossAxisSpacing: 10, // horizontal spacing
-                mainAxisSpacing: 10, // vertical spacing 
+                crossAxisSpacing: 20, // horizontal spacing
+                mainAxisSpacing: 15, // vertical spacing 
                 childAspectRatio: 150 / 180, 
               ),
               itemCount: 4, 
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 Answer word;
                 switch (index) {
