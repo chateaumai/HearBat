@@ -166,6 +166,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
             setState(() {});
           },
         ),
+        SizedBox(height: 30),
       ],
     );
   }
