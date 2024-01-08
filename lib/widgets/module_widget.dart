@@ -39,8 +39,18 @@ class _ModulePageState extends State<ModuleWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: moduleCompleted ? null : AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 18.0),
+          child: IconButton(
+            onPressed:() => Navigator.of(context).pop(),
+            icon: Icon(
+              Icons.close,
+              size: 40,
+            ),
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 232, 218, 255),
       ),
       body: Center(
         child: moduleCompleted ? buildCompletionScreen() : buildModuleContent(),

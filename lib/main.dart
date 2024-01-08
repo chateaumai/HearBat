@@ -4,6 +4,7 @@ import 'pages/navigation_bar.dart';
 import 'providers/my_app_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         title: 'HearBat',
         theme: ThemeData(
           useMaterial3: true,
+          textTheme: GoogleFonts.beVietnamProTextTheme(
+            Theme.of(context).textTheme,
+          ),
           colorScheme:
               ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 67, 0, 99)),
         ),

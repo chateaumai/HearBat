@@ -26,11 +26,15 @@ class WordButton extends StatelessWidget {
         elevation: 5,
         shadowColor: Colors.grey[900],
       ),
-      child: Text(
-        word.answer,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 40,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          word.answer,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 40,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

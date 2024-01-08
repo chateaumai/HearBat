@@ -144,29 +144,44 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
             ),
           ),
         ),
-        SizedBox(height: 20),
-        if (isAnswerFalse)
-          IncorrectCardWidget(
-            incorrectWord: incorrectWord!,
-            correctWord: correctWord,
-            voiceType: widget.voiceType,
-            isWord: widget.isWord,
-          ),
-        CheckButtonWidget(
-          isCheckingAnswer: isCheckingAnswer,
-          isSelectedWordValid: selectedWord != null,
-          onPressed: () {
-            if (isCheckingAnswer) {
-              checkAnswer();
-            } else if (readyForCompletion) {
-              widget.onCompletion();
-            } else {
-              setNextPair();
-            }
-            setState(() {});
-          },
+        Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            if (isAnswerFalse)
+              Container(
+                width: double.infinity,
+                height: 250,
+                color: Color.fromARGB(255, 93, 104, 255),
+                child: IncorrectCardWidget(
+                  incorrectWord: incorrectWord!,
+                  correctWord: correctWord,
+                  voiceType: widget.voiceType,
+                  isWord: widget.isWord,
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: SizedBox(
+                width: 350,
+                height: 56,
+                child: CheckButtonWidget(
+                  isCheckingAnswer: isCheckingAnswer,
+                  isSelectedWordValid: selectedWord != null,
+                  onPressed: () {
+                    if (isCheckingAnswer) {
+                      checkAnswer();
+                    } else if (readyForCompletion) {
+                      widget.onCompletion();
+                    } else {
+                      setNextPair();
+                    }
+                    setState(() {});
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 30),
       ],
     );
   }

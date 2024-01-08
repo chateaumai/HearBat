@@ -40,26 +40,75 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        // Correct word button
-        Expanded(
-          child: ElevatedButton.icon(
-            onPressed: () => playAnswer(widget.correctWord),
-            icon: Icon(Icons.volume_up),
-            label: Text('Correct Answer: ${widget.correctWord.answer}'),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Correct word button
+          SizedBox(
+            width: 160,
+            height: 60,
+            child: ElevatedButton.icon(
+              onPressed: () => playAnswer(widget.correctWord),
+              icon: Icon(
+                Icons.volume_up,
+                color: Colors.black,
+                size: 30,
+              ),
+              label: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  widget.correctWord.answer,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold, 
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                elevation: 3,
+                shadowColor: Colors.grey[900],
+              ),
+            ),
           ),
-        ),
-        // Incorrect word button
-        Expanded(
-          child: ElevatedButton.icon(
-            onPressed: () => playAnswer(widget.incorrectWord),
-            icon: Icon(Icons.volume_up),
-            label: Text('Incorrect Answer: ${widget.incorrectWord.answer}'),
+          // Incorrect word button
+          SizedBox(
+            width: 160,
+            height: 60,
+            child: ElevatedButton.icon(
+              onPressed: () => playAnswer(widget.incorrectWord),
+              icon: Icon(
+                Icons.volume_up,
+                color: Colors.black,
+                size: 30,
+              ),
+              label: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  widget.incorrectWord.answer,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                elevation: 3,
+                shadowColor: Colors.grey[900],
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
