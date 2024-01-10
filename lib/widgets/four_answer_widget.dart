@@ -6,6 +6,7 @@ import '../widgets/check_button_widget.dart';
 import '../widgets/incorrect_card_widget.dart';
 import '../utils/google_tts_util.dart';
 import '../utils/audio_util.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class FourAnswerWidget extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
@@ -152,41 +153,49 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                 width: double.infinity,
                 height: 250,
                 color: Color.fromARGB(255, 93, 104, 255),
-                child: IncorrectCardWidget(
-                  incorrectWord: incorrectWord!,
-                  correctWord: correctWord,
-                  voiceType: widget.voiceType,
-                  isWord: widget.isWord,
-                ),
-              ),
-            if (isAnswerFalse) 
-              Positioned(
-                top: 60,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 30.0),
-                      child: Text(
-                        "Incorrect",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Positioned(
+                      top: 92,
+                      left: 0,
+                      right: 0,
+                      child: IncorrectCardWidget(
+                        incorrectWord: incorrectWord!,
+                        correctWord: correctWord,
+                        voiceType: widget.voiceType,
+                        isWord: widget.isWord,
                       ),
                     ),
-                    Text(
-                      "Correct",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    Positioned(
+                      top: 60,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 30.0),
+                            child: Text(
+                              "Incorrect",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "Correct",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    ), // .animate().slide(begin: Offset(0, 1)),
                   ],
                 ),
-              ),
+              ).animate(onPlay: (controller) => controller.forward()).slide(begin: Offset(0, 1), duration: 400.ms, curve: Curves.easeInOutQuart),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: SizedBox(

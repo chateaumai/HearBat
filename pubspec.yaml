@@ -20,6 +20,7 @@ dependencies:
   shared_preferences: ^2.2.2
   path: ^1.8.0
   google_fonts: ^6.1.0
+  flutter_animate: ^4.4.0
 
   cupertino_icons: ^1.0.2
   english_words: ^4.0.0
