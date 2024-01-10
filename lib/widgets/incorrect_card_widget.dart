@@ -45,12 +45,12 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // Correct word button
+          // Incorrect word button
           SizedBox(
             width: 160,
             height: 60,
             child: ElevatedButton.icon(
-              onPressed: () => playAnswer(widget.correctWord),
+              onPressed: () => playAnswer(widget.incorrectWord),
               icon: Icon(
                 Icons.volume_up,
                 color: Colors.black,
@@ -59,7 +59,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
               label: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  widget.correctWord.answer,
+                  widget.incorrectWord.answer,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,
@@ -76,12 +76,12 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
               ),
             ),
           ),
-          // Incorrect word button
+          // Correct word button
           SizedBox(
             width: 160,
             height: 60,
             child: ElevatedButton.icon(
-              onPressed: () => playAnswer(widget.incorrectWord),
+              onPressed: () => playAnswer(widget.correctWord),
               icon: Icon(
                 Icons.volume_up,
                 color: Colors.black,
@@ -90,7 +90,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
               label: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  widget.incorrectWord.answer,
+                  widget.correctWord.answer,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,

@@ -147,7 +147,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
         Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            if (isAnswerFalse)
+            if (isAnswerFalse) 
               Container(
                 width: double.infinity,
                 height: 250,
@@ -157,6 +157,34 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   correctWord: correctWord,
                   voiceType: widget.voiceType,
                   isWord: widget.isWord,
+                ),
+              ),
+            if (isAnswerFalse) 
+              Positioned(
+                top: 60,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30.0),
+                      child: Text(
+                        "Incorrect",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "Correct",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             Padding(
