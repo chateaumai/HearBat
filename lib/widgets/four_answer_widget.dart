@@ -35,6 +35,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   Answer? selectedWord;
   bool isCheckingAnswer = true;
   bool isAnswerFalse = false;
+  bool isAnswerTrue = false;
   bool readyForCompletion = false;
 
   @override
@@ -55,6 +56,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       selectedWord = null;
       isCheckingAnswer = true;
       isAnswerFalse = false;
+      isAnswerTrue = false;
       readyForCompletion = false;
     }
   }
@@ -68,6 +70,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   void checkAnswer() {
     if (selectedWord!.answer == correctWord.answer) {
       print("Correct");
+      isAnswerTrue = true;
     } else {
       print("Incorrect");
       incorrectWord = selectedWord;
@@ -195,7 +198,25 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                     ), // .animate().slide(begin: Offset(0, 1)),
                   ],
                 ),
-              ).animate(onPlay: (controller) => controller.forward()).slide(begin: Offset(0, 1), duration: 400.ms, curve: Curves.easeInOutQuart),
+              ).animate(onPlay: (controller) => controller.forward()).slide(begin: Offset(0, 1), duration: 300.ms, curve: Curves.easeInOutQuart),
+            if (isAnswerTrue)
+              Container(
+                width: double.infinity,
+                height: 150,
+                color: Color.fromARGB(255, 93, 104, 255),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 60),
+                    child: Text(
+                      "Correct",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ).animate(onPlay: (controller) => controller.forward()).slide(begin: Offset(0, 1), duration: 300.ms, curve: Curves.easeInOutQuart),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: SizedBox(
