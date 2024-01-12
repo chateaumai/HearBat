@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'module_widget.dart';
+import 'module/module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
 
 class ModuleListWidget extends StatefulWidget {

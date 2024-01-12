@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../utils/google_tts_util.dart';
-import '../utils/audio_util.dart';
+import '../../utils/google_tts_util.dart';
+import '../../utils/audio_util.dart';
 
 class IncorrectCardWidget extends StatefulWidget {
   final Answer incorrectWord;

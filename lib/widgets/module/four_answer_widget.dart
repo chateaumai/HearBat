@@ -1,11 +1,11 @@
 import "dart:math";
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../widgets/word_button_widget.dart';
-import '../widgets/check_button_widget.dart';
-import '../widgets/incorrect_card_widget.dart';
-import '../utils/google_tts_util.dart';
-import '../utils/audio_util.dart';
+import 'word_button_widget.dart';
+import 'check_button_widget.dart';
+import 'incorrect_card_widget.dart';
+import '../../utils/google_tts_util.dart';
+import '../../utils/audio_util.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class FourAnswerWidget extends StatefulWidget {
@@ -13,6 +13,7 @@ class FourAnswerWidget extends StatefulWidget {
   final VoidCallback onCompletion;
   final String voiceType;
   final bool isWord;
+  final Function(int) onProgressUpdate; //for progress bar in parent
 
   FourAnswerWidget({
     Key? key,
@@ -20,6 +21,7 @@ class FourAnswerWidget extends StatefulWidget {
     required this.onCompletion,
     required this.voiceType,
     required this.isWord,
+    required this.onProgressUpdate,
   }) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   bool isAnswerFalse = false;
   bool isAnswerTrue = false;
   bool readyForCompletion = false;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -78,6 +81,8 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
     }
     if (answerGroups.isEmpty) readyForCompletion = true;
     isCheckingAnswer = false; // Time to go to the next pair
+    ++currentIndex;
+    indexChange();
   }
 
   void playAnswer() {
@@ -89,11 +94,15 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
     }
   }
 
+  void indexChange() {
+    widget.onProgressUpdate(currentIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 20),
+        //SizedBox(height: 20),
         // play button
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(

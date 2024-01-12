@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'module_widget.dart';
+import 'module/module_widget.dart';
 
 class SoundModuleListWidget extends StatelessWidget {
   final Map<String, List<AnswerGroup>> modules;

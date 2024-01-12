@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../../../../widgets/four_answer_widget.dart';
+import 'package:hearbat/widgets/module/module_progress_bar_widget.dart';
+import 'four_answer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ModuleWidget extends StatefulWidget {
@@ -17,6 +18,14 @@ class ModuleWidget extends StatefulWidget {
 class _ModulePageState extends State<ModuleWidget> {
   bool moduleCompleted = false;
   String voiceType = "en-US-Studio-O";
+  int currentIndex = 0;
+
+  // this is for the progress bar, bar needs to be here to be on same level as x
+  void updateProgress(int newIndex) {
+    setState(() {
+      currentIndex = newIndex;
+    });
+  }
 
   void getVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,6 +59,11 @@ class _ModulePageState extends State<ModuleWidget> {
             ),
           ),
         ),
+        titleSpacing: 0,
+        title: ModuleProgressBarWidget(
+          currentIndex: currentIndex,
+          total: 10, // hardcoded for now
+        ),
         backgroundColor: Color.fromARGB(255, 232, 218, 255),
       ),
       body: Center(
@@ -66,6 +80,7 @@ class _ModulePageState extends State<ModuleWidget> {
         onCompletion: () => setState(() => moduleCompleted = true),
         voiceType: voiceType,
         isWord: widget.isWord,
+        onProgressUpdate: updateProgress,
       ),
     );
   }
