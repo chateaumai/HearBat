@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class HomeCardWidget extends StatefulWidget {
   final String cardText;
@@ -28,7 +29,7 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final cardWidth = screenSize.width * 0.9;
-    final cardHeight = (screenSize.height * 0.65) / 3;
+    final cardHeight = max((screenSize.height * 0.65) / 3, 120.0);
 
     return GestureDetector(
       onTapDown: (_) => setState(() => elevation = 1.0),
