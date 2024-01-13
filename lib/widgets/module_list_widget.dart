@@ -80,28 +80,20 @@ class ModuleListWidgetState extends State<ModuleListWidget> {
 
     return ListView.builder(
       itemCount: moduleList.length,
+      padding: EdgeInsets.all(10),
       itemBuilder: (context, index) {
         final module = moduleList[index];
-        return GestureDetector(
-          onTap: () => _cacheAndNavigate(module.key, module.value),
-          child: Container(
-            width: 150, // Circle diameter
-            height: 150, // Circle diameter
-            margin: EdgeInsets.symmetric(vertical: 20), // Space between circles
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.blue, // Change as needed
-            ),
-            child: Center(
-              child: Text(
-                module.key,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ), // Text color
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ElevatedButton(
+              onPressed: () => _cacheAndNavigate(module.key, module.value),
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(40),
+                backgroundColor: Colors.deepPurple,
+                elevation: 5,
               ),
-            ),
+              child: Icon(Icons.menu_book, color: Colors.white, size: 60,)
           ),
         );
       },
