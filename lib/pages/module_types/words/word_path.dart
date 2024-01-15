@@ -9,6 +9,8 @@ class WordPath extends StatelessWidget {
 
   WordPath({Key? key, required this.chapter}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
     Map<String, List<AnswerGroup>> modules = getModulesForChapter(chapter);
@@ -25,7 +27,7 @@ class WordPath extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        WordsList()), // where the user can view all of the words in the chapter
+                        WordsList(modules: modules)), // where the user can view all of the words in the chapter
               );
             },
             child: Text('View All Words'),
