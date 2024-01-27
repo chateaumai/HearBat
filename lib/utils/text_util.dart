@@ -1,4 +1,5 @@
-String lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+String lorem =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do .';
 
 String getPrompt(int wordsNeeded, String wordInput) {
   /* String prompt = 
@@ -72,8 +73,7 @@ String getPrompt(int wordsNeeded, String wordInput) {
 
 }*/
 
-String prompt = 
-  """
+  String prompt = """
   Generate exactly $wordsNeeded unique words. Each generated word must meet these properties:
 
   1. Audibly distinct: Avoid homophones (e.g., 'too' and 'two' should not both appear).
@@ -109,7 +109,6 @@ String prompt =
 
   return prompt;
 }
-
 
 String stripNonAlphaCharacters(String input) {
   // Regular expression pattern to match any non-alphabetic character and non-space character
