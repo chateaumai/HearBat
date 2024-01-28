@@ -1,6 +1,11 @@
 String lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do .';
-
+String wordDesc =
+  'Enhance auditory recognition with a variety of words, tailored for cochlear implant users';
+String soundDesc =
+  'Identify everyday sounds, from home to nature, designed for cochlear implant listeners';
+String customDesc =
+  'Personalize your auditory learning with custom word sets';
 String getPrompt(int wordsNeeded, String wordInput) {
   /* String prompt = 
     """

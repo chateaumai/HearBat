@@ -62,7 +62,7 @@ class _ModulePageState extends State<ModuleWidget> {
         titleSpacing: 0,
         title: ModuleProgressBarWidget(
           currentIndex: currentIndex,
-          total: widget.answerGroups.length, // hardcoded for now
+          total: widget.answerGroups.length, 
         ),
         backgroundColor: Color.fromARGB(255, 232, 218, 255),
       ),

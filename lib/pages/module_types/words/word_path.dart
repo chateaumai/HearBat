@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'words_list_page.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../../utils/module_util.dart';
-import '../../../widgets/module_list_widget.dart';
+import '../../../widgets/path/module_list_widget_copy.dart';
 
 class WordPath extends StatelessWidget {
   final String chapter;
 
   WordPath({Key? key, required this.chapter}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
