@@ -15,15 +15,27 @@ class HomePage extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(width:200, height: 200,'assets/visuals/HB_Default.png'),
-            HomeCardWidget(cardText: 'Train Words', description: wordDesc, destinationPage: WordChapters()),
-            HomeCardWidget(cardText: 'Train Sounds', description: soundDesc, destinationPage: SoundChapters()),
-            HomeCardWidget(cardText: 'Custom Module Builder', description: customDesc, destinationPage: CustomPath()),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                  width: 200, height: 200, 'assets/visuals/HB_Default.png'),
+              HomeCardWidget(
+                  cardText: 'Train Words',
+                  description: wordDesc,
+                  destinationPage: WordChapters()),
+              HomeCardWidget(
+                  cardText: 'Train Sounds',
+                  description: soundDesc,
+                  destinationPage: SoundChapters()),
+              HomeCardWidget(
+                  cardText: 'Custom Module Builder',
+                  description: customDesc,
+                  destinationPage: CustomPath()),
+            ],
+          ),
         ),
       ),
     );
