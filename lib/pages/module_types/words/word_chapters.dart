@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'word_path.dart';
+import '../../../widgets/top_bar_widget.dart';
+import '../../../widgets/chapter_card_widget.dart';
 
 class WordChapters extends StatelessWidget {
   @override
@@ -18,20 +20,15 @@ class WordChapters extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Word Chapters"),
+      appBar: TopBar(
+        title: "WORD CHAPTERS",
+        leadingIcon: Icons.west,
       ),
       body: ListView(
         children: List.generate(chapters.length, (index) {
-          return ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => WordPath(chapter: chapters[index])),
-              );
-            },
-            child: Text(chapters[index]),
+          return ChapterCardWidget(
+            chapterName: chapters[index],
+            destinationPage: WordPath(chapter: chapters[index]), 
           );
         }),
       ),

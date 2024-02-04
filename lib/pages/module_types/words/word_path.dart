@@ -3,6 +3,7 @@ import 'words_list_page.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../../utils/module_util.dart';
 import '../../../widgets/path/module_list_widget_copy.dart';
+import '../../../widgets/top_bar_widget.dart';
 
 class WordPath extends StatelessWidget {
   final String chapter;
@@ -14,8 +15,9 @@ class WordPath extends StatelessWidget {
     Map<String, List<AnswerGroup>> modules = getModulesForChapter(chapter);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(chapter),
+      appBar: TopBar(
+        title: chapter.toUpperCase(),
+        leadingIcon: Icons.west,
       ),
       body: Column(
         children: [

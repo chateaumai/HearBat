@@ -4,7 +4,6 @@ import 'module_types/sound/sound_chapters.dart';
 import 'module_types/custom/custom_path.dart';
 import '../widgets/home_card_widget.dart';
 import '../utils/text_util.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
