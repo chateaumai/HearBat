@@ -25,12 +25,17 @@ class WordChapters extends StatelessWidget {
         leadingIcon: Icons.west,
       ),
       body: ListView(
-        children: List.generate(chapters.length, (index) {
-          return ChapterCardWidget(
-            chapterName: chapters[index],
-            destinationPage: WordPath(chapter: chapters[index]), 
-          );
-        }),
+        children: [
+          SizedBox(height: 10.0),
+          ...List.generate(chapters.length, (index) {
+            return ChapterCardWidget(
+              chapterName: chapters[index],
+              chapterNumber: index,
+              destinationPage: WordPath(chapter: chapters[index]), 
+            );
+          }),
+          SizedBox(height: 10.0),
+        ],
       ),
     );
   }
