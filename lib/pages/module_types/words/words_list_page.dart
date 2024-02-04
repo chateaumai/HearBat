@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../../utils/google_tts_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../widgets/top_bar_widget.dart';
 
 class WordsList extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
@@ -39,8 +40,9 @@ class _WordsListState extends State<WordsList> {
     int itemCount = (allWords.length + 1) ~/ 2;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Word List'),
+      appBar: TopBar(
+        title: "WORD LIST",
+        leadingIcon: Icons.west,
       ),
       body: ListView.builder(
         itemCount: itemCount,

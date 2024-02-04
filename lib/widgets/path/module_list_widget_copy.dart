@@ -82,6 +82,7 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
     var moduleList = widget.modules.entries.toList();
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Center(
         child: TriangularPathLayout(
           itemCount: moduleList.length,
