@@ -28,7 +28,7 @@ class _WordCardState extends State<WordCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start, 
             children: <Widget>[
-              SizedBox(width: 10), 
+              SizedBox(width: 12), 
               Icon(Icons.volume_up,size: 30, color: const Color.fromARGB(255, 31, 31, 31)), 
               SizedBox(width: 0), 
               Expanded(

@@ -1,53 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
+import 'package:hearbat/widgets/path/animated_button_widget.dart';
 import 'module/module_widget.dart';
+import '../widgets/path/trangular_path_layout_widget.dart';
 
 class SoundModuleListWidget extends StatelessWidget {
   final Map<String, List<AnswerGroup>> modules;
-  final isWord = false;
+
   SoundModuleListWidget({Key? key, required this.modules}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var moduleList = modules.entries.toList();
-
-    return ListView.builder(
-      itemCount: moduleList.length,
-      itemBuilder: (context, index) {
-        final module = moduleList[index];
-        return GestureDetector(
-          onTap: () => 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ModuleWidget(
-                title: module.key,
-                answerGroups: module.value,
-                isWord: isWord,
-              ),
-            ),
+    void navigate(String moduleName, List<AnswerGroup> answerGroups) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ModuleWidget(
+            title: moduleName,
+            answerGroups: answerGroups,
+            isWord: false, 
           ),
-          child: Container(
-            width: 150, // Circle diameter
-            height: 150, 
-            margin: EdgeInsets.symmetric(vertical: 20), // space between circles
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.blue, 
-            ),
-            child: Center(
-              child: Text(
-                module.key,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ), 
-              ),
-            ),
-          ),
-        );
-      },
+        ),
+      );
+    }
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: TriangularPathLayout(
+          itemCount: moduleList.length,
+          itemBuilder: (context, index) {
+            final module = moduleList[index];
+            return Stack(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black, 
+                  ),
+                  width: 100.0,
+                  height: 100.0,
+                ),
+                AnimatedButton(
+                  moduleName: module.key,
+                  answerGroups: module.value,
+                  onButtonPressed: (String moduleName, List<AnswerGroup> answerGroups) {
+                    navigate(moduleName, answerGroups);    
+                  }
+                ),
+              ],
+            );
+          },
+          itemSize: 120.0, 
+          spacing: 80.0, 
+        ),
+      ),
     );
   }
 }
