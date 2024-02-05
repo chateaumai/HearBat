@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../pages/module_types/words/module_words_page.dart';
+import 'package:hearbat/utils/cache_words_util.dart';
 
 class ModuleCard extends StatefulWidget {
   final String moduleName;
@@ -21,8 +22,42 @@ class ModuleCard extends StatefulWidget {
 }
 
 class _ModuleCardState extends State<ModuleCard> {
+  final CacheWordsUtil cacheUtil = CacheWordsUtil();
   double elevation = 5.0; 
 
+  Future<void> _cacheAndNavigate() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 10),
+              Text("Loading..."),
+            ],
+          ),
+        );
+      },
+    );
+
+    await cacheUtil.cacheModuleWords(widget.answerGroups, widget.voiceType);
+
+    if (!mounted) return; 
+
+    Navigator.pop(context); // Close the loading dialog
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ModuleWordsPage(
+          moduleName: widget.moduleName,
+          answerGroups: widget.answerGroups,
+          voiceType: widget.voiceType,
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -33,16 +68,7 @@ class _ModuleCardState extends State<ModuleCard> {
       onTapDown: (_) => setState(() => elevation = 2.0), 
       onTapUp: (_) {
         setState(() => elevation = 5.0); 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ModuleWordsPage(
-              moduleName: widget.moduleName,
-              answerGroups: widget.answerGroups,
-              voiceType: widget.voiceType,
-            ),
-          ),
-        );
+        _cacheAndNavigate();
       },
       onTapCancel: () => setState(() => elevation = 5.0), 
       child: Container(
