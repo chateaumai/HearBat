@@ -15,6 +15,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // this is the line
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -43,7 +44,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0.0,
         centerTitle: true,
         elevation: 0, 
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 232, 218, 255),
       ),
     );
   }

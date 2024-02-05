@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'HearBat',
         theme: ThemeData(
+          scaffoldBackgroundColor: const Color.fromARGB(255, 232, 218, 255),
           useMaterial3: true,
           textTheme: GoogleFonts.beVietnamProTextTheme(
             Theme.of(context).textTheme,

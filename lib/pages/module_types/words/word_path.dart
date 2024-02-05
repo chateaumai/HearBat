@@ -17,10 +17,10 @@ class WordPath extends StatefulWidget {
 class _WordPathState extends State<WordPath> {
   double elevation = 5.0; 
 
-  void _navigateToWordsList(BuildContext context, Map<String, List<AnswerGroup>> modules) {
+  void _navigateToWordsList(BuildContext context, Map<String, List<AnswerGroup>> modules, String chapterName) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => WordsList(modules: modules)),
+      MaterialPageRoute(builder: (context) => WordsList(modules: modules, chapterName: chapterName)),
     );
   }
 
@@ -36,14 +36,14 @@ class _WordPathState extends State<WordPath> {
       backgroundColor: const Color.fromARGB(255, 232, 218, 255),
       body: Column(
         children: [
+          // View all words button
           GestureDetector(
             onTapDown: (_) => setState(() => elevation = 1.0), 
             onTapUp: (_) => setState(() {
               elevation = 5.0; 
-              _navigateToWordsList(context, modules);
+              _navigateToWordsList(context, modules, widget.chapter.toUpperCase());
             }),
             onTapCancel: () => setState(() => elevation = 5.0), 
-            //View words
             child: Container(
               margin: EdgeInsets.all(20),
               child: Material(
@@ -53,7 +53,7 @@ class _WordPathState extends State<WordPath> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text(
-                    'View All Words',
+                    'View Chapter Words',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

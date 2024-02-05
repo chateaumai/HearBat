@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../../../utils/google_tts_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../widgets/top_bar_widget.dart';
+import '../../../widgets/path/module_card_widget.dart';
 
 class WordsList extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
-
-  WordsList({Key? key, required this.modules}) : super(key: key);
+  final String chapterName;
+  WordsList({Key? key, required this.modules, required this.chapterName}) : super(key: key);
 
   @override
   State<WordsList> createState() => _WordsListState();
@@ -15,6 +15,7 @@ class WordsList extends StatefulWidget {
 
 class _WordsListState extends State<WordsList> {
   String voiceType = "en-US-Studio-O";
+  double elevation = 5.0;
 
   void getVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -32,73 +33,26 @@ class _WordsListState extends State<WordsList> {
     getVoiceType();
   }
 
-  GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
-
-  @override
+ @override
   Widget build(BuildContext context) {
-    List<String> allWords = _extractWords();
-    int itemCount = (allWords.length + 1) ~/ 2;
 
     return Scaffold(
       appBar: TopBar(
-        title: "WORD LIST",
+        title: "${widget.chapterName} WORDS",
         leadingIcon: Icons.west,
       ),
       body: ListView.builder(
-        itemCount: itemCount,
+        itemCount: widget.modules.length,
         itemBuilder: (context, index) {
-          int firstWordIndex = index * 2;
-          int secondWordIndex = firstWordIndex + 1;
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () => playAnswer(allWords[firstWordIndex]),
-                    icon: Icon(
-                      Icons.volume_up,
-                      color: Colors.black,
-                      size: 20,
-                    ), 
-                    label: Text(allWords[firstWordIndex]),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: secondWordIndex < allWords.length ? ElevatedButton.icon(
-                    onPressed: () => playAnswer(allWords[secondWordIndex]),
-                    icon: Icon(
-                      Icons.volume_up,
-                      color: Colors.black,
-                      size: 20,
-                    ), 
-                    label: Text(allWords[secondWordIndex]),
-                  ) : SizedBox(),
-                ),
-              ],
-            ),
+          String moduleName = widget.modules.keys.elementAt(index);
+          List<AnswerGroup> answerGroups = widget.modules[moduleName]!;
+          return ModuleCard(
+            moduleName: moduleName,
+            answerGroups: answerGroups,
+            voiceType: voiceType, 
           );
-        }
+        },
       ),
     );
-  }
-
-  void playAnswer(String answer) {
-    googleTTSUtil.speak(answer, voiceType);
-  }
-
-  List<String> _extractWords() {
-    List<String> words = [];
-    widget.modules.forEach((moduleName, answerGroups) {
-      for (var group in answerGroups) {
-        words.add(group.answer1.answer);
-        words.add(group.answer2.answer);
-        words.add(group.answer3.answer);
-        words.add(group.answer4.answer);
-      }
-    });
-    return words;
   }
 }
