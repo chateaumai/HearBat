@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../../utils/google_tts_util.dart';
 import '../../../widgets/top_bar_widget.dart';
-
+import '../../../widgets/path/single_word_widget.dart';
 
 class ModuleWordsPage extends StatefulWidget {
   final String moduleName;
@@ -47,19 +47,9 @@ class _ModuleWordsPageState extends State<ModuleWordsPage> {
         ),
         itemCount: words.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTapDown: (_) => setState(() => elevation = 1.0), 
-            onTapUp: (details) {
-              setState(() => elevation = 5.0); 
-              playAnswer(words[index]);
-            },
-            onTapCancel: () => setState(() => elevation = 5.0),
-            child: Card(
-              elevation: elevation,
-              child: Center(
-                child: Text(words[index]),
-              ),
-            ),
+          return WordCard(
+            word: words[index],
+            onWordTap: (word) => playAnswer(word),
           );
         },
       ),
