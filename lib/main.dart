@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'pages/navigation_bar.dart';
 import 'providers/my_app_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'pages/sound_adjustment_page.dart'; // Make sure the path is correct
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 67, 0, 99)),
         ),
-        home: MyNavBar(),
+        home: SoundAdjustmentPage(),
       ),
     );
   }
