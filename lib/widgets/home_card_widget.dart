@@ -25,6 +25,7 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
       MaterialPageRoute(builder: (context) => widget.destinationPage),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -45,29 +46,27 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
           elevation: elevation,
           child: Padding(
             padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Title
-                Text(
-                  widget.cardText,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              // Title
+              Text(
+                widget.cardText,
+                style: TextStyle(
+                  fontSize: 20, //
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8), // title and description
+              SizedBox(
+                width: cardWidth * 0.55, // for image on right
+                child: Text(
+                  widget.description,
                   style: TextStyle(
-                    fontSize: 20, //
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 8), // title and description
-                SizedBox(
-                  width: cardWidth * 0.40, // for image on right
-                  child: Text(
-                    widget.description,
-                    style: TextStyle(
-                      fontSize: 16, 
-                    ),
-                  ),
-                ),
-              ]
-            ),
+              ),
+            ]),
           ),
         ),
       ),
