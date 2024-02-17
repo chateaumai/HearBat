@@ -1,14 +1,14 @@
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioUtil {
-  static final AudioPlayer _wordAudioPlayer = AudioPlayer();
+  static final AudioPlayer _soundAudioPlayer = AudioPlayer();
   static final AudioPlayer _backgroundAudioPlayer = AudioPlayer();
   static bool _isPlaying = false;
   static String _currentFile = '';
 
-
+  // used for Sound modules, word modules use google_tts_util
   static Future<void> playSound(String audioFilePath) async {
-    await _wordAudioPlayer.play(AssetSource(audioFilePath));
+    await _soundAudioPlayer.play(AssetSource(audioFilePath));
   }
 
   static Future<void> toggleBackgroundSound(String audioFilePath) async {
@@ -21,5 +21,15 @@ class AudioUtil {
       _isPlaying = true;
       _currentFile = audioFilePath;
     }
+  }
+
+  static Future<void> stopAll() async {
+    await _soundAudioPlayer.stop();
+
+    if (_isPlaying = true) {
+      await _backgroundAudioPlayer.stop();
+      _isPlaying = false; 
+    }
+    _currentFile = ''; 
   }
 }

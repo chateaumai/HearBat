@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
+import 'package:hearbat/utils/audio_util.dart';
 import 'package:hearbat/widgets/module/module_progress_bar_widget.dart';
 import 'four_answer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +43,7 @@ class _ModulePageState extends State<ModuleWidget> {
     super.initState();
     if (widget.isWord) {
       getVoiceType();
+      // getBackgroundNoise();
     }
   }
 
@@ -52,7 +54,10 @@ class _ModulePageState extends State<ModuleWidget> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 18.0),
           child: IconButton(
-            onPressed:() => Navigator.of(context).pop(),
+            onPressed:() {
+              Navigator.of(context).pop();
+              AudioUtil.stopAll();
+            },
             icon: Icon(
               Icons.close,
               size: 40,
@@ -79,6 +84,7 @@ class _ModulePageState extends State<ModuleWidget> {
         answerGroups: widget.answerGroups,
         onCompletion: () => setState(() => moduleCompleted = true),
         voiceType: voiceType,
+        // backgroundNoise (path?) - then init if backGroundNoise is not null then play
         isWord: widget.isWord,
         onProgressUpdate: updateProgress,
       ),
