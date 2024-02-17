@@ -37,21 +37,27 @@ class _ModuleWordsPageState extends State<ModuleWordsPage> {
         title: widget.moduleName,
         leadingIcon: Icons.west,
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(8),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 3, 
-        ),
-        itemCount: words.length,
-        itemBuilder: (context, index) {
-          return WordCard(
-            word: words[index],
-            onWordTap: (word) => playAnswer(word),
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              padding: EdgeInsets.all(8),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 2.4, 
+              ),
+              itemCount: words.length,
+              itemBuilder: (context, index) {
+                return WordCard(
+                  word: words[index],
+                  onWordTap: (word) => playAnswer(word),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

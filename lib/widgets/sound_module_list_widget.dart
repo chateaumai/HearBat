@@ -37,7 +37,7 @@ class SoundModuleListWidget extends StatelessWidget {
                   margin: EdgeInsets.only(top: 8),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.black, 
+                    color: Color.fromARGB(255, 34, 38, 110), 
                   ),
                   width: 100.0,
                   height: 100.0,

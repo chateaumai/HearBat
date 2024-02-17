@@ -28,9 +28,6 @@ class _WordCardState extends State<WordCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start, 
             children: <Widget>[
-              SizedBox(width: 12), 
-              Icon(Icons.volume_up,size: 30, color: const Color.fromARGB(255, 31, 31, 31)), 
-              SizedBox(width: 0), 
               Expanded(
                 child: Text(
                   widget.word, 
@@ -41,7 +38,7 @@ class _WordCardState extends State<WordCard> {
               // this is just to push the expanded widget left
               Opacity(
                 opacity: 0.0,
-                child: Icon(Icons.volume_up, size: 30),
+                child: Icon(Icons.volume_up, size: 5),
               ),
             ],
           ),

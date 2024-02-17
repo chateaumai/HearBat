@@ -120,7 +120,7 @@ class _ModuleCardState extends State<ModuleCard> {
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
                       child: Text(
-                        "VIEW WORDS",
+                        "HEAR WORDS",
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
