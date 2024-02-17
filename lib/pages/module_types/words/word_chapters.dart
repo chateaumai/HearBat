@@ -7,16 +7,11 @@ class WordChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> chapters = [
-      "Short 'a' Sound",
-      "Short 'e' Sound",
-      "Short 'i' Sound",
-      "Short 'o' Sound",
-      "Short 'u' Sound",
-      "Buzzing and Hissing Sound",
-      "Vowel Slides (Diphthongs)",
-      "Nose Sounds (Nasals)",
-      "Throaty Sounds (Gutturals)",
-      "Tongue-Tip Sounds (Alveolars)",
+      "Beginner Foundations",
+      "Intermediate Development",
+      "Advanced Exploration",
+      "Proficient Application",
+      "Expert Mastery",
     ];
 
     return Scaffold(
@@ -31,7 +26,7 @@ class WordChapters extends StatelessWidget {
             return ChapterCardWidget(
               chapterName: chapters[index],
               chapterNumber: index,
-              destinationPage: WordPath(chapter: chapters[index]), 
+              destinationPage: WordPath(chapter: chapters[index]),
             );
           }),
           SizedBox(height: 10.0),

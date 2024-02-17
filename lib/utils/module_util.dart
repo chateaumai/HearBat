@@ -4,26 +4,16 @@ import '../data/sound_modules_data.dart';
 
 Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
   switch (chapter) {
-    case "Short 'a' Sound":
+    case "Beginner Foundations":
       return chapter1wordModules;
-    case "Short 'e' Sound":
+    case "Intermediate Development":
       return chapter2wordModules;
-    case "Short 'i' Sound":
+    case "Advanced Exploration":
       return chapter3wordModules;
-    case "Short 'o' Sound":
+    case "Proficient Application":
       return chapter4wordModules;
-    case "Short 'u' Sound":
+    case "Expert Mastery":
       return chapter5wordModules;
-    case "Buzzing and Hissing Sound":
-      return chapter6wordModules;
-    case "Vowel Slides (Diphthongs)":
-      return chapter7wordModules;
-    case "Nose Sounds (Nasals)":
-      return chapter8wordModules;
-    case "Throaty Sounds (Gutturals)":
-      return chapter9wordModules;
-    case "Tongue-Tip Sounds (Alveolars)":
-      return chapter10wordModules;
 
     // Sound Chapters
     case "Home Sounds":
