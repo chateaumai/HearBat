@@ -58,7 +58,7 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
                 ),
                 SizedBox(height: 8), // title and description
                 SizedBox(
-                  width: cardWidth * 0.65, // for image on right
+                  width: cardWidth * 0.40, // for image on right
                   child: Text(
                     widget.description,
                     style: TextStyle(

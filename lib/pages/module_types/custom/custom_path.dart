@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/utils/custom_util.dart';
 import 'package:hearbat/utils/user_module_util.dart';
@@ -81,8 +82,8 @@ class CustomPathState extends State<CustomPath> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Custom Modules"),
+      appBar: TopBar(
+        title: "Custom Module Builder",
       ),
       body: ListView.builder(
         itemCount: moduleNames.length + 1,
