@@ -1,12 +1,13 @@
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:googleapis_auth/auth_io.dart';
 import '../utils/text_util.dart';
+import '../utils/config_util.dart';
 
 class GeminiUtil {
   static Future<String> _loadCredentials() async {
-    return await rootBundle.loadString('hearbat-408909-40d76f6c489d.json');
+    String apiKey = ConfigurationManager().googleCloudAPIKey;
+    return apiKey;
   }
 
   static Future<String> generateContent(List<String> wordsToBeCompared) async {

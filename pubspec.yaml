@@ -28,6 +28,8 @@ dependencies:
   audioplayers: ^5.2.1
   firebase_core: ^2.24.2
   flutter_svg: ^2.0.9
+  firebase_remote_config: ^4.3.13
+  firebase_analytics: ^10.8.5
 
 dev_dependencies:
   flutter_test:
@@ -45,7 +47,6 @@ flutter:
     - assets/audio/sounds/nature/
     - assets/audio/background/
     - assets/visuals/
-    - hearbat-408909-40d76f6c489d.json
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

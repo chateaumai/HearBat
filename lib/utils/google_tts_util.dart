@@ -1,19 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
+import '../utils/config_util.dart';
 
 class GoogleTTSUtil {
   final AudioPlayer audioPlayer = AudioPlayer();
   final Map<String, String> cache = {};
 
   Future<String> _loadCredentials() async {
-    return await rootBundle.loadString('hearbat-408909-40d76f6c489d.json');
+    String apiKey = ConfigurationManager().googleCloudAPIKey;
+    return apiKey;
   }
 
   Future<void> speak(String text, String voicetype) async {

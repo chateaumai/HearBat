@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
+import '../utils/config_util.dart';
 
   Future<String> loadCredentials() async {
-    var file = File('..\\..\\hearbat-408909-40d76f6c489d.json');
-    return file.readAsString();
+    String apiKey = ConfigurationManager().googleCloudAPIKey;
+    return apiKey;
   }
 
   Future<http.Response> connectAPI(String text, String voicetype, http.Client client) async {
