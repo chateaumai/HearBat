@@ -62,6 +62,10 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       isAnswerTrue = false;
       readyForCompletion = false;
     }
+
+    Future.delayed(Duration(milliseconds: 800), () {
+      playAnswer();
+    });
   }
 
   void handleSelection(Answer word) {
