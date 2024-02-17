@@ -3,34 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../utils/google_tts_util.dart';
 
-class GlobalAudioPlayer {
-  static final AudioPlayer _audioPlayer = AudioPlayer();
-  static final GlobalAudioPlayer _instance = GlobalAudioPlayer._internal();
-
-  factory GlobalAudioPlayer() {
-    return _instance;
-  }
-
-  GlobalAudioPlayer._internal();
-
-  static AudioPlayer get player => _audioPlayer;
-
-  void playSound(String filePath, {bool loop = false}) async {
-    await _audioPlayer.setSourceAsset(filePath);
-    await _audioPlayer
-        .setReleaseMode(loop ? ReleaseMode.loop : ReleaseMode.stop);
-    await _audioPlayer.resume();
-  }
-
-  void stopSound() async {
-    await _audioPlayer.stop();
-  }
-
-  void setVolume(double volume) async {
-    await _audioPlayer.setVolume(volume);
-  }
-}
-
 class ProfilePage extends StatefulWidget {
   @override
   ProfilePageState createState() => ProfilePageState();
@@ -38,9 +10,10 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   String? _voicePreference;
+  String _backgroundSound = 'None';
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
   bool isCaching = false;
-  double _currentVolume = 1.0;
+  AudioPlayer audioPlayer = AudioPlayer();
 
   List<String> voiceTypes = [
     "en-US-Studio-O",
@@ -73,6 +46,13 @@ class ProfilePageState extends State<ProfilePage> {
     super.initState();
     _loadVoicePreference();
     _cacheVoiceTypes();
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    super.dispose();
   }
 
   _loadVoicePreference() async {
@@ -94,20 +74,15 @@ class ProfilePageState extends State<ProfilePage> {
     setState(() {
       isCaching = true;
     });
-
     String phraseToCache = "Hello this is how I sound";
-
     List<Future> downloadFutures = [];
-
     for (String voiceType in voiceTypes) {
       downloadFutures.add(
           _googleTTSUtil.downloadMP3(phraseToCache, voiceType).catchError((e) {
         print("Error downloading for voice type $voiceType: $e");
       }));
     }
-
     await Future.wait(downloadFutures);
-
     setState(() {
       isCaching = false;
     });
@@ -119,113 +94,137 @@ class ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Select Voice Type",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Select Voice Type",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_voicePreference != null) {
-                    _googleTTSUtil.speak(
-                        "Hello this is how I sound", _voicePreference!);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Please select a voice preference first"),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                if (_voicePreference != null) {
+                  _googleTTSUtil.speak(
+                      "Hello this is how I sound", _voicePreference!);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Please select a voice preference first"),
+                  ));
+                }
+              },
+              child: Text('Test Audio'),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    for (int i = 0; i < 5; i++)
+                      ListTile(
+                        title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
+                        leading: Radio<String>(
+                          value: voiceTypes[i],
+                          groupValue: _voicePreference,
+                          onChanged: (String? value) {
+                            _updateVoicePreference(value!);
+                          },
+                        ),
                       ),
-                    );
-                  }
-                },
-                child: Text('Test Audio'),
+                  ],
+                ),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      for (int i = 0; i < 5; i++)
-                        ListTile(
-                          title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
-                          leading: Radio<String>(
-                            value: voiceTypes[i],
-                            groupValue: _voicePreference,
-                            onChanged: _voicePreference == null
-                                ? null
-                                : (String? value) {
-                                    _updateVoicePreference(value!);
-                                  },
-                          ),
+              Expanded(
+                child: Column(
+                  children: [
+                    for (int i = 5; i < 10; i++)
+                      ListTile(
+                        title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
+                        leading: Radio<String>(
+                          value: voiceTypes[i],
+                          groupValue: _voicePreference,
+                          onChanged: (String? value) {
+                            _updateVoicePreference(value!);
+                          },
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      for (int i = 5; i < 10; i++)
-                        ListTile(
-                          title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
-                          leading: Radio<String>(
-                            value: voiceTypes[i],
-                            groupValue: _voicePreference,
-                            onChanged: _voicePreference == null
-                                ? null
-                                : (String? value) {
-                                    _updateVoicePreference(value!);
-                                  },
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Select Background Sounds",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            Slider(
-              value: _currentVolume,
-              min: 0.0,
-              max: 1.0,
-              divisions: 10,
-              label: "${(_currentVolume * 100).toInt()}%",
-              onChanged: (double value) {
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              switch (_backgroundSound) {
+                case 'Rain Sound':
+                  await audioPlayer
+                      .play(AssetSource("audio/background/rain.mp3"));
+                  break;
+                case 'Shop Sound':
+                  await audioPlayer
+                      .play(AssetSource("audio/background/shop.mp3"));
+                  break;
+                case 'None':
+                  audioPlayer.stop();
+                  break;
+              }
+              if (_backgroundSound != 'None') {
+                await Future.delayed(Duration(seconds: 5));
+                await audioPlayer.stop();
+              }
+            },
+            child: Text('Test Background Noise'),
+          ),
+          ListTile(
+            title: Text('Rain Sound'),
+            leading: Radio<String>(
+              value: 'Rain Sound',
+              groupValue: _backgroundSound,
+              onChanged: (String? value) {
                 setState(() {
-                  _currentVolume = value;
-                  GlobalAudioPlayer().setVolume(_currentVolume);
+                  _backgroundSound = value!;
                 });
               },
             ),
-            ElevatedButton(
-              onPressed: () {
-                GlobalAudioPlayer()
-                    .playSound("audio/background/rain.mp3", loop: true);
+          ),
+          ListTile(
+            title: Text('Shop Sound'),
+            leading: Radio<String>(
+              value: 'Shop Sound',
+              groupValue: _backgroundSound,
+              onChanged: (String? value) {
+                setState(() {
+                  _backgroundSound = value!;
+                });
               },
-              child: Text('Play Rain Sound'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                GlobalAudioPlayer()
-                    .playSound("audio/background/shop.mp3", loop: true);
+          ),
+          ListTile(
+            title: Text('None'),
+            leading: Radio<String>(
+              value: 'None',
+              groupValue: _backgroundSound,
+              onChanged: (String? value) {
+                setState(() {
+                  _backgroundSound = value!;
+                });
               },
-              child: Text('Play Shop Sound'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                GlobalAudioPlayer().stopSound();
-              },
-              child: Text('Stop Sound'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
