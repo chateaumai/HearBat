@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../../../widgets/top_bar_widget.dart';
 import 'navigation_bar.dart';
 
 class SoundAdjustmentPage extends StatefulWidget {
@@ -52,33 +51,30 @@ class SoundAdjustmentPageState extends State<SoundAdjustmentPage> {
                         MaterialPageRoute(builder: (context) => MyNavBar()));
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    minimumSize: Size(200, 60), 
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    )
-                  ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      minimumSize: Size(200, 60),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      )),
                   child: Text(
                     'Ready',
-                    style: TextStyle(
-                      fontSize: 24
-                    ),
+                    style: TextStyle(fontSize: 24),
                   ),
                 ),
               ],
             ),
           ),
           Align(
-            alignment: Alignment.bottomCenter,
-            child: Transform.translate(
-              offset: Offset(0, 100),
-              child: Image.asset(
-                'assets/visuals/HB_Default.png',
-                width: MediaQuery.of(context).size.width * 0.75,
-                fit: BoxFit.cover, 
-              ),
-            )
-          ),
+              alignment: Alignment.bottomCenter,
+              child: Transform.translate(
+                offset: Offset(0, 100),
+                child: Image.asset(
+                  'assets/visuals/HB_Default.png',
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  fit: BoxFit.cover,
+                ),
+              )),
         ],
       ),
     );
