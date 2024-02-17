@@ -8,7 +8,7 @@ class WordChapters extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> chapters = [
       "Beginner Foundations",
-      "Intermediate Development",
+      "Intermediate Progress",
       "Advanced Exploration",
       "Proficient Application",
       "Expert Mastery",

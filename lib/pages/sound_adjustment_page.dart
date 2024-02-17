@@ -25,7 +25,7 @@ class SoundAdjustmentPageState extends State<SoundAdjustmentPage> {
   }
 
   void playSound() async {
-    await audioPlayer.play(AssetSource(audioPath), volume: 0.5);
+    await audioPlayer.play(AssetSource(audioPath));
   }
 
   @override

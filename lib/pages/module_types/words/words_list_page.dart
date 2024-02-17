@@ -38,11 +38,12 @@ class _WordsListState extends State<WordsList> {
 
     return Scaffold(
       appBar: TopBar(
-        title: "${widget.chapterName} WORDS",
+        title: widget.chapterName,
         leadingIcon: Icons.west,
       ),
       body: ListView.builder(
         itemCount: widget.modules.length,
+        padding: EdgeInsets.only(top: 10),
         itemBuilder: (context, index) {
           String moduleName = widget.modules.keys.elementAt(index);
           List<AnswerGroup> answerGroups = widget.modules[moduleName]!;

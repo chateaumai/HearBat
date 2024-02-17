@@ -24,7 +24,7 @@ class TriangularPathLayout extends StatelessWidget {
     double initialXOffset = (layoutWidth - 300) / 2;
     
     double xOffset = initialXOffset;
-    double yOffset = spacing - 50;
+    double yOffset = spacing - 15;
 
     // Create triangles
     for (int i = 0; i < itemCount; i += 3) {

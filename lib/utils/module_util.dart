@@ -6,7 +6,7 @@ Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
   switch (chapter) {
     case "Beginner Foundations":
       return chapter1wordModules;
-    case "Intermediate Development":
+    case "Intermediate Progress":
       return chapter2wordModules;
     case "Advanced Exploration":
       return chapter3wordModules;

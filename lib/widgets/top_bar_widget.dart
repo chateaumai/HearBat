@@ -34,11 +34,14 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
             )
             : null,
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         scrolledUnderElevation: 0.0,
