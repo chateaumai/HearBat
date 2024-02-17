@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audioplayers.dart';
 import '../utils/google_tts_util.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -11,6 +12,9 @@ class ProfilePageState extends State<ProfilePage> {
   String? _voicePreference;
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
   bool isCaching = false;
+  AudioPlayer audioPlayer = AudioPlayer();
+  bool isPlayingRain = false;
+  bool isPlayingShop = false;
 
   List<String> voiceTypes = [
     "en-US-Studio-O", //US1 Female
@@ -43,6 +47,33 @@ class ProfilePageState extends State<ProfilePage> {
     super.initState();
     _loadVoicePreference();
     _cacheVoiceTypes();
+    audioPlayer.setReleaseMode(ReleaseMode.loop); // Set to loop
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.stop(); // Ensure audio is stopped when the widget is disposed
+    super.dispose();
+  }
+
+  void toggleBackgroundSound(String soundPath) async {
+    if (audioPlayer.state == PlayerState.playing) {
+      await audioPlayer.stop();
+      if ((soundPath.contains("rain") && isPlayingRain) ||
+          (soundPath.contains("shop") && isPlayingShop)) {
+        setState(() {
+          isPlayingRain = false;
+          isPlayingShop = false;
+        });
+        return;
+      }
+    }
+
+    await audioPlayer.play(AssetSource(soundPath));
+    setState(() {
+      isPlayingRain = soundPath.contains("rain");
+      isPlayingShop = soundPath.contains("shop");
+    });
   }
 
   _loadVoicePreference() async {
@@ -175,6 +206,15 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ],
+          ),
+          // New buttons for playing background sounds
+          ElevatedButton(
+            onPressed: () => toggleBackgroundSound("audio/background/rain.mp3"),
+            child: Text(isPlayingRain ? 'Stop Rain Sound' : 'Play Rain Sound'),
+          ),
+          ElevatedButton(
+            onPressed: () => toggleBackgroundSound("audio/background/shop.mp3"),
+            child: Text(isPlayingShop ? 'Stop Shop Sound' : 'Play Shop Sound'),
           ),
         ],
       ),
