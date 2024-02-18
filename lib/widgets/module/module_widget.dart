@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import 'package:hearbat/utils/background_noise_util.dart';
+import 'package:hearbat/utils/audio_util.dart';
 import 'package:hearbat/widgets/module/module_progress_bar_widget.dart';
 import 'four_answer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,7 @@ class _ModulePageState extends State<ModuleWidget> {
   @override
   void dispose() {
     BackgroundNoiseUtil.stopSound();
+    AudioUtil.stop();
     super.dispose();
   }
 
@@ -67,6 +69,7 @@ class _ModulePageState extends State<ModuleWidget> {
                   onPressed: () {
                     Navigator.of(context).pop();
                     BackgroundNoiseUtil.stopSound();
+                    AudioUtil.stop();
                   },
                   icon: Icon(Icons.close, size: 40),
                 ),
