@@ -11,6 +11,7 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   String? _voicePreference;
   String _backgroundSound = 'None';
+  String _audioVolume = 'Low';
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
   bool isCaching = false;
   AudioPlayer audioPlayer = AudioPlayer();
@@ -44,30 +45,24 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _loadVoicePreference();
+    _loadPreferences();
     _cacheVoiceTypes();
     audioPlayer.setReleaseMode(ReleaseMode.loop);
   }
 
-  @override
-  void dispose() {
-    audioPlayer.stop();
-    super.dispose();
-  }
-
-  _loadVoicePreference() async {
+  void _loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _voicePreference = prefs.getString('voicePreference') ?? "en-US-Studio-O";
+      _backgroundSound = prefs.getString('backgroundSoundPreference') ?? 'None';
+      _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
     });
   }
 
-  _updateVoicePreference(String voiceType) async {
+  void _updatePreference(String key, String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _voicePreference = voiceType;
-      prefs.setString('voicePreference', voiceType);
-    });
+    prefs.setString(key, value);
+    _loadPreferences();
   }
 
   Future<void> _cacheVoiceTypes() async {
@@ -77,10 +72,9 @@ class ProfilePageState extends State<ProfilePage> {
     String phraseToCache = "Hello this is how I sound";
     List<Future> downloadFutures = [];
     for (String voiceType in voiceTypes) {
-      downloadFutures.add(
-          _googleTTSUtil.downloadMP3(phraseToCache, voiceType).catchError((e) {
-        print("Error downloading for voice type $voiceType: $e");
-      }));
+      downloadFutures.add(_googleTTSUtil
+          .downloadMP3(phraseToCache, voiceType)
+          .catchError((e) {}));
     }
     await Future.wait(downloadFutures);
     setState(() {
@@ -100,11 +94,9 @@ class ProfilePageState extends State<ProfilePage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "Select Voice Type",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            child: Text("Select Voice Type",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge),
           ),
           Center(
             child: ElevatedButton(
@@ -112,10 +104,6 @@ class ProfilePageState extends State<ProfilePage> {
                 if (_voicePreference != null) {
                   _googleTTSUtil.speak(
                       "Hello this is how I sound", _voicePreference!);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Please select a voice preference first"),
-                  ));
                 }
               },
               child: Text('Test Audio'),
@@ -133,7 +121,7 @@ class ProfilePageState extends State<ProfilePage> {
                           value: voiceTypes[i],
                           groupValue: _voicePreference,
                           onChanged: (String? value) {
-                            _updateVoicePreference(value!);
+                            _updatePreference('voicePreference', value!);
                           },
                         ),
                       ),
@@ -150,7 +138,7 @@ class ProfilePageState extends State<ProfilePage> {
                           value: voiceTypes[i],
                           groupValue: _voicePreference,
                           onChanged: (String? value) {
-                            _updateVoicePreference(value!);
+                            _updatePreference('voicePreference', value!);
                           },
                         ),
                       ),
@@ -161,68 +149,100 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "Select Background Sounds",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            child: Text("Select Background Sound",
+                style: Theme.of(context).textTheme.titleLarge),
           ),
           ElevatedButton(
             onPressed: () async {
-              switch (_backgroundSound) {
-                case 'Rain Sound':
-                  await audioPlayer
-                      .play(AssetSource("audio/background/rain.mp3"));
-                  break;
-                case 'Shop Sound':
-                  await audioPlayer
-                      .play(AssetSource("audio/background/shop.mp3"));
-                  break;
-                case 'None':
-                  audioPlayer.stop();
-                  break;
-              }
               if (_backgroundSound != 'None') {
-                await Future.delayed(Duration(seconds: 5));
+                String fileName =
+                    _backgroundSound.replaceAll(' Sound', '').toLowerCase();
+                await audioPlayer
+                    .play(AssetSource("audio/background/$fileName.mp3"));
+                await Future.delayed(Duration(seconds: 3));
                 await audioPlayer.stop();
               }
             },
             child: Text('Test Background Noise'),
           ),
-          ListTile(
-            title: Text('Rain Sound'),
-            leading: Radio<String>(
-              value: 'Rain Sound',
-              groupValue: _backgroundSound,
-              onChanged: (String? value) {
-                setState(() {
-                  _backgroundSound = value!;
-                });
-              },
-            ),
-          ),
-          ListTile(
-            title: Text('Shop Sound'),
-            leading: Radio<String>(
-              value: 'Shop Sound',
-              groupValue: _backgroundSound,
-              onChanged: (String? value) {
-                setState(() {
-                  _backgroundSound = value!;
-                });
-              },
-            ),
-          ),
-          ListTile(
-            title: Text('None'),
-            leading: Radio<String>(
-              value: 'None',
-              groupValue: _backgroundSound,
-              onChanged: (String? value) {
-                setState(() {
-                  _backgroundSound = value!;
-                });
-              },
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text('Rain Sound'),
+                      leading: Radio<String>(
+                        value: 'Rain Sound',
+                        groupValue: _backgroundSound,
+                        onChanged: (String? value) {
+                          _updatePreference(
+                              'backgroundSoundPreference', value!);
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('Shop Sound'),
+                      leading: Radio<String>(
+                        value: 'Shop Sound',
+                        groupValue: _backgroundSound,
+                        onChanged: (String? value) {
+                          _updatePreference(
+                              'backgroundSoundPreference', value!);
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('None'),
+                      leading: Radio<String>(
+                        value: 'None',
+                        groupValue: _backgroundSound,
+                        onChanged: (String? value) {
+                          _updatePreference(
+                              'backgroundSoundPreference', value!);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text('Low'),
+                      leading: Radio<String>(
+                        value: 'Low',
+                        groupValue: _audioVolume,
+                        onChanged: (String? value) {
+                          _updatePreference('audioVolumePreference', value!);
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('Medium'),
+                      leading: Radio<String>(
+                        value: 'Medium',
+                        groupValue: _audioVolume,
+                        onChanged: (String? value) {
+                          _updatePreference('audioVolumePreference', value!);
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('High'),
+                      leading: Radio<String>(
+                        value: 'High',
+                        groupValue: _audioVolume,
+                        onChanged: (String? value) {
+                          _updatePreference('audioVolumePreference', value!);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
