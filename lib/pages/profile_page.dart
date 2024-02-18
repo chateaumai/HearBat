@@ -57,11 +57,15 @@ class ProfilePageState extends State<ProfilePage> {
       _backgroundSound = prefs.getString('backgroundSoundPreference') ?? 'None';
       _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
     });
+    _adjustVolume(_audioVolume);
   }
 
   void _updatePreference(String key, String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
+    if (key == 'audioVolumePreference') {
+      _adjustVolume(value);
+    }
     _loadPreferences();
   }
 
@@ -80,6 +84,20 @@ class ProfilePageState extends State<ProfilePage> {
     setState(() {
       isCaching = false;
     });
+  }
+
+  void _adjustVolume(String volumeLevel) {
+    switch (volumeLevel) {
+      case 'Low':
+        audioPlayer.setVolume(0.2);
+      case 'Medium':
+        audioPlayer.setVolume(0.6);
+      case 'High':
+        audioPlayer.setVolume(1.0);
+      default:
+        audioPlayer.setVolume(0.3);
+        break;
+    }
   }
 
   @override
