@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'package:hearbat/utils/audio_util.dart';
+import 'package:hearbat/utils/background_noise_util.dart';
 import 'package:hearbat/widgets/module/module_progress_bar_widget.dart';
 import 'four_answer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +9,12 @@ class ModuleWidget extends StatefulWidget {
   final String title;
   final List<AnswerGroup> answerGroups;
   final bool isWord;
-  ModuleWidget({Key? key, required this.title, required this.answerGroups, required this.isWord})
+
+  ModuleWidget(
+      {Key? key,
+      required this.title,
+      required this.answerGroups,
+      required this.isWord})
       : super(key: key);
 
   @override
@@ -21,11 +26,17 @@ class _ModulePageState extends State<ModuleWidget> {
   String voiceType = "en-US-Studio-O";
   int currentIndex = 0;
 
-  // this is for the progress bar, bar needs to be here to be on same level as x
-  void updateProgress(int newIndex) {
-    setState(() {
-      currentIndex = newIndex;
-    });
+  @override
+  void initState() {
+    super.initState();
+    getVoiceType();
+    BackgroundNoiseUtil.playSavedSound();
+  }
+
+  @override
+  void dispose() {
+    BackgroundNoiseUtil.stopSound();
+    super.dispose();
   }
 
   void getVoiceType() async {
@@ -38,39 +49,35 @@ class _ModulePageState extends State<ModuleWidget> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.isWord) {
-      getVoiceType();
-      // getBackgroundNoise();
-    }
+  void updateProgress(int newIndex) {
+    setState(() {
+      currentIndex = newIndex;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: moduleCompleted ? null : AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 18.0),
-          child: IconButton(
-            onPressed:() {
-              Navigator.of(context).pop();
-              AudioUtil.stopAll();
-            },
-            icon: Icon(
-              Icons.close,
-              size: 40,
+      appBar: moduleCompleted
+          ? null
+          : AppBar(
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    BackgroundNoiseUtil.stopSound();
+                  },
+                  icon: Icon(Icons.close, size: 40),
+                ),
+              ),
+              titleSpacing: 0,
+              title: ModuleProgressBarWidget(
+                currentIndex: currentIndex,
+                total: widget.answerGroups.length,
+              ),
+              backgroundColor: Color.fromARGB(255, 232, 218, 255),
             ),
-          ),
-        ),
-        titleSpacing: 0,
-        title: ModuleProgressBarWidget(
-          currentIndex: currentIndex,
-          total: widget.answerGroups.length, 
-        ),
-        backgroundColor: Color.fromARGB(255, 232, 218, 255),
-      ),
       body: Center(
         child: moduleCompleted ? buildCompletionScreen() : buildModuleContent(),
       ),
@@ -84,7 +91,6 @@ class _ModulePageState extends State<ModuleWidget> {
         answerGroups: widget.answerGroups,
         onCompletion: () => setState(() => moduleCompleted = true),
         voiceType: voiceType,
-        // backgroundNoise (path?) - then init if backGroundNoise is not null then play
         isWord: widget.isWord,
         onProgressUpdate: updateProgress,
       ),
@@ -92,6 +98,7 @@ class _ModulePageState extends State<ModuleWidget> {
   }
 
   Widget buildCompletionScreen() {
+    BackgroundNoiseUtil.stopSound();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
