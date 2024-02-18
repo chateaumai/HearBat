@@ -3,13 +3,15 @@ import 'dart:math';
 class Answer {
   final String answer;
   final String? path;
+  final String? image;
 
-  Answer(this.answer, this.path);
+  Answer(this.answer, this.path, this.image);
 
   Map<String, dynamic> toJson() {
     return {
       'answer': answer,
       'path': path,
+      'image': image,
     };
   }
 
@@ -17,6 +19,7 @@ class Answer {
     return Answer(
       json['answer'] as String,
       json['path'] as String?,
+      json['image'] as String?,
     );
   }
 }

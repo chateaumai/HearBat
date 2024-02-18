@@ -154,6 +154,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                 }
                 return WordButton(
                   word: word,
+                  isWord: widget.isWord,
                   selectedWord: selectedWord,
                   onSelected: handleSelection,
                 );
@@ -175,6 +176,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                       top: 92,
                       left: 0,
                       right: 0,
+                      // needs to be changed for images
                       child: IncorrectCardWidget(
                         incorrectWord: incorrectWord!,
                         correctWord: correctWord,
