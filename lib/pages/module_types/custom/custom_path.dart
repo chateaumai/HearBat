@@ -1,9 +1,11 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/utils/custom_util.dart';
 import 'package:hearbat/utils/user_module_util.dart';
 import '../../../utils/custom_modules_util.dart';
+import "../../../widgets/custom_module_card_widget.dart";
 
 class CustomPath extends StatefulWidget {
   @override
@@ -85,29 +87,63 @@ class CustomPathState extends State<CustomPath> {
       appBar: TopBar(
         title: "Custom Module Builder",
       ),
-      body: ListView.builder(
-        itemCount: moduleNames.length + 1,
-        itemBuilder: (context, index) {
-          if (index < moduleNames.length) {
-            String moduleName = moduleNames[index];
-            return ListTile(
-              title: Text(moduleName),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => _deleteModule(moduleName),
+      body: SingleChildScrollView( // Allows the column to be scrollable
+        child: Column(
+          children: <Widget>[
+            Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0), 
+              child: DottedBorder(
+                dashPattern: [6, 6],
+                borderType: BorderType.RRect,
+                radius: Radius.circular(8),
+                color: Color.fromARGB(255, 35, 102, 29),
+                strokeWidth: 2,
+                child: ElevatedButton(
+                  onPressed: _navigateToCreateModule,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 117, 210, 109),
+                    padding: EdgeInsets.symmetric(vertical: 20.0,),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8), 
+                    ),
+                    textStyle: TextStyle(fontSize: 24.0),
+                    minimumSize: Size(double.infinity, 40), 
+                  ),
+                  child: Text(
+                    "Create New Module",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255)
+                    )
+                  )
+                ),
+              )
+            ),
+            // Use Expanded to fill the available space with the GridView
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: GridView.builder(
+                shrinkWrap: true, // Necessary to use GridView inside Column/ScrollView
+                physics: NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                itemCount: moduleNames.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 8/10,
+                ),
+                itemBuilder: (context, index) {
+                  String moduleName = moduleNames[index];
+                  return CustomModuleCard(
+                    moduleName: moduleName,
+                    onStart: () => _showModule(moduleName),
+                    onDelete: () => _deleteModule(moduleName),
+                  );
+                },
               ),
-              onTap: () => _showModule(moduleName),
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: _navigateToCreateModule,
-                child: Text("Create Custom Module"),
-              ),
-            );
-          }
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
