@@ -85,9 +85,9 @@ class CustomPathState extends State<CustomPath> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        title: "Custom Module Builder",
+        title: "Custom Modules",
       ),
-      body: SingleChildScrollView( // Allows the column to be scrollable
+      body: SingleChildScrollView( 
         child: Column(
           children: <Widget>[
             Padding(
@@ -119,12 +119,11 @@ class CustomPathState extends State<CustomPath> {
                 ),
               )
             ),
-            // Use Expanded to fill the available space with the GridView
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: GridView.builder(
-                shrinkWrap: true, // Necessary to use GridView inside Column/ScrollView
-                physics: NeverScrollableScrollPhysics(), // Disable scrolling inside GridView
+                shrinkWrap: true, 
+                physics: NeverScrollableScrollPhysics(), 
                 itemCount: moduleNames.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

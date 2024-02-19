@@ -63,22 +63,17 @@ class CustomModuleCard extends StatelessWidget {
                       child: Text('Start', style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(height: 5),
-                    IconButton(
-                      onPressed: onDelete,
-                      icon: Icon(Icons.delete, color: Color.fromARGB(255, 95, 95, 95)),
-                      iconSize: 35,
-                    ),
-                    /*ElevatedButton(
+                    ElevatedButton(
                       onPressed: onDelete,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 255, 0, 0),
-                        foregroundColor: Color.fromARGB(255, 0, 0, 0),
+                        backgroundColor: Color.fromARGB(255, 214, 214, 214),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8), 
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        padding: EdgeInsets.zero, // Remove padding to allow the icon to center
                       ),
-                      child: Text('Delete'),
-                    ), */
+                      child: Icon(Icons.delete, color: Color.fromARGB(255, 100, 100, 100), size: 24), // Adjust size to your preference
+                    ),
                   ],
                 ),
               ),

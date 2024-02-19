@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/utils/user_module_util.dart';
 import 'package:hearbat/data/answer_pair.dart';
+import 'package:hearbat/widgets/top_bar_widget.dart';
 import '../utils/gemini_util.dart';
 import '../utils/text_util.dart';
 
@@ -124,12 +125,13 @@ class CustomUtilState extends State<CustomUtil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create Custom Module"),
+      appBar: TopBar(
+        title: "Module Creator",
       ),
       body: ListView(
         children: <Widget>[
-          Padding(
+          SizedBox(height: 12),
+          /* Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
               controller: _moduleNameController,
@@ -138,7 +140,7 @@ class CustomUtilState extends State<CustomUtil> {
                 border: OutlineInputBorder(),
               ),
             ),
-          ),
+          ), */
           ...List.generate(
             _controllers.length ~/ 4,
             (index) => Padding(
@@ -204,19 +206,46 @@ class CustomUtilState extends State<CustomUtil> {
           ),
           if (_controllers.length < 40)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: _addNewPair,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(40, 40),
-                  backgroundColor: Colors.green,
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+              child: ElevatedButton.icon(
+                onPressed: _addNewPair, 
+                icon: Icon(
+                  Icons.add, 
+                  color: Colors.white, 
                 ),
-                child: Icon(Icons.add),
+                label: Text(
+                  'Add Set', 
+                  style: TextStyle(
+                    color: Colors.white, 
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green, 
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16), 
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20), 
+                ),
+              ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: _saveModule,
-            child: Text("Save Module"),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
+            child: ElevatedButton(
+              onPressed: _saveModule,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 201, 168, 255), 
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16), 
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20), 
+              ),
+              child: Text(
+                "Save Module",
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
           ),
         ],
       ),
