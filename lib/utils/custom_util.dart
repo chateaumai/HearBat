@@ -130,31 +130,107 @@ class CustomUtilState extends State<CustomUtil> {
       ),
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 12),
-          /* Padding(
-            padding: EdgeInsets.all(8.0),
+          SizedBox(height: 30),
+          Text(
+            "Enter your desired words!",
+            style:
+              TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 7, 45, 78),
+                height: 1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          SizedBox(height: 20),
+          Text(
+            "We'll fill in the rest of your set if\nyou enter less than four words",
+            style:
+              TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 7, 45, 78),
+                height: 1,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          SizedBox(height: 50),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
             child: TextField(
               controller: _moduleNameController,
               decoration: InputDecoration(
-                labelText: 'Module Name',
-                border: OutlineInputBorder(),
+                labelText: "Module Name",
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color.fromARGB(255, 174, 130, 255),
+                    width: 3.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color.fromARGB(255, 83, 83, 83),
+                    width: 3.0,
+                  ),
+                ),
               ),
             ),
-          ), */
+          ), 
+          SizedBox(height: 12),
           ...List.generate(
             _controllers.length ~/ 4,
             (index) => Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Set ${index +1}', 
+                          style: TextStyle(
+                            fontSize: 16, 
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black, 
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Visibility(
+                        visible: _controllers.length > 4,
+                        maintainSize: true,
+                        maintainAnimation: true,
+                        maintainState: true,
+                        child: IconButton(
+                          icon: Icon(Icons.delete),
+                          alignment: Alignment.centerRight,
+                          onPressed: () => _removePair(index * 4),
+                        ),
+                      ),
+                    ],
+                  ),
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: TextField(
                           controller: _controllers[index * 4],
                           decoration: InputDecoration(
-                            labelText: '${index + 1}A',
-                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 174, 130, 255),
+                                width: 3.0,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 83, 83, 83),
+                                width: 3.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -163,8 +239,20 @@ class CustomUtilState extends State<CustomUtil> {
                         child: TextField(
                           controller: _controllers[index * 4 + 1],
                           decoration: InputDecoration(
-                            labelText: '${index + 1}B',
-                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 174, 130, 255),
+                                width: 3.0,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 83, 83, 83),
+                                width: 3.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -173,8 +261,20 @@ class CustomUtilState extends State<CustomUtil> {
                         child: TextField(
                           controller: _controllers[index * 4 + 2],
                           decoration: InputDecoration(
-                            labelText: '${index + 1}C',
-                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 174, 130, 255),
+                                width: 3.0,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 83, 83, 83),
+                                width: 3.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -183,23 +283,25 @@ class CustomUtilState extends State<CustomUtil> {
                         child: TextField(
                           controller: _controllers[index * 4 + 3],
                           decoration: InputDecoration(
-                            labelText: '${index + 1}D',
-                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 174, 130, 255),
+                                width: 3.0,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color.fromARGB(255, 83, 83, 83),
+                                width: 3.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  if (_controllers.length > 4)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => _removePair(index * 4),
-                        ),
-                      ],
-                    ),
                 ],
               ),
             ),
