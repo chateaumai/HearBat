@@ -74,9 +74,12 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
                   ),
                 ),
                 Expanded( 
-                  child: Image.asset(
-                    widget.image, 
-                    fit: BoxFit.contain, 
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      widget.image, 
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ],

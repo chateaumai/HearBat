@@ -108,6 +108,20 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       children: [
         //SizedBox(height: 20),
         // play button
+        Padding(
+          padding: const EdgeInsets.fromLTRB(30.0, 20.0, 0.0, 20.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "What do you hear?",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                color: Color.fromARGB(255, 0, 0, 0)
+              ),
+            ),
+          ),
+        ),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromARGB(255, 7, 45, 78),
@@ -169,7 +183,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
               Container(
                 width: double.infinity,
                 height: 250,
-                color: Color.fromARGB(255, 93, 104, 255),
+                color: Color.fromARGB(255, 255, 255, 255),
                 child: Stack(
                   children: [
                     Positioned(
@@ -218,12 +232,12 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
               Container(
                 width: double.infinity,
                 height: 150,
-                color: Color.fromARGB(255, 93, 104, 255),
+                color: Color.fromARGB(255, 255, 255, 255),
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 60),
                     child: Text(
-                      "Correct",
+                      "Great!",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

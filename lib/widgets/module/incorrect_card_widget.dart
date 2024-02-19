@@ -53,7 +53,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
               onPressed: () => playAnswer(widget.incorrectWord),
               icon: Icon(
                 Icons.volume_up,
-                color: Colors.black,
+                color: const Color.fromARGB(255, 255, 255, 255),
                 size: 30,
               ),
               label: FittedBox(
@@ -61,13 +61,14 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
                 child: Text(
                   widget.incorrectWord.answer,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: const Color.fromARGB(255, 255, 255, 255),
                     fontSize: 22,
                     fontWeight: FontWeight.bold, 
                   ),
                 ),
               ),
               style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 154, 107, 187),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -84,7 +85,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
               onPressed: () => playAnswer(widget.correctWord),
               icon: Icon(
                 Icons.volume_up,
-                color: Colors.black,
+                color: const Color.fromARGB(255, 255, 255, 255),
                 size: 30,
               ),
               label: FittedBox(
@@ -92,13 +93,14 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
                 child: Text(
                   widget.correctWord.answer,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: const Color.fromARGB(255, 255, 255, 255),
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 154, 107, 187),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

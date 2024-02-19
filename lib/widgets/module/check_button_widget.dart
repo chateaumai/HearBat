@@ -17,9 +17,11 @@ class CheckButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: isSelectedWordValid ? onPressed : null, 
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelectedWordValid
-        ? const Color.fromARGB(255, 136, 255, 0)
-        : Colors.grey,
+        backgroundColor: !isCheckingAnswer
+        ? Color.fromARGB(255, 7, 45, 78)
+        : isSelectedWordValid
+          ? Color.fromARGB(255, 19, 233, 0)
+          : Colors.grey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -28,9 +30,9 @@ class CheckButtonWidget extends StatelessWidget {
         elevation: 5,
       ),
       child: Text(
-        isCheckingAnswer ? 'CHECK' : 'NEXT',
+        isCheckingAnswer ? 'CHECK' : 'CONTINUE',
         style: TextStyle(
-          color: Colors.black,
+          color: const Color.fromARGB(255, 255, 255, 255),
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
