@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'module_types/words/word_chapters.dart';
 import 'module_types/sound/sound_chapters.dart';
 import 'module_types/custom/custom_path.dart';
@@ -19,20 +20,58 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                  width: 200, height: 200, 'assets/visuals/HB_Default.png'),
+              SizedBox(
+                width: double.infinity,
+                height: 200,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 30),
+                        Text(
+                          "HearBat",
+                          style: GoogleFonts.londrinaSolid(
+                            textStyle: TextStyle(
+                              fontSize: 100,
+                              color: Color.fromARGB(255, 7, 45, 78),
+                              height: 0.8,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "your hearing companion",
+                          style: GoogleFonts.londrinaSolid(
+                            textStyle: TextStyle(
+                              fontSize: 30,
+                              color: Color.fromARGB(255, 7, 45, 78),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               HomeCardWidget(
-                  cardText: 'Train Words',
-                  description: wordDesc,
-                  destinationPage: WordChapters()),
+                cardText: 'Train Words',
+                description: wordDesc,
+                destinationPage: WordChapters(),
+                image: "assets/visuals/HB_Word.png",
+              ),
               HomeCardWidget(
-                  cardText: 'Train Sounds',
-                  description: soundDesc,
-                  destinationPage: SoundChapters()),
+                cardText: 'Train Sounds',
+                description: soundDesc,
+                destinationPage: SoundChapters(),
+                image: "assets/visuals/HB_Music.png",
+              ),
               HomeCardWidget(
-                  cardText: 'Custom Module Builder',
-                  description: customDesc,
-                  destinationPage: CustomPath()),
+                cardText: 'Custom Module Builder',
+                description: customDesc,
+                destinationPage: CustomPath(),
+                image: "assets/visuals/HB_Custom.png",
+              ),
             ],
           ),
         ),

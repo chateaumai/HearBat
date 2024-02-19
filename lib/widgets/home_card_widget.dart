@@ -5,12 +5,14 @@ class HomeCardWidget extends StatefulWidget {
   final String cardText;
   final String description;
   final Widget destinationPage;
+  final String image;
 
   const HomeCardWidget({
     Key? key,
     required this.cardText,
     required this.description,
     required this.destinationPage,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
     );
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final cardWidth = screenSize.width * 0.9;
@@ -46,27 +48,39 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
           elevation: elevation,
           child: Padding(
             padding: EdgeInsets.all(16.0),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              // Title
-              Text(
-                widget.cardText,
-                style: TextStyle(
-                  fontSize: 20, //
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8), // title and description
-              SizedBox(
-                width: cardWidth * 0.55, // for image on right
-                child: Text(
-                  widget.description,
-                  style: TextStyle(
-                    fontSize: 16,
+            child: Row( 
+              children: [
+                SizedBox(
+                  width: cardWidth * 0.45, 
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.cardText,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        widget.description,
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ]),
+                Expanded( 
+                  child: Image.asset(
+                    widget.image, 
+                    fit: BoxFit.contain, 
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
