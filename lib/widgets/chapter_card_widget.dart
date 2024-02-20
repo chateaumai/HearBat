@@ -58,9 +58,12 @@ class _ChapterCardWidgetState extends State<ChapterCardWidget> {
                     left: 0,
                     right: 0,
                     bottom: cardHeight * 0.4,
-                    child: Image.asset(
-                      widget.image,
-                      fit: BoxFit.contain,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Image.asset(
+                        widget.image,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -69,10 +72,10 @@ class _ChapterCardWidgetState extends State<ChapterCardWidget> {
                     right: 0,
                     // blue box
                     child: Container(
-                      height: cardHeight * 0.4,
+                      height: cardHeight * 0.35,
                       color: Color.fromARGB(255, 7, 45, 78),
                       padding: EdgeInsets.only(
-                          left: 16.0, top: 16.0, right: 16.0, bottom: 16.0),
+                          left: 16.0, top: 10.0, right: 16.0, bottom: 16.0),
                       alignment: Alignment.topLeft,
                       child: AutoSizeText(
                         "Chapter ${widget.chapterNumber + 1}\n${widget.chapterName.toUpperCase()}",
