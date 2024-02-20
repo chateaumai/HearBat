@@ -53,11 +53,15 @@ class _ChapterCardWidgetState extends State<ChapterCardWidget> {
               borderRadius: BorderRadius.circular(12.0),
               child: Stack(
                 children: [
-                  Image.asset(
-                    widget.image,
-                    fit: BoxFit.contain,
-                    width: cardWidth,
-                    height: cardHeight,
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: cardHeight * 0.4,
+                    child: Image.asset(
+                      widget.image,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   Positioned(
                     bottom: 0,
