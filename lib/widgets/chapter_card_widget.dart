@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ChapterCardWidget extends StatefulWidget {
   final String chapterName;
   final int chapterNumber;
+  final String image;
   final Widget destinationPage;
 
   const ChapterCardWidget({
     Key? key,
     required this.chapterName,
     required this.chapterNumber,
+    required this.image,
     required this.destinationPage,
   }) : super(key: key);
 

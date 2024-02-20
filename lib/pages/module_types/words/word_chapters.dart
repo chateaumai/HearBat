@@ -6,12 +6,12 @@ import '../../../widgets/chapter_card_widget.dart';
 class WordChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<String> chapters = [
-      "Beginner Foundations",
-      "Intermediate Progress",
-      "Advanced Exploration",
-      "Proficient Application",
-      "Expert Mastery",
+    List<Map<String, String>> chapters = [
+      {"name": "Beginner Foundations", "image": "assets/visuals"},
+      {"name": "Intermediate Progress", "image": "assets/visuals"},
+      {"name": "Advanced Exploration", "image": "assets/visuals"},
+      {"name": "Proficient Application", "image": "assets/visuals"},
+      {"name": "Expert Mastery", "image": "assets/visuals"},
     ];
 
     return Scaffold(
@@ -24,9 +24,10 @@ class WordChapters extends StatelessWidget {
           SizedBox(height: 10.0),
           ...List.generate(chapters.length, (index) {
             return ChapterCardWidget(
-              chapterName: chapters[index],
+              chapterName: chapters[index]["name"]!,
               chapterNumber: index,
-              destinationPage: WordPath(chapter: chapters[index]),
+              image: chapters[index]["image"]!,
+              destinationPage: WordPath(chapter: chapters[index]["name"]!),
             );
           }),
           SizedBox(height: 10.0),
