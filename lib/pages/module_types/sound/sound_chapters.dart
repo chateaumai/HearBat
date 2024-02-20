@@ -6,10 +6,10 @@ import '../../../widgets/chapter_card_widget.dart';
 class SoundChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<String> chapters = [
-      "Home Sounds",
-      "Music Sounds",
-      "Nature Sounds",
+    List<Map<String, String>> chapters = [
+      {"name": "Home Sounds", "image": "assets/visuals"},
+      {"name": "Music Sounds", "image": "assets/visuals"},
+      {"name": "Nature Sounds", "image": "assets/visuals"},
     ];
 
     return Scaffold(
@@ -22,9 +22,10 @@ class SoundChapters extends StatelessWidget {
           SizedBox(height: 10.0),
           ...List.generate(chapters.length, (index) {
             return ChapterCardWidget(
-              chapterName: chapters[index],
+              chapterName: chapters[index]["name"]!,
               chapterNumber: index,
-              destinationPage: SoundPath(chapter: chapters[index]), 
+              image: chapters[index]["image"]!,
+              destinationPage: SoundPath(chapter: chapters[index]["name"]!), 
             );
           }),
           SizedBox(height: 10.0),
