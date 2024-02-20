@@ -18,10 +18,10 @@ Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
     // Sound Chapters
     case "Home Sounds":
       return chapter1soundModules;
-    /* case "Music Sounds":
+    case "Music Sounds":
       return chapter2soundModules;
     case "Nature Sounds":
-      return chapter3soundModules; */
+      return chapter3soundModules;
 
     default:
       return {}; // Return an empty map if none of the cases match
