@@ -7,11 +7,26 @@ class WordChapters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, String>> chapters = [
-      {"name": "Beginner Foundations", "image": "assets/visuals"},
-      {"name": "Intermediate Progress", "image": "assets/visuals"},
-      {"name": "Advanced Exploration", "image": "assets/visuals"},
-      {"name": "Proficient Application", "image": "assets/visuals"},
-      {"name": "Expert Mastery", "image": "assets/visuals"},
+      {
+        "name": "Beginner Foundations",
+        "image": "assets/visuals/HBWordsChapterOne.png"
+      },
+      {
+        "name": "Intermediate Progress",
+        "image": "assets/visuals/HB_WordsChapterTwo.png"
+      },
+      {
+        "name": "Advanced Exploration",
+        "image": "assets/visuals/HBWordsChapterThree.png"
+      },
+      {
+        "name": "Proficient Application",
+        "image": "assets/visuals/HBWordsChapterFour.png"
+      },
+      {
+        "name": "Expert Mastery",
+        "image": "assets/visuals/HBWordsChapterFive.png"
+      },
     ];
 
     return Scaffold(

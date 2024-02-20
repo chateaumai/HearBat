@@ -48,27 +48,33 @@ class _ChapterCardWidgetState extends State<ChapterCardWidget> {
           height: cardHeight,
           child: Card(
             elevation: elevation,
-            // this is for respect to the rounded border of the card
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12.0),
               child: Stack(
                 children: [
+                  Image.asset(
+                    widget.image,
+                    fit: BoxFit.contain,
+                    width: cardWidth,
+                    height: cardHeight,
+                  ),
                   Positioned(
                     bottom: 0,
                     left: 0,
                     right: 0,
                     // blue box
                     child: Container(
-                      height: cardHeight * 0.4, 
+                      height: cardHeight * 0.4,
                       color: Color.fromARGB(255, 7, 45, 78),
-                      padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), 
-                      alignment: Alignment.topLeft, 
+                      padding:
+                          EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+                      alignment: Alignment.topLeft,
                       child: Text(
                         "Chapter ${widget.chapterNumber + 1}\n${widget.chapterName.toUpperCase()}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white, 
+                          color: Colors.white,
                         ),
                       ),
                     ),
