@@ -186,6 +186,7 @@ class ProfilePageState extends State<ProfilePage> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Column(
                             children: [
+                              SizedBox(height: 10.0),
                               for (int i = 4; i < 8; i++)
                                 ListTile(
                                   title: Text(

@@ -45,7 +45,7 @@ class CustomModuleCard extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20), 
+              SizedBox(height: 22), 
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 child: Column(
