@@ -291,6 +291,101 @@ final List<AnswerGroup> chapter1module3SoundGroups = [
           "assets/visuals/home/garbage disposal.png")),
 ];
 
+final List<AnswerGroup> chapter1module4SoundGroups = [
+  AnswerGroup(
+      Answer("Ice Dispenser", "audio/sounds/home/ice dispenser.wav",
+          "assets/visuals/home/ice dispenser.png"),
+      Answer("Wind Chimes", "audio/sounds/home/wind chimes.wav",
+          "assets/visuals/home/wind chimes.png"),
+      Answer("Electric Shaver", "audio/sounds/home/electric shaver.wav",
+          "assets/visuals/home/electric shaver.png"),
+      Answer("Toilet Flush", "audio/sounds/home/toilet flush.wav",
+          "assets/visuals/home/toilet flush.png")),
+  AnswerGroup(
+      Answer("Shower Curtains", "audio/sounds/home/shower curtains.mp3",
+          "assets/visuals/home/shower curtains.png"),
+      Answer("Dog Bark", "audio/sounds/home/dog bark.wav",
+          "assets/visuals/home/dog bark.png"),
+      Answer("Doorbell", "audio/sounds/home/doorbell.wav",
+          "assets/visuals/home/doorbell emoji.png"),
+      Answer("Pencil Writing", "audio/sounds/home/pencil writing.wav",
+          "assets/visuals/home/pencil writing.png")),
+  AnswerGroup(
+      Answer("Washing Machine", "audio/sounds/home/washing machine.wav",
+          "assets/visuals/home/washing machine.png"),
+      Answer("Garbage Disposal", "audio/sounds/home/garbage disposal.wav",
+          "assets/visuals/home/garbage disposal.png"),
+      Answer("Cat Meow", "audio/sounds/home/cat meow.wav",
+          "assets/visuals/home/cat meow.png"),
+      Answer("Mouse Click", "audio/sounds/home/mouse click.wav",
+          "assets/visuals/home/mouse click.png")),
+  AnswerGroup(
+      Answer("Printer", "audio/sounds/home/printer.wav",
+          "assets/visuals/home/printer emoji.png"),
+      Answer("Vacuum", "audio/sounds/home/vacuum.wav",
+          "assets/visuals/home/vacuum.png"),
+      Answer("Book Page Flipping", "audio/sounds/home/book page flipping.wav",
+          "assets/visuals/home/book page flipping.png"),
+      Answer("Microwave", "audio/sounds/home/microwave.wav",
+          "assets/visuals/home/microwave.png")),
+  AnswerGroup(
+      Answer("Knife Sharpen", "audio/sounds/home/knife sharpen.wav",
+          "assets/visuals/home/knife sharpening.png"),
+      Answer(
+          "Computer Keyboard Clicking",
+          "audio/sounds/home/computer keyboard clicking.wav",
+          "assets/visuals/home/keyboard.png"),
+      Answer("Alarm Clock Beep", "audio/sounds/home/alarm clock beep.wav",
+          "assets/visuals/home/alarm clock.png"),
+      Answer("Telephone Ringing", "audio/sounds/home/telephone ringing.wav",
+          "assets/visuals/home/telephone.png")),
+  AnswerGroup(
+      Answer("Clock Ticking", "audio/sounds/home/clock ticking.wav",
+          "assets/visuals/home/clock ticking.png"),
+      Answer("Cutting Paper", "audio/sounds/home/cutting paper.wav",
+          "assets/visuals/home/cutting paper emoji.png"),
+      Answer("Door Close", "audio/sounds/home/door close.wav",
+          "assets/visuals/home/door close emoji.png"),
+      Answer("Kettle Whistling", "audio/sounds/home/kettle whistling.wav",
+          "assets/visuals/home/kettle whistling.png")),
+  AnswerGroup(
+      Answer("Toothbrush Brushing", "audio/sounds/home/toothbrush brushing.wav",
+          "assets/visuals/home/toothbrush brushing.png"),
+      Answer("Shower Curtains", "audio/sounds/home/shower curtains.mp3",
+          "assets/visuals/home/shower curtains.png"),
+      Answer("Ice Dispenser", "audio/sounds/home/ice dispenser.wav",
+          "assets/visuals/home/ice dispenser.png"),
+      Answer("Mouse Click", "audio/sounds/home/mouse click.wav",
+          "assets/visuals/home/mouse click.png")),
+  AnswerGroup(
+      Answer("Washing Machine", "audio/sounds/home/washing machine.wav",
+          "assets/visuals/home/washing machine.png"),
+      Answer("Vacuum", "audio/sounds/home/vacuum.wav",
+          "assets/visuals/home/vacuum.png"),
+      Answer("Garbage Disposal", "audio/sounds/home/garbage disposal.wav",
+          "assets/visuals/home/garbage disposal.png"),
+      Answer("Electric Shaver", "audio/sounds/home/electric shaver.wav",
+          "assets/visuals/home/electric shaver.png")),
+  AnswerGroup(
+      Answer("Doorbell", "audio/sounds/home/doorbell.wav",
+          "assets/visuals/home/doorbell emoji.png"),
+      Answer("Alarm Clock Beep", "audio/sounds/home/alarm clock beep.wav",
+          "assets/visuals/home/alarm clock.png"),
+      Answer("Dog Bark", "audio/sounds/home/dog bark.wav",
+          "assets/visuals/home/dog bark.png"),
+      Answer("Toilet Flush", "audio/sounds/home/toilet flush.wav",
+          "assets/visuals/home/toilet flush.png")),
+  AnswerGroup(
+      Answer("Pencil Writing", "audio/sounds/home/pencil writing.wav",
+          "assets/visuals/home/pencil writing.png"),
+      Answer("Printer", "audio/sounds/home/printer.wav",
+          "assets/visuals/home/printer emoji.png"),
+      Answer("Cutting Paper", "audio/sounds/home/cutting paper.wav",
+          "assets/visuals/home/cutting paper emoji.png"),
+      Answer("Book Page Flipping", "audio/sounds/home/book page flipping.wav",
+          "assets/visuals/home/book page flipping.png")),
+];
+
 final List<AnswerGroup> chapter2module1SoundGroups = [
   AnswerGroup(
       Answer("Piano", "audio/sounds/music/piano.wav",
@@ -568,6 +663,99 @@ final List<AnswerGroup> chapter2module3SoundGroups = [
           "assets/visuals/music/drums.png"),
       Answer("Xylophone", "audio/sounds/music/xylophone.wav",
           "assets/visuals/music/xylophone.png")),
+];
+
+final List<AnswerGroup> chapter2module4SoundGroups = [
+  AnswerGroup(
+      Answer("Mandolin", "audio/sounds/music/mandolin.wav",
+          "assets/visuals/music/mandolin.png"),
+      Answer("Electric Guitar", "audio/sounds/music/electric guitar.wav",
+          "assets/visuals/music/electric guitar.png"),
+      Answer("Recorder", "audio/sounds/music/recorder.wav",
+          "assets/visuals/music/recorder.png"),
+      Answer("Bongo Drums", "audio/sounds/music/bongo drums.wav",
+          "assets/visuals/music/bongo drums.png")),
+  AnswerGroup(
+      Answer("Tuba", "audio/sounds/music/tuba.wav",
+          "assets/visuals/music/tuba.png"),
+      Answer("Harp", "audio/sounds/music/harp.wav",
+          "assets/visuals/music/harp.png"),
+      Answer("Oboe", "audio/sounds/music/oboe.wav",
+          "assets/visuals/music/oboe.png"),
+      Answer("Violin", "audio/sounds/music/violin.wav",
+          "assets/visuals/music/violin.png")),
+  AnswerGroup(
+      Answer("Piano", "audio/sounds/music/piano.wav",
+          "assets/visuals/music/piano.png"),
+      Answer("Clarinet", "audio/sounds/music/clarinet.wav",
+          "assets/visuals/music/clarinet.png"),
+      Answer("Saxophone", "audio/sounds/music/saxophone.wav",
+          "assets/visuals/music/saxophone.png"),
+      Answer("French Horn", "audio/sounds/music/french horn.wav",
+          "assets/visuals/music/frenchhorn.png")),
+  AnswerGroup(
+      Answer("Flute", "audio/sounds/music/flute.wav",
+          "assets/visuals/music/flute.png"),
+      Answer("Piccolo", "audio/sounds/music/piccolo.wav",
+          "assets/visuals/music/piccolo.png"),
+      Answer("Trombone", "audio/sounds/music/trombone.wav",
+          "assets/visuals/music/trombone.png"),
+      Answer("Conga Drums", "audio/sounds/music/conga drums.wav",
+          "assets/visuals/music/conga drums.png")),
+  AnswerGroup(
+      Answer("Cello", "audio/sounds/music/cello.wav",
+          "assets/visuals/music/cello.png"),
+      Answer("Accordion", "audio/sounds/music/accordion.wav",
+          "assets/visuals/music/accordion.png"),
+      Answer("Harmonica", "audio/sounds/music/harmonica.wav",
+          "assets/visuals/music/harmonica.png"),
+      Answer("Drums", "audio/sounds/music/drums.wav",
+          "assets/visuals/music/drums.png")),
+  AnswerGroup(
+      Answer("Xylophone", "audio/sounds/music/xylophone.wav",
+          "assets/visuals/music/xylophone.png"),
+      Answer("Banjo", "audio/sounds/music/banjo.wav",
+          "assets/visuals/music/banjo.png"),
+      Answer("Acoustic Guitar", "audio/sounds/music/acoustic guitar.wav",
+          "assets/visuals/music/acoustic guitar.png"),
+      Answer("Ukulele", "audio/sounds/music/ukelele.wav",
+          "assets/visuals/music/ukelele.png")),
+  AnswerGroup(
+      Answer("Saxophone", "audio/sounds/music/saxophone.wav",
+          "assets/visuals/music/saxophone.png"),
+      Answer("Flute", "audio/sounds/music/flute.wav",
+          "assets/visuals/music/flute.png"),
+      Answer("Mandolin", "audio/sounds/music/mandolin.wav",
+          "assets/visuals/music/mandolin.png"),
+      Answer("Violin", "audio/sounds/music/violin.wav",
+          "assets/visuals/music/violin.png")),
+  AnswerGroup(
+      Answer("Piano", "audio/sounds/music/piano.wav",
+          "assets/visuals/music/piano.png"),
+      Answer("Electric Guitar", "audio/sounds/music/electric guitar.wav",
+          "assets/visuals/music/electric guitar.png"),
+      Answer("Clarinet", "audio/sounds/music/clarinet.wav",
+          "assets/visuals/music/clarinet.png"),
+      Answer("Tuba", "audio/sounds/music/tuba.wav",
+          "assets/visuals/music/tuba.png")),
+  AnswerGroup(
+      Answer("Harp", "audio/sounds/music/harp.wav",
+          "assets/visuals/music/harp.png"),
+      Answer("Recorder", "audio/sounds/music/recorder.wav",
+          "assets/visuals/music/recorder.png"),
+      Answer("Bongo Drums", "audio/sounds/music/bongo drums.wav",
+          "assets/visuals/music/bongo drums.png"),
+      Answer("Conga Drums", "audio/sounds/music/conga drums.wav",
+          "assets/visuals/music/conga drums.png")),
+  AnswerGroup(
+      Answer("Oboe", "audio/sounds/music/oboe.wav",
+          "assets/visuals/music/oboe.png"),
+      Answer("French Horn", "audio/sounds/music/french horn.wav",
+          "assets/visuals/music/frenchhorn.png"),
+      Answer("Trombone", "audio/sounds/music/trombone.wav",
+          "assets/visuals/music/trombone.png"),
+      Answer("Xylophone", "audio/sounds/music/xylophone.wav",
+          "assets/visuals/music/xylophone.png"))
 ];
 
 final List<AnswerGroup> chapter3module1SoundGroups = [
@@ -859,11 +1047,107 @@ final List<AnswerGroup> chapter3module3SoundGroups = [
           "assets/visuals/nature/mosquito.png")),
 ];
 
+final List<AnswerGroup> chapter3module4SoundGroups = [
+  AnswerGroup(
+      Answer("Elephant", "audio/sounds/nature/elephant.wav",
+          "assets/visuals/nature/elephant.png"),
+      Answer("Hawk", "audio/sounds/nature/hawk.wav",
+          "assets/visuals/nature/hawk.png"),
+      Answer("Cicadas", "audio/sounds/nature/cicadas.wav",
+          "assets/visuals/nature/cicadas.png"),
+      Answer("River Flow", "audio/sounds/nature/river flow.wav",
+          "assets/visuals/nature/river flow.png")),
+  AnswerGroup(
+      Answer("Woodpecker", "audio/sounds/nature/woodpecker.wav",
+          "assets/visuals/nature/woodpecker.png"),
+      Answer("Rain", "audio/sounds/nature/rain.wav",
+          "assets/visuals/nature/rain.png"),
+      Answer("Frog", "audio/sounds/nature/frog.wav",
+          "assets/visuals/nature/frog.png"),
+      Answer("Sheep", "audio/sounds/nature/sheep.wav",
+          "assets/visuals/nature/sheep.png")),
+  AnswerGroup(
+      Answer("Cat Meow", "audio/sounds/nature/cat meow.wav",
+          "assets/visuals/nature/cat.png"),
+      Answer("Duck", "audio/sounds/nature/duck.wav",
+          "assets/visuals/nature/duck.png"),
+      Answer("Mosquito", "audio/sounds/nature/mosquito.wav",
+          "assets/visuals/nature/mosquito.png"),
+      Answer("Wind", "audio/sounds/nature/wind.wav",
+          "assets/visuals/nature/wind.png")),
+  AnswerGroup(
+      Answer("Owl Hoot", "audio/sounds/nature/owl hoot.wav",
+          "assets/visuals/nature/owl.png"),
+      Answer("Campfire", "audio/sounds/nature/campfire.wav",
+          "assets/visuals/nature/campfire.png"),
+      Answer("Thunder", "audio/sounds/nature/thunder.wav",
+          "assets/visuals/nature/thunder.png"),
+      Answer("Rock Skip", "audio/sounds/nature/rock skip.wav",
+          "assets/visuals/nature/rock skipping.png")),
+  AnswerGroup(
+      Answer("Crickets", "audio/sounds/nature/crickets.wav",
+          "assets/visuals/nature/crickets.png"),
+      Answer("Turkey", "audio/sounds/nature/turkey.wav",
+          "assets/visuals/nature/turkey.png"),
+      Answer("Pig", "audio/sounds/nature/pig.wav",
+          "assets/visuals/nature/pig.png"),
+      Answer("Bird", "audio/sounds/nature/bird.wav",
+          "assets/visuals/nature/bird.png")),
+  AnswerGroup(
+      Answer("Snake", "audio/sounds/nature/snake.wav",
+          "assets/visuals/nature/snake.png"),
+      Answer("Dog", "audio/sounds/nature/dog.wav",
+          "assets/visuals/nature/dog.png"),
+      Answer("Rocks Falling", "audio/sounds/nature/rocks falling.wav",
+          "assets/visuals/nature/rockslide.png"),
+      Answer("Coyote", "audio/sounds/nature/coyote.wav",
+          "assets/visuals/nature/coyote.png")),
+  AnswerGroup(
+      Answer(
+          "Walking Through Leaves",
+          "audio/sounds/nature/walking through leaves.wav",
+          "assets/visuals/nature/walking through leaves.png"),
+      Answer("Bird", "audio/sounds/nature/bird.wav",
+          "assets/visuals/nature/bird.png"),
+      Answer("Elephant", "audio/sounds/nature/elephant.wav",
+          "assets/visuals/nature/elephant.png"),
+      Answer("Campfire", "audio/sounds/nature/campfire.wav",
+          "assets/visuals/nature/campfire.png")),
+  AnswerGroup(
+      Answer("Rain", "audio/sounds/nature/rain.wav",
+          "assets/visuals/nature/rain.png"),
+      Answer("Owl Hoot", "audio/sounds/nature/owl hoot.wav",
+          "assets/visuals/nature/owl.png"),
+      Answer("Frog", "audio/sounds/nature/frog.wav",
+          "assets/visuals/nature/frog.png"),
+      Answer("Crickets", "audio/sounds/nature/crickets.wav",
+          "assets/visuals/nature/crickets.png")),
+  AnswerGroup(
+      Answer("Dog", "audio/sounds/nature/dog.wav",
+          "assets/visuals/nature/dog.png"),
+      Answer("Cicadas", "audio/sounds/nature/cicadas.wav",
+          "assets/visuals/nature/cicadas.png"),
+      Answer("Snake", "audio/sounds/nature/snake.wav",
+          "assets/visuals/nature/snake.png"),
+      Answer("Turkey", "audio/sounds/nature/turkey.wav",
+          "assets/visuals/nature/turkey.png")),
+  AnswerGroup(
+      Answer("Woodpecker", "audio/sounds/nature/woodpecker.wav",
+          "assets/visuals/nature/woodpecker.png"),
+      Answer("Sheep", "audio/sounds/nature/sheep.wav",
+          "assets/visuals/nature/sheep.png"),
+      Answer("Pig", "audio/sounds/nature/pig.wav",
+          "assets/visuals/nature/pig.png"),
+      Answer("Mosquito", "audio/sounds/nature/mosquito.wav",
+          "assets/visuals/nature/mosquito.png"))
+];
+
 // Map of sound modules
 final Map<String, List<AnswerGroup>> chapter1soundModules = {
   'Module 1': chapter1module1SoundGroups,
   'Module 2': chapter1module2SoundGroups,
   'Module 3': chapter1module3SoundGroups,
+  'Module 4': chapter1module4SoundGroups,
   // Add more modules as needed
 };
 
@@ -871,6 +1155,7 @@ final Map<String, List<AnswerGroup>> chapter2soundModules = {
   'Module 1': chapter2module1SoundGroups,
   'Module 2': chapter2module2SoundGroups,
   'Module 3': chapter2module3SoundGroups,
+  'Module 4': chapter2module4SoundGroups,
   // Add more modules as needed
 };
 
@@ -878,5 +1163,6 @@ final Map<String, List<AnswerGroup>> chapter3soundModules = {
   'Module 1': chapter3module1SoundGroups,
   'Module 2': chapter3module2SoundGroups,
   'Module 3': chapter3module3SoundGroups,
+  'Module 4': chapter3module4SoundGroups,
   // Add more modules as needed
 };
