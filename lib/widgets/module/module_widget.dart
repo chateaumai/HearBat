@@ -63,6 +63,7 @@ class _ModulePageState extends State<ModuleWidget> {
       appBar: moduleCompleted
           ? null
           : AppBar(
+              surfaceTintColor: Colors.transparent,
               leading: Padding(
                 padding: const EdgeInsets.only(left: 18.0),
                 child: IconButton(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 class WordCard extends StatefulWidget {
   final String word;
   final Function(String word) onWordTap;
@@ -29,10 +31,11 @@ class _WordCardState extends State<WordCard> {
             mainAxisAlignment: MainAxisAlignment.start, 
             children: <Widget>[
               Expanded(
-                child: Text(
+                child: AutoSizeText(
                   widget.word, 
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
               ),
               // this is just to push the expanded widget left

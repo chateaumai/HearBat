@@ -106,73 +106,83 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //SizedBox(height: 20),
-        // play button
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30.0, 20.0, 0.0, 20.0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "What do you hear?",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: Color.fromARGB(255, 7, 45, 78)
-              ),
-            ),
-          ),
-        ),
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 7, 45, 78),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            minimumSize: Size(355, 90),
-          ),
-          onPressed: () => playAnswer(),
-          icon: Icon(
-            Icons.volume_up,
-            color: Colors.white,
-            size: 50,
-          ),
-          label: Text(''),
-        ),
-        // space between play button and 4 cards
-        SizedBox(height: 20),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, 
-                crossAxisSpacing: 20, // horizontal spacing
-                mainAxisSpacing: 15, // vertical spacing 
-                childAspectRatio: 150 / 180, 
-              ),
-              itemCount: 4, 
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                Answer word;
-                switch (index) {
-                  case 0:
-                    word = currentGroup.answer1;
-                  case 1:
-                    word = currentGroup.answer2;
-                  case 2:
-                    word = currentGroup.answer3;
-                  case 3:
-                    word = currentGroup.answer4;
-                  default:
-                    word = currentGroup.answer1; 
-                }
-                return WordButton(
-                  word: word,
-                  isWord: widget.isWord,
-                  selectedWord: selectedWord,
-                  onSelected: handleSelection,
-                );
-              },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                //SizedBox(height: 20),
+                // play button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30.0, 20.0, 0.0, 20.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "What do you hear?",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        color: Color.fromARGB(255, 7, 45, 78)
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 7, 45, 78),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      minimumSize: Size(355, 90),
+                    ),
+                    onPressed: () => playAnswer(),
+                    icon: Icon(
+                      Icons.volume_up,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                    label: Text(''),
+                  ),
+                ),
+                // space between play button and 4 cards
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, 
+                      crossAxisSpacing: 20, // horizontal spacing
+                      mainAxisSpacing: 15, // vertical spacing 
+                      childAspectRatio: 150 / 180, 
+                    ),
+                    itemCount: 4, 
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      Answer word;
+                      switch (index) {
+                        case 0:
+                          word = currentGroup.answer1;
+                        case 1:
+                          word = currentGroup.answer2;
+                        case 2:
+                          word = currentGroup.answer3;
+                        case 3:
+                          word = currentGroup.answer4;
+                        default:
+                          word = currentGroup.answer1; 
+                      }
+                      return WordButton(
+                        word: word,
+                        isWord: widget.isWord,
+                        selectedWord: selectedWord,
+                        onSelected: handleSelection,
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -190,7 +200,6 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                       top: 50,
                       left: 0,
                       right: 0,
-                      // needs to be changed for images
                       child: IncorrectCardWidget(
                         incorrectWord: incorrectWord!,
                         correctWord: correctWord,
