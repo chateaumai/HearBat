@@ -20,7 +20,7 @@ class CheckButtonWidget extends StatelessWidget {
         backgroundColor: !isCheckingAnswer
         ? Color.fromARGB(255, 7, 45, 78)
         : isSelectedWordValid
-          ? Color.fromARGB(255, 19, 233, 0)
+          ? Color.fromARGB(255, 94, 224, 82)
           : Colors.grey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

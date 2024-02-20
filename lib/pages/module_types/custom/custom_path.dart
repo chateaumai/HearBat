@@ -101,7 +101,7 @@ class CustomPathState extends State<CustomPath> {
                 child: ElevatedButton(
                   onPressed: _navigateToCreateModule,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 117, 210, 109),
+                    backgroundColor: Color.fromARGB(255, 94, 224, 82),
                     padding: EdgeInsets.symmetric(vertical: 20.0,),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8), 

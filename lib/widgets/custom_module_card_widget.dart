@@ -54,13 +54,13 @@ class CustomModuleCard extends StatelessWidget {
                     ElevatedButton(
                       onPressed: onStart,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 0, 136, 255),
+                        backgroundColor: Color.fromARGB(255, 154, 107, 187),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8), 
                         ),
                       ),
-                      child: Text('Start', style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: Text('Start', style: TextStyle(fontSize: 16)),
                     ),
                     SizedBox(height: 5),
                     ElevatedButton(
@@ -70,9 +70,9 @@ class CustomModuleCard extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: EdgeInsets.zero, // Remove padding to allow the icon to center
+                        padding: EdgeInsets.zero, 
                       ),
-                      child: Icon(Icons.delete, color: Color.fromARGB(255, 100, 100, 100), size: 24), // Adjust size to your preference
+                      child: Icon(Icons.delete, color: Color.fromARGB(255, 100, 100, 100), size: 24), 
                     ),
                   ],
                 ),

@@ -37,8 +37,8 @@ class _MyNavBarState extends State<MyNavBar> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.face),
-            label: 'Profile',
+            icon: Icon(Icons.settings),
+            label: 'Setting',
           ),
         ],
       ),

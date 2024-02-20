@@ -105,7 +105,7 @@ class ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: TopBar(
-      title: 'Profile',
+      title: 'Setting',
     ),
     body: Column(
       children: [
@@ -142,7 +142,7 @@ class ProfilePageState extends State<ProfilePage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 176, 59, 255),
+                        backgroundColor: Color.fromARGB(255, 154, 107, 187),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8), 
@@ -246,7 +246,7 @@ class ProfilePageState extends State<ProfilePage> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 176, 59, 255),
+                      backgroundColor: Color.fromARGB(255, 154, 107, 187),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8), 

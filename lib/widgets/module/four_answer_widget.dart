@@ -117,7 +117,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 28,
-                color: Color.fromARGB(255, 0, 0, 0)
+                color: Color.fromARGB(255, 7, 45, 78)
               ),
             ),
           ),
@@ -182,12 +182,12 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
             if (isAnswerFalse) 
               Container(
                 width: double.infinity,
-                height: 250,
+                height: 220,
                 color: Color.fromARGB(255, 255, 255, 255),
                 child: Stack(
                   children: [
                     Positioned(
-                      top: 92,
+                      top: 50,
                       left: 0,
                       right: 0,
                       // needs to be changed for images
@@ -199,7 +199,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                       ),
                     ),
                     Positioned(
-                      top: 60,
+                      top: 20,
                       left: 0,
                       right: 0,
                       child: Row(
@@ -212,6 +212,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 7, 45, 78),
                               ),
                             ),
                           ),
@@ -220,6 +221,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 7, 45, 78),
                             ),
                           ),
                         ],

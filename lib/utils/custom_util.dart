@@ -319,10 +319,12 @@ class CustomUtilState extends State<CustomUtil> {
                   'Add Set', 
                   style: TextStyle(
                     color: Colors.white, 
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, 
+                  backgroundColor: Color.fromARGB(255, 94, 224, 82),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16), 
                   ),
@@ -335,7 +337,7 @@ class CustomUtilState extends State<CustomUtil> {
             child: ElevatedButton(
               onPressed: _saveModule,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 201, 168, 255), 
+                backgroundColor: Color.fromARGB(255, 154, 107, 187), 
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16), 
                 ),
@@ -344,7 +346,9 @@ class CustomUtilState extends State<CustomUtil> {
               child: Text(
                 "Save Module",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                 ),
               ),
             ),
