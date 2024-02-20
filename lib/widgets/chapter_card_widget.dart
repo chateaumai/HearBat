@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ChapterCardWidget extends StatefulWidget {
   final String chapterName;
@@ -66,13 +67,13 @@ class _ChapterCardWidgetState extends State<ChapterCardWidget> {
                     child: Container(
                       height: cardHeight * 0.4,
                       color: Color.fromARGB(255, 7, 45, 78),
-                      padding:
-                          EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+                      padding: EdgeInsets.only(
+                          left: 16.0, top: 16.0, right: 16.0, bottom: 16.0),
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: AutoSizeText(
                         "Chapter ${widget.chapterNumber + 1}\n${widget.chapterName.toUpperCase()}",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

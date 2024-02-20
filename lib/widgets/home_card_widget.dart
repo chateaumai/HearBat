@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:math';
 
 class HomeCardWidget extends StatefulWidget {
@@ -32,7 +33,7 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final cardWidth = screenSize.width * 0.9;
-    final cardHeight = max((screenSize.height * 0.65) / 3, 120.0);
+    final cardHeight = max((screenSize.height * 0.65) / 3, 200.0);
 
     return GestureDetector(
       onTapDown: (_) => setState(() => elevation = 1.0),
@@ -56,15 +57,16 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      AutoSizeText(
                         widget.cardText,
+                        maxLines: 2,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text(
+                      AutoSizeText(
                         widget.description,
                         style: TextStyle(
                           fontSize: 15,
