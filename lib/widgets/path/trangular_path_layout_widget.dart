@@ -48,8 +48,14 @@ class TriangularPathLayout extends StatelessWidget {
       xOffset = initialXOffset;
       yOffset += 330;
     }
+    double totalHeight = yOffset;
 
-    return Stack(children: positionedItems);
+    return SingleChildScrollView(
+      child: Container(
+        height: totalHeight,
+        child: Stack(children: positionedItems)
+      ),
+    );
   }
 
   Positioned _buildPositionedItem(BuildContext context, IndexedWidgetBuilder itemBuilder, double left, double top, int index) {
