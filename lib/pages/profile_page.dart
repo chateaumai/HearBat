@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../utils/google_tts_util.dart';
@@ -18,12 +19,12 @@ class ProfilePageState extends State<ProfilePage> {
 
   List<String> voiceTypes = [
     "en-US-Studio-O",
-    "en-US-Neural2-C",
+    // "en-US-Neural2-C",
     "en-GB-Neural2-C",
     "en-IN-Neural2-A",
     "en-AU-Neural2-C",
     "en-US-Studio-Q",
-    "en-US-Neural2-D",
+    // "en-US-Neural2-D",
     "en-GB-Neural2-B",
     "en-IN-Neural2-B",
     "en-AU-Neural2-B",
@@ -31,12 +32,12 @@ class ProfilePageState extends State<ProfilePage> {
 
   Map<String, String> voiceTypeTitles = {
     "en-US-Studio-O": "US1 Female",
-    "en-US-Neural2-C": "US2 Female",
+    //"en-US-Neural2-C": "US2 Female",
     "en-GB-Neural2-C": "UK Female",
     "en-IN-Neural2-A": "IN Female",
     "en-AU-Neural2-C": "AU Female",
     "en-US-Studio-Q": "US1 Male",
-    "en-US-Neural2-D": "US2 Male",
+    // "en-US-Neural2-D": "US2 Male",
     "en-GB-Neural2-B": "UK Male",
     "en-IN-Neural2-B": "IN Male",
     "en-AU-Neural2-B": "AU Male",
@@ -102,168 +103,277 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text("Select Voice Type",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                if (_voicePreference != null) {
-                  _googleTTSUtil.speak(
-                      "Hello this is how I sound", _voicePreference!);
-                }
-              },
-              child: Text('Test Audio'),
+  return Scaffold(
+    appBar: TopBar(
+      title: 'Profile',
+    ),
+    body: Column(
+      children: [
+        Expanded(
+          flex: 6,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Voice Type",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_voicePreference != null) {
+                          _googleTTSUtil.speak("Hello this is how I sound", _voicePreference!);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 176, 59, 255),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8), 
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        child: Text('Test',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10.0),
+                              for (int i = 0; i < 4; i++)
+                                ListTile(
+                                  title: Text(
+                                    voiceTypeTitles[voiceTypes[i]] ?? "",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  leading: Radio<String>(
+                                    value: voiceTypes[i],
+                                    groupValue: _voicePreference,
+                                    onChanged: (String? value) {
+                                      _updatePreference('voicePreference', value!);
+                                    },
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Column(
+                            children: [
+                              for (int i = 4; i < 8; i++)
+                                ListTile(
+                                  title: Text(
+                                    voiceTypeTitles[voiceTypes[i]] ?? "",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  leading: Radio<String>(
+                                    value: voiceTypes[i],
+                                    groupValue: _voicePreference,
+                                    onChanged: (String? value) {
+                                      _updatePreference('voicePreference', value!);
+                                    },
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    for (int i = 0; i < 5; i++)
-                      ListTile(
-                        title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
-                        leading: Radio<String>(
-                          value: voiceTypes[i],
-                          groupValue: _voicePreference,
-                          onChanged: (String? value) {
-                            _updatePreference('voicePreference', value!);
-                          },
+        ),
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Background Sound",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_backgroundSound != 'None') {
+                        String fileName = _backgroundSound.replaceAll(' Sound', '').toLowerCase();
+                        await audioPlayer.play(AssetSource("audio/background/$fileName.mp3"));
+                        await Future.delayed(Duration(seconds: 3));
+                        await audioPlayer.stop();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 176, 59, 255),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8), 
+                      ),
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        child: Text('Test',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  'Rain Sound',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                leading: Radio<String>(
+                                  value: 'Rain Sound',
+                                  groupValue: _backgroundSound,
+                                  onChanged: (String? value) {
+                                    _updatePreference('backgroundSoundPreference', value!);
+                                  },
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'Shop Sound',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                leading: Radio<String>(
+                                  value: 'Shop Sound',
+                                  groupValue: _backgroundSound,
+                                  onChanged: (String? value) {
+                                    _updatePreference('backgroundSoundPreference', value!);
+                                  },
+                                ),
+                              ),
+                              ListTile(
+                                title: Text(
+                                  'None',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                leading: Radio<String>(
+                                  value: 'None',
+                                  groupValue: _backgroundSound,
+                                  onChanged: (String? value) {
+                                    _updatePreference('backgroundSoundPreference', value!);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    for (int i = 5; i < 10; i++)
-                      ListTile(
-                        title: Text(voiceTypeTitles[voiceTypes[i]] ?? ""),
-                        leading: Radio<String>(
-                          value: voiceTypes[i],
-                          groupValue: _voicePreference,
-                          onChanged: (String? value) {
-                            _updatePreference('voicePreference', value!);
-                          },
+                      Expanded(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                'Low',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              leading: Radio<String>(
+                                value: 'Low',
+                                groupValue: _audioVolume,
+                                onChanged: (String? value) {
+                                  _updatePreference('audioVolumePreference', value!);
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'Medium',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              leading: Radio<String>(
+                                value: 'Medium',
+                                groupValue: _audioVolume,
+                                onChanged: (String? value) {
+                                  _updatePreference('audioVolumePreference', value!);
+                                },
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(
+                                'High',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              leading: Radio<String>(
+                                value: 'High',
+                                groupValue: _audioVolume,
+                                onChanged: (String? value) {
+                                  _updatePreference('audioVolumePreference', value!);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Select Background Sound",
-                style: Theme.of(context).textTheme.titleLarge),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (_backgroundSound != 'None') {
-                String fileName =
-                    _backgroundSound.replaceAll(' Sound', '').toLowerCase();
-                await audioPlayer
-                    .play(AssetSource("audio/background/$fileName.mp3"));
-                await Future.delayed(Duration(seconds: 3));
-                await audioPlayer.stop();
-              }
-            },
-            child: Text('Test Background Noise'),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text('Rain Sound'),
-                      leading: Radio<String>(
-                        value: 'Rain Sound',
-                        groupValue: _backgroundSound,
-                        onChanged: (String? value) {
-                          _updatePreference(
-                              'backgroundSoundPreference', value!);
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Shop Sound'),
-                      leading: Radio<String>(
-                        value: 'Shop Sound',
-                        groupValue: _backgroundSound,
-                        onChanged: (String? value) {
-                          _updatePreference(
-                              'backgroundSoundPreference', value!);
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('None'),
-                      leading: Radio<String>(
-                        value: 'None',
-                        groupValue: _backgroundSound,
-                        onChanged: (String? value) {
-                          _updatePreference(
-                              'backgroundSoundPreference', value!);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text('Low'),
-                      leading: Radio<String>(
-                        value: 'Low',
-                        groupValue: _audioVolume,
-                        onChanged: (String? value) {
-                          _updatePreference('audioVolumePreference', value!);
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('Medium'),
-                      leading: Radio<String>(
-                        value: 'Medium',
-                        groupValue: _audioVolume,
-                        onChanged: (String? value) {
-                          _updatePreference('audioVolumePreference', value!);
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: Text('High'),
-                      leading: Radio<String>(
-                        value: 'High',
-                        groupValue: _audioVolume,
-                        onChanged: (String? value) {
-                          _updatePreference('audioVolumePreference', value!);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 }
