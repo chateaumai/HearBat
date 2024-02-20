@@ -107,11 +107,10 @@ class ProfilePageState extends State<ProfilePage> {
     appBar: TopBar(
       title: 'Setting',
     ),
-    body: Column(
-      children: [
-        Expanded(
-          flex: 6,
-          child: Padding(
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
             child: Container(
               width: double.infinity,
@@ -213,10 +212,7 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Padding(
+          Padding(
             padding: const EdgeInsets.all(20.0),
             child: Container(
               width: double.infinity,
@@ -370,8 +366,8 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

@@ -31,6 +31,7 @@ dependencies:
   firebase_remote_config: ^4.3.13
   firebase_analytics: ^10.8.5
   dotted_border: ^2.1.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
