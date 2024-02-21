@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -347,8 +348,9 @@ class ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               ListTile(
-                                title: Text(
+                                title: AutoSizeText(
                                   'Medium',
+                                  maxLines: 1,
                                   style: TextStyle(
                                     fontSize: 14,
                                   ),

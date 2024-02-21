@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import 'package:hearbat/widgets/path/animated_button_widget.dart';
 import 'module/module_widget.dart';
-import '../widgets/path/trangular_path_layout_widget.dart';
+import '../widgets/path/sound_trangular_path_layout_widget.dart';
 
 class SoundModuleListWidget extends StatelessWidget {
   final Map<String, List<AnswerGroup>> modules;
@@ -27,7 +27,7 @@ class SoundModuleListWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: TriangularPathLayout(
+        child: SoundTriangularPathLayout(
           itemCount: moduleList.length,
           itemBuilder: (context, index) {
             final module = moduleList[index];

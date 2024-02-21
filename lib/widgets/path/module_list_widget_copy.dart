@@ -8,8 +8,9 @@ import 'animated_button_widget.dart';
 
 class ModuleListWidget extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
+  final String chapter;
 
-  ModuleListWidget({Key? key, required this.modules}) : super(key: key);
+  ModuleListWidget({Key? key, required this.modules, required this.chapter}) : super(key: key);
 
   @override
   ModuleListWidgetState createState() => ModuleListWidgetState();
@@ -111,6 +112,7 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
           },
           itemSize: 120.0,
           spacing: 80.0,
+          chapter: widget.chapter,
         ),
       ),
     );
