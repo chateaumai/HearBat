@@ -9,12 +9,12 @@ class SoundChapters extends StatelessWidget {
     List<Map<String, String>> chapters = [
       { "name": "Home Sounds",
         "image": "assets/visuals/HBSoundChapterOne.png",
-        "background": "assets/visuals/PathOne.png"
+        "background": "assets/visuals/PathMoon.png"
       },
 
       { "name": "Music Sounds",
         "image": "assets/visuals/HBSoundChapterTwo.png",
-        "background": "assets/visuals/PathTwo.png"
+        "background": "assets/visuals/PathOne.png"
       },
 
       {

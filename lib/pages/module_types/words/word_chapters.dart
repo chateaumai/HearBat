@@ -10,12 +10,12 @@ class WordChapters extends StatelessWidget {
       {
         "name": "Beginner Foundations",
         "image": "assets/visuals/HBWordsChapterOne.png",
-        "background": "assets/visuals/PathOne.png"
+        "background": "assets/visuals/PathMoon.png"
       },
       {
         "name": "Intermediate Progress",
         "image": "assets/visuals/HB_WordsChapterTwo.png",
-        "background": "assets/visuals/PathTwo.png"
+        "background": "assets/visuals/PathOne.png"
       },
       {
         "name": "Advanced Exploration",
