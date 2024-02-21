@@ -6,8 +6,9 @@ import '../../../widgets/top_bar_widget.dart';
 
 class WordPath extends StatefulWidget {
   final String chapter;
+  final String background;
 
-  WordPath({Key? key, required this.chapter}) : super(key: key);
+  WordPath({Key? key, required this.chapter, required this.background}) : super(key: key);
 
   @override
   State<WordPath> createState() => _WordPathState();
@@ -25,14 +26,22 @@ class _WordPathState extends State<WordPath> {
         title: widget.chapter.toUpperCase(),
         leadingIcon: Icons.west,
       ),
-      backgroundColor: const Color.fromARGB(255, 232, 218, 255),
-      body: Column(
-        children: [
-          // circles
-          Expanded(
-            child: ModuleListWidget(modules: modules, chapter: widget.chapter),
-          ),
-        ],
+      // backgroundColor: const Color.fromARGB(255, 232, 218, 255),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(widget.background),
+            fit: BoxFit.cover,
+          )
+        ),
+        child: Column(
+          children: [
+            // circles
+            Expanded(
+              child: ModuleListWidget(modules: modules, chapter: widget.chapter),
+            ),
+          ],
+        ),
       ),
     );
   }

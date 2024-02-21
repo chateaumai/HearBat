@@ -72,7 +72,8 @@ class AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvide
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(),
               padding: EdgeInsets.all(20),
-              backgroundColor: const Color.fromARGB(255, 81, 87, 240),
+              //backgroundColor: const Color.fromARGB(255, 81, 87, 240),
+              backgroundColor: const Color.fromARGB(255, 154, 107, 187),
               elevation: 0,
             ),
             child: GestureDetector(

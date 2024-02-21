@@ -9,23 +9,28 @@ class WordChapters extends StatelessWidget {
     List<Map<String, String>> chapters = [
       {
         "name": "Beginner Foundations",
-        "image": "assets/visuals/HBWordsChapterOne.png"
+        "image": "assets/visuals/HBWordsChapterOne.png",
+        "background": "assets/visuals/PathOne.png"
       },
       {
         "name": "Intermediate Progress",
-        "image": "assets/visuals/HB_WordsChapterTwo.png"
+        "image": "assets/visuals/HB_WordsChapterTwo.png",
+        "background": "assets/visuals/PathTwo.png"
       },
       {
         "name": "Advanced Exploration",
-        "image": "assets/visuals/HBWordsChapterThree.png"
+        "image": "assets/visuals/HBWordsChapterThree.png",
+        "background": "assets/visuals/PathThree.png"
       },
       {
         "name": "Proficient Application",
-        "image": "assets/visuals/HBWordsChapterFour.png"
+        "image": "assets/visuals/HBWordsChapterFour.png",
+        "background": "assets/visuals/PathFour.png"
       },
       {
         "name": "Expert Mastery",
-        "image": "assets/visuals/HBWordsChapterFive.png"
+        "image": "assets/visuals/HBWordsChapterFive.png",
+        "background": "assets/visuals/PathFive.png"
       },
     ];
 
@@ -42,7 +47,7 @@ class WordChapters extends StatelessWidget {
               chapterName: chapters[index]["name"]!,
               chapterNumber: index,
               image: chapters[index]["image"]!,
-              destinationPage: WordPath(chapter: chapters[index]["name"]!),
+              destinationPage: WordPath(chapter: chapters[index]["name"]!, background: chapters[index]["background"]!),
             );
           }),
           SizedBox(height: 10.0),

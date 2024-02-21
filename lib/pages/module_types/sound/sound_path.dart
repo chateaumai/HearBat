@@ -6,8 +6,9 @@ import '../../../widgets/top_bar_widget.dart';
 
 class SoundPath extends StatefulWidget {
   final String chapter;
+  final String background;
 
-  SoundPath({Key? key, required this.chapter}) : super(key: key);
+  SoundPath({Key? key, required this.chapter, required this.background}) : super(key: key);
 
   @override
   State<SoundPath> createState() => _SoundPathState();
@@ -23,13 +24,21 @@ class _SoundPathState extends State<SoundPath> {
         title: widget.chapter.toUpperCase(),
         leadingIcon: Icons.west,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SoundModuleListWidget(
-                modules: modules), // all of the modules for the chapter
-          ),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(widget.background),
+            fit: BoxFit.cover,
+          )
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: SoundModuleListWidget(
+                  modules: modules), 
+            ),
+          ],
+        ),
       ),
     );
   }

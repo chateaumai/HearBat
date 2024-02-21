@@ -47,7 +47,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
         scrolledUnderElevation: 0.0,
         centerTitle: true,
         elevation: 0, 
-        backgroundColor: const Color.fromARGB(255, 232, 218, 255),
+        backgroundColor: Color.fromARGB(255, 232, 218, 255),
       ),
     );
   }

@@ -95,7 +95,8 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
                   margin: EdgeInsets.only(top: 8),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 34, 38, 110),
+                    // color: Color.fromARGB(255, 34, 38, 110),
+                    color: Color.fromARGB(255, 94, 63, 117),
                   ),
                   width: 100.0,
                   height: 100.0,
