@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import 'package:hearbat/utils/background_noise_util.dart';
@@ -106,10 +107,36 @@ class _ModulePageState extends State<ModuleWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Good Job Completing the Module!'),
-        ElevatedButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text('Back to Word Path'),
+        Spacer(flex: 1),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
+            child: AutoSizeText(
+              'Good Job Completing the Module!',
+              maxLines: 3,
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 7, 45, 78)),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Image.asset("assets/visuals/HBCompletion.png", fit: BoxFit.contain),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+          child: ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            ),
+            child: AutoSizeText(
+              'Return to Path',
+              maxLines: 1,
+              style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)),
+            ),
+          ),
         ),
       ],
     );
