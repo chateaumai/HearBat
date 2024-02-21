@@ -10,6 +10,7 @@ class SoundAdjustmentPage extends StatefulWidget {
 class SoundAdjustmentPageState extends State<SoundAdjustmentPage> {
   final AudioPlayer audioPlayer = AudioPlayer();
   final String audioPath = 'audio/background/jazz.mp3';
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -19,6 +20,7 @@ class SoundAdjustmentPageState extends State<SoundAdjustmentPage> {
 
   @override
   void dispose() {
+    _isDisposed = true;
     audioPlayer.stop();
     audioPlayer.dispose();
     super.dispose();
@@ -26,6 +28,11 @@ class SoundAdjustmentPageState extends State<SoundAdjustmentPage> {
 
   void playSound() async {
     await audioPlayer.play(AssetSource(audioPath));
+    if (!_isDisposed) {
+      // Ensure that the audio player is not disposed before playing
+      // If the page is disposed before the audio finishes loading, avoid calling setState
+      setState(() {});
+    }
   }
 
   @override
