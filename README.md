@@ -26,8 +26,8 @@ Download APK file [here](https://drive.google.com/file/d/1hKA3xh7suNmvhh1va1yn14
 - Android Studio: [https://developer.android.com/studio](https://developer.android.com/studio)
 - Xcode: [https://developer.apple.com/xcode/](https://developer.apple.com/xcode/)
 - You can also use a physical device to run the project.
-  - Android instructions: [https://flutter.dev/docs/get-started/install/macos#set-up-the-ios-device](https://flutter.dev/docs/get-started/install/macos#set-up-the-ios-device)
-  - iOS instructions: [https://flutter.dev/docs/get-started/install/windows#set-up-the-android-device](https://flutter.dev/docs/get-started/install/windows#set-up-the-android-device)
+  - Android instructions: [https://flutter.dev/docs/get-started/install/windows#set-up-the-android-device](https://flutter.dev/docs/get-started/install/windows#set-up-the-android-device)
+  - iOS instructions: [https://flutter.dev/docs/get-started/install/macos#set-up-the-ios-device](https://flutter.dev/docs/get-started/install/macos#set-up-the-ios-device)
 
 **Steps**:
 
