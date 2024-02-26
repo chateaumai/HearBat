@@ -54,7 +54,6 @@ class SoundAdjustmentPageState extends State<SoundAdjustmentPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    dispose();
                     Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => MyNavBar()));
                   },
