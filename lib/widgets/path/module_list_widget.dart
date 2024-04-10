@@ -3,17 +3,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../module/module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
+import 'trangular_path_layout_widget.dart';
+import 'animated_button_widget.dart';
 
 class ModuleListWidget extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
+  final String chapter;
 
-  ModuleListWidget({Key? key, required this.modules}) : super(key: key);
+  ModuleListWidget({Key? key, required this.modules, required this.chapter}) : super(key: key);
 
   @override
   ModuleListWidgetState createState() => ModuleListWidgetState();
 }
 
-class ModuleListWidgetState extends State<ModuleListWidget> {
+class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderStateMixin {
   String? _voiceType;
   final CacheWordsUtil cacheUtil = CacheWordsUtil();
 
@@ -21,6 +24,7 @@ class ModuleListWidgetState extends State<ModuleListWidget> {
   void initState() {
     super.initState();
     _loadVoiceType();
+
   }
 
   void _loadVoiceType() async {
@@ -78,25 +82,40 @@ class ModuleListWidgetState extends State<ModuleListWidget> {
   Widget build(BuildContext context) {
     var moduleList = widget.modules.entries.toList();
 
-    return ListView.builder(
-      itemCount: moduleList.length,
-      padding: EdgeInsets.all(10),
-      itemBuilder: (context, index) {
-        final module = moduleList[index];
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ElevatedButton(
-              onPressed: () => _cacheAndNavigate(module.key, module.value),
-              style: ElevatedButton.styleFrom(
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(40),
-                backgroundColor: Colors.deepPurple,
-                elevation: 5,
-              ),
-              child: Icon(Icons.menu_book, color: Colors.white, size: 60,)
-          ),
-        );
-      },
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: TriangularPathLayout(
+          itemCount: moduleList.length,
+          itemBuilder: (context, index) {
+            final module = moduleList[index];
+            return Stack(
+              children: <Widget> [
+                Container(
+                  margin: EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    // color: Color.fromARGB(255, 34, 38, 110),
+                    color: Color.fromARGB(255, 94, 63, 117),
+                  ),
+                  width: 100.0,
+                  height: 100.0,
+                ),
+                AnimatedButton(
+                  moduleName: module.key,
+                  answerGroups: module.value,
+                  onButtonPressed: (String moduleName, List<AnswerGroup> answerGroups) {
+                    _cacheAndNavigate(moduleName, answerGroups);
+                  },
+                ),
+              ],
+            );
+          },
+          itemSize: 120.0,
+          spacing: 80.0,
+          chapter: widget.chapter,
+        ),
+      ),
     );
   }
 }
