@@ -11,6 +11,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 class FourAnswerWidget extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
   final VoidCallback onCompletion;
+  final VoidCallback onCorrectAnswer;
   final String voiceType;
   final bool isWord;
   final Function(int) onProgressUpdate; //for progress bar in parent
@@ -19,6 +20,7 @@ class FourAnswerWidget extends StatefulWidget {
     Key? key,
     required this.answerGroups,
     required this.onCompletion,
+    required this.onCorrectAnswer,
     required this.voiceType,
     required this.isWord,
     required this.onProgressUpdate,
@@ -77,6 +79,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   void checkAnswer() {
     if (selectedWord!.answer == correctWord.answer) {
       print("Correct");
+      widget.onCorrectAnswer();
       isAnswerTrue = true;
     } else {
       print("Incorrect");

@@ -25,8 +25,9 @@ class ModuleWidget extends StatefulWidget {
 
 class _ModulePageState extends State<ModuleWidget> {
   bool moduleCompleted = false;
-  String voiceType = "en-US-Studio-O";
   int currentIndex = 0;
+  int correctAnswersCount = 0;
+  String voiceType = "en-US-Studio-O";
 
   @override
   void initState() {
@@ -95,6 +96,11 @@ class _ModulePageState extends State<ModuleWidget> {
       child: FourAnswerWidget(
         answerGroups: widget.answerGroups,
         onCompletion: () => setState(() => moduleCompleted = true),
+        onCorrectAnswer: () {
+          setState(() {
+            correctAnswersCount++;
+          });
+        },
         voiceType: voiceType,
         isWord: widget.isWord,
         onProgressUpdate: updateProgress,
@@ -112,7 +118,7 @@ class _ModulePageState extends State<ModuleWidget> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
             child: AutoSizeText(
-              'Good Job Completing the Module!',
+              'Good Job Completing the Module!\nYou got $correctAnswersCount / 10 correct',
               maxLines: 3,
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 7, 45, 78)),
               textAlign: TextAlign.center,

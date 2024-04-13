@@ -54,3 +54,32 @@ flutter pub get
 ```bash
 flutter run
 ```
+## Case Study
+![HearBat-01](https://github.com/chateaumai/HearBat/assets/136946607/0e51d87a-6665-413d-b766-371b26d934c4)
+![HearBat-02](https://github.com/chateaumai/HearBat/assets/136946607/932970a3-01b7-468f-a212-80275008b710)
+![HearBat-03](https://github.com/chateaumai/HearBat/assets/136946607/41f7161d-ecbc-4679-ad48-5fe4bc45c54f)
+![HearBat-04](https://github.com/chateaumai/HearBat/assets/136946607/dfcd45b5-be4f-43d9-95f5-ca862e93e7ab)
+![HearBat-05](https://github.com/chateaumai/HearBat/assets/136946607/c4932f44-61a0-43d5-bcce-a7fcb694f15d)
+![HearBat-06](https://github.com/chateaumai/HearBat/assets/136946607/2de38f1e-6f1a-42cd-af9a-aebb39f18992)
+![HearBat-07](https://github.com/chateaumai/HearBat/assets/136946607/c0e845ce-0185-4057-8e96-b759789b26d6)
+![HearBat-08](https://github.com/chateaumai/HearBat/assets/136946607/27a3936a-faf5-4142-8a8b-8e0baf4966f5)
+![HearBat-09](https://github.com/chateaumai/HearBat/assets/136946607/56bc5fcd-bdbb-404a-97cf-679debbc61c9)
+![HearBat-10](https://github.com/chateaumai/HearBat/assets/136946607/f0d32874-fb63-484e-858c-7f666abcae85)
+![HearBat-11](https://github.com/chateaumai/HearBat/assets/136946607/52fd0d37-44b8-41a6-b95c-86cd0fc44ebf)
+![HearBat-12](https://github.com/chateaumai/HearBat/assets/136946607/39184e5e-f58f-4b76-955a-3265d67e1c0f)
+![HearBat-13](https://github.com/chateaumai/HearBat/assets/136946607/69e91b05-fe7c-4ca7-8e01-b8e8944561b9)
+![HearBat-14](https://github.com/chateaumai/HearBat/assets/136946607/61fc877e-8ac4-48e5-81f9-5ab9a391513f)
+![HearBat-15](https://github.com/chateaumai/HearBat/assets/136946607/d225ded5-d2b2-4337-8b04-33ae51ed5906)
+![HearBat-16](https://github.com/chateaumai/HearBat/assets/136946607/24b03e00-37fb-4a92-8da6-42f74457060b)
+![HearBat-17](https://github.com/chateaumai/HearBat/assets/136946607/9d933f2d-4cbf-4f03-b52b-f786704d6886)
+
+
+
+
+
+
+
+
+
+
+

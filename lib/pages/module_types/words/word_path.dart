@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import '../../../utils/module_util.dart';
-import '../../../widgets/path/module_list_widget_copy.dart';
+import '../../../widgets/path/module_list_widget.dart';
 import '../../../widgets/top_bar_widget.dart';
 
 class WordPath extends StatefulWidget {
