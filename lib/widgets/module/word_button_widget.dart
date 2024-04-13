@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
+
 class WordButton extends StatelessWidget {
   final Answer word;
   final bool isWord;
@@ -19,9 +20,7 @@ class WordButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => onSelected(word),
       style: ElevatedButton.styleFrom(
-        backgroundColor : selectedWord == word
-          ? Colors.grey
-          : Colors.white,
+        backgroundColor: selectedWord == word ? Colors.grey : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -31,7 +30,8 @@ class WordButton extends StatelessWidget {
       child: isWord ? _textWidget() : _imageWidget(),
     );
   }
-    Widget _textWidget() {
+
+  Widget _textWidget() {
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Text(
@@ -44,14 +44,14 @@ class WordButton extends StatelessWidget {
       ),
     );
   }
+
   Widget _imageWidget() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Image.asset(
-        word.image!,
-        fit: BoxFit.contain,
-      )
-    );
-  } 
+    return SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Image.asset(
+          word.image!,
+          fit: BoxFit.contain,
+        ));
+  }
 }

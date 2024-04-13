@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'profile_page.dart';
+import 'test_page.dart';
 
 class MyNavBar extends StatefulWidget {
   @override
@@ -8,15 +9,15 @@ class MyNavBar extends StatefulWidget {
 }
 
 class _MyNavBarState extends State<MyNavBar> {
-
   int selectedIndex = 0;
   NavigationDestinationLabelBehavior labelBehavior =
-    NavigationDestinationLabelBehavior.onlyShowSelected;
+      NavigationDestinationLabelBehavior.onlyShowSelected;
 
   // pages on bottom bar
   final List<Widget> pages = [
     HomePage(),
     ProfilePage(),
+    TestPage(),
   ];
 
   @override
@@ -40,6 +41,10 @@ class _MyNavBarState extends State<MyNavBar> {
             icon: Icon(Icons.settings),
             label: 'Setting',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.person),
+            label: 'Test',
+          )
         ],
       ),
     );
