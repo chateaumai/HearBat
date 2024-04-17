@@ -32,13 +32,16 @@ class WordButton extends StatelessWidget {
   }
 
   Widget _textWidget() {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25),
+      decoration: BoxDecoration(
+        // borrerRadius: BorderRadius.circular(8)
+      ),
       child: Text(
         word.answer,
         style: TextStyle(
           color: Colors.black,
-          fontSize: 40,
+          fontSize: 25,
           fontWeight: FontWeight.w600,
         ),
       ),

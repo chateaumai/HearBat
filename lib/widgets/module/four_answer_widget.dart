@@ -152,14 +152,8 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: GridView.builder(
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, 
-                      crossAxisSpacing: 20, // horizontal spacing
-                      mainAxisSpacing: 15, // vertical spacing 
-                      childAspectRatio: 150 / 180, 
-                    ),
                     itemCount: 4, 
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
@@ -176,11 +170,14 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                         default:
                           word = currentGroup.answer1; 
                       }
-                      return WordButton(
-                        word: word,
-                        isWord: widget.isWord,
-                        selectedWord: selectedWord,
-                        onSelected: handleSelection,
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: WordButton(
+                          word: word,
+                          isWord: widget.isWord,
+                          selectedWord: selectedWord,
+                          onSelected: handleSelection,
+                        ),
                       );
                     },
                   ),
