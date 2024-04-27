@@ -12,6 +12,7 @@ class FourAnswerWidget extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
   final VoidCallback onCompletion;
   final VoidCallback onCorrectAnswer;
+  final void Function(Answer, Answer) onIncorrectAnswer;
   final String voiceType;
   final bool isWord;
   final Function(int) onProgressUpdate; //for progress bar in parent
@@ -21,6 +22,7 @@ class FourAnswerWidget extends StatefulWidget {
     required this.answerGroups,
     required this.onCompletion,
     required this.onCorrectAnswer,
+    required this.onIncorrectAnswer,
     required this.voiceType,
     required this.isWord,
     required this.onProgressUpdate,
@@ -83,6 +85,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       isAnswerTrue = true;
     } else {
       print("Incorrect");
+      widget.onIncorrectAnswer(selectedWord!, correctWord);
       incorrectWord = selectedWord;
       isAnswerFalse = true;
     }
