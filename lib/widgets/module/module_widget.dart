@@ -316,14 +316,14 @@ var gradientBoxDecoration = BoxDecoration(
       Color.fromARGB(255, 213, 177, 239),
     ],
   ),
-  borderRadius: BorderRadius.circular(8.0), 
+  borderRadius: BorderRadius.circular(8.0),
   border: Border.all(
     color: Color.fromARGB(255, 7, 45, 78),
     width: 3.0,
   ),
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.5), 
+      color: Colors.grey.withOpacity(0.5),
       spreadRadius: 5,
       blurRadius: 7,
       offset: Offset(0, 3),
@@ -333,14 +333,14 @@ var gradientBoxDecoration = BoxDecoration(
 
 var blueBoxDecoration = BoxDecoration(
   color: Color.fromARGB(255, 7, 45, 78),
-  borderRadius: BorderRadius.circular(8.0), 
+  borderRadius: BorderRadius.circular(8.0),
   border: Border.all(
     color: Color.fromARGB(255, 7, 45, 78),
     width: 3.0,
   ),
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.5), 
+      color: Colors.grey.withOpacity(0.5),
       spreadRadius: 5,
       blurRadius: 7,
       offset: Offset(0, 3),
@@ -349,19 +349,18 @@ var blueBoxDecoration = BoxDecoration(
 );
 
 class ScoreWidget extends StatelessWidget {
-  const ScoreWidget({
-    super.key,
-    required this.context,
-    required this.correctAnswersCount,
-    required this.subtitleText,
-    required this.icon,
-    required this.boxDecoration
-  });
+  const ScoreWidget(
+      {super.key,
+      required this.context,
+      required this.correctAnswersCount,
+      required this.subtitleText,
+      required this.icon,
+      required this.boxDecoration});
 
   final BuildContext context;
   final int correctAnswersCount;
   final String subtitleText;
-  final Icon  icon;
+  final Icon icon;
   final BoxDecoration boxDecoration;
 
   @override
@@ -381,7 +380,12 @@ class ScoreWidget extends StatelessWidget {
               children: [
                 AutoSizeText(
                   '$correctAnswersCount / 10',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900, color: subtitleText == "Highest Score" ? Colors.white : Color.fromARGB(255, 7, 45, 78)),
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                      color: subtitleText == "Highest Score"
+                          ? Colors.white
+                          : Color.fromARGB(255, 7, 45, 78)),
                 ),
                 AutoSizeText(
                   subtitleText,
@@ -391,9 +395,9 @@ class ScoreWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 10, 
+            top: 10,
             right: 10,
-            child: icon, 
+            child: icon,
           ),
         ],
       ),
