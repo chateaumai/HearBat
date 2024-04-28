@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hearbat/widgets/path/difficulty_selection_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import '../module/module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
 import 'trangular_path_layout_widget.dart';
 import 'animated_button_widget.dart';
@@ -10,13 +10,15 @@ class ModuleListWidget extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
   final String chapter;
 
-  ModuleListWidget({Key? key, required this.modules, required this.chapter}) : super(key: key);
+  ModuleListWidget({Key? key, required this.modules, required this.chapter})
+      : super(key: key);
 
   @override
   ModuleListWidgetState createState() => ModuleListWidgetState();
 }
 
-class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderStateMixin {
+class ModuleListWidgetState extends State<ModuleListWidget>
+    with TickerProviderStateMixin {
   String? _voiceType;
   final CacheWordsUtil cacheUtil = CacheWordsUtil();
 
@@ -24,7 +26,6 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
   void initState() {
     super.initState();
     _loadVoiceType();
-
   }
 
   void _loadVoiceType() async {
@@ -69,11 +70,8 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ModuleWidget(
-          title: moduleName,
-          answerGroups: answerGroups,
-          isWord: true,
-        ),
+        builder: (context) => DifficultySelectionWidget(
+            moduleName: moduleName, answerGroups: answerGroups),
       ),
     );
   }
@@ -90,7 +88,7 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
           itemBuilder: (context, index) {
             final module = moduleList[index];
             return Stack(
-              children: <Widget> [
+              children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(top: 8),
                   decoration: BoxDecoration(
@@ -104,7 +102,8 @@ class ModuleListWidgetState extends State<ModuleListWidget> with TickerProviderS
                 AnimatedButton(
                   moduleName: module.key,
                   answerGroups: module.value,
-                  onButtonPressed: (String moduleName, List<AnswerGroup> answerGroups) {
+                  onButtonPressed:
+                      (String moduleName, List<AnswerGroup> answerGroups) {
                     _cacheAndNavigate(moduleName, answerGroups);
                   },
                 ),
