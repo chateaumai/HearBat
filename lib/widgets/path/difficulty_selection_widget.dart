@@ -106,6 +106,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
     setState(() {
       _difficulty = value!;
     });
+    _updatePreference('difficultyPreference', _difficulty);
   }
 
   Future<void> _cacheAndNavigate(
