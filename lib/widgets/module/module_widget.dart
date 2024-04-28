@@ -7,6 +7,8 @@ import 'package:hearbat/widgets/module/module_progress_bar_widget.dart';
 import 'four_answer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/utils/google_tts_util.dart';
+import 'word_missed_button_widget.dart';
+import 'package:confetti/confetti.dart';
 
 class ModuleWidget extends StatefulWidget {
   final String title;
@@ -31,11 +33,13 @@ class _ModulePageState extends State<ModuleWidget> {
   GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
   List<List<Answer>> incorrectAnswerPairs = [];
   String voiceType = "en-US-Studio-O";
+  ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 3));
 
   @override
   void initState() {
     super.initState();
     getVoiceType();
+    _confettiController.play();
     BackgroundNoiseUtil.playSavedSound();
   }
 
@@ -43,6 +47,7 @@ class _ModulePageState extends State<ModuleWidget> {
   void dispose() {
     BackgroundNoiseUtil.stopSound();
     AudioUtil.stop();
+    _confettiController.dispose();
     super.dispose();
   }
 
@@ -77,7 +82,11 @@ class _ModulePageState extends State<ModuleWidget> {
           margin: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 7, 45, 78),
+              width: 3.0,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -112,66 +121,43 @@ class _ModulePageState extends State<ModuleWidget> {
                   ),
                 ),
               ),
-              //SizedBox(height: 10),
-              Expanded(
+            Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
                   itemCount: incorrectAnswerPairs.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // Incorrect answer button
-                          Expanded(
-                            child: ElevatedButton.icon(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 7, 45, 78),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(12),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            AnswerButton(
+                              answer: incorrectAnswerPairs[index][0].answer,
                               onPressed: () => playAnswer(incorrectAnswerPairs[index][0]),
-                              icon: const Icon(Icons.volume_up, color: Colors.white, size: 30),
-                              label: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  incorrectAnswerPairs[index][0].answer,
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.redAccent,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                elevation: 3,
-                                shadowColor: Colors.grey[900],
-                              ),
+                              headerText: "You Chose",
+                              color: Color.fromARGB(255, 195, 74, 74),
                             ),
-                          ),
-                          SizedBox(width: 8), // spacing between buttons
-                          // Correct answer button
-                          Expanded(
-                            child: ElevatedButton.icon(
+                            SizedBox(width: 8), 
+                            AnswerButton(
+                              answer: incorrectAnswerPairs[index][1].answer,
                               onPressed: () => playAnswer(incorrectAnswerPairs[index][1]),
-                              icon: const Icon(Icons.volume_up, color: Colors.white, size: 30),
-                              label: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  incorrectAnswerPairs[index][1].answer,
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                elevation: 3,
-                                shadowColor: Colors.grey[900],
-                              ),
+                              headerText: "Correct Answer",
+                              color: Color.fromARGB(255, 129, 221, 121)
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
-                ),
-              ),
+                )
+              )
             ],
           ),
         ),
@@ -235,71 +221,85 @@ class _ModulePageState extends State<ModuleWidget> {
 
   Widget buildCompletionScreen() {
     BackgroundNoiseUtil.stopSound();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      alignment: Alignment.topCenter,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 120.0, right: 120.0, top: 60.0),
-          child: Image.asset("assets/visuals/HBCompletion.png", fit: BoxFit.contain),
-        ),
-        // Spacer(flex: 1),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
-          child: AutoSizeText(
-            'Lesson Complete!',
-            maxLines: 1,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 7, 45, 78)),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        // Today's score
-        ScoreWidget(
-          context: context,
-          correctAnswersCount: correctAnswersCount,
-          subtitleText: "Score",
-          icon: Icon(
-            Icons.star,
-            color: Color.fromARGB(255, 7, 45, 78),
-            size: 30,
-          ),
-          boxDecoration: gradientBoxDecoration,
-        ),
-        ScoreWidget(
-          context: context,
-          correctAnswersCount: correctAnswersCount,
-          subtitleText: "Highest Score",
-          icon: Icon(
-            Icons.emoji_events,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 30,
-          ),
-          boxDecoration: blueBoxDecoration,
-        ),
-        Expanded(
-          flex: 2, 
-          child: listIncorrectAnswers(),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
-          child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor:Color.fromARGB(255, 94, 224, 82),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                minimumSize: Size(350, 50),
-                elevation: 5,
+        ConfettiWidget(
+        confettiController: _confettiController,
+        blastDirectionality: BlastDirectionality.explosive, // use a preset or customize as needed
+        particleDrag: 0.05, // apply drag to the confetti
+        emissionFrequency: 0.1, // how often it should emit
+        numberOfParticles: 8, // number of particles to emit
+        gravity: 0.2, // gravity - or fall speed
+        colors: const [Colors.yellow, Colors.blue, Colors.pink, Colors.orange, Colors.green], // manually specify the colors to be used
+      ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 120.0, right: 120.0, top: 60.0),
+              child: Image.asset("assets/visuals/HBCompletion.png", fit: BoxFit.contain),
+            ),
+            // Spacer(flex: 1),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+              child: AutoSizeText(
+                'Lesson Complete!',
+                maxLines: 1,
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 7, 45, 78)),
+                textAlign: TextAlign.center,
               ),
-              child: Text(
-                'CONTINUE',
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
+            ),
+            // Today's score
+            ScoreWidget(
+              context: context,
+              correctAnswersCount: correctAnswersCount,
+              subtitleText: "Score",
+              icon: Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 7, 45, 78),
+                size: 30,
               ),
-          ),
+              boxDecoration: gradientBoxDecoration,
+            ),
+            ScoreWidget(
+              context: context,
+              correctAnswersCount: correctAnswersCount,
+              subtitleText: "Highest Score",
+              icon: Icon(
+                Icons.emoji_events,
+                color: Color.fromARGB(255, 255, 255, 255),
+                size: 30,
+              ),
+              boxDecoration: blueBoxDecoration,
+            ),
+            Expanded(
+              flex: 2, 
+              child: listIncorrectAnswers(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:Color.fromARGB(255, 94, 224, 82),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    minimumSize: Size(350, 50),
+                    elevation: 5,
+                  ),
+                  child: Text(
+                    'CONTINUE',
+                    style: TextStyle(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -385,7 +385,7 @@ class ScoreWidget extends StatelessWidget {
                 ),
                 AutoSizeText(
                   subtitleText,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: subtitleText == "Highest Score" ? Colors.white : Color.fromARGB(255, 7, 45, 78)),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: subtitleText == "Highest Score" ? Colors.white : Color.fromARGB(255, 7, 45, 78)),
                 ),
               ],
             ),
