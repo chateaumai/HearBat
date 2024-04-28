@@ -6,6 +6,7 @@ import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../module/module_widget.dart';
+import 'package:hearbat/utils/cache_words_util.dart';
 
 class DifficultySelectionWidget extends StatefulWidget {
   final String moduleName;
@@ -24,8 +25,10 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   String _backgroundSound = 'None';
   String _audioVolume = 'Low';
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
+  final CacheWordsUtil cacheUtil = CacheWordsUtil();
   bool isCaching = false;
   AudioPlayer audioPlayer = AudioPlayer();
+  String? _voiceType;
 
   List<String> voiceTypes = [
     "en-US-Studio-O",
@@ -57,6 +60,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   void initState() {
     super.initState();
     _loadPreferences();
+    _loadVoiceType();
     _cacheVoiceTypes();
     audioPlayer.setReleaseMode(ReleaseMode.loop);
   }
@@ -69,6 +73,14 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
       _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
     });
     _adjustVolume(_audioVolume);
+  }
+
+  void _loadVoiceType() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _voiceType = prefs.getString('voicePreference') ??
+          "en-US-Studio-O"; // Default voice type
+    });
   }
 
   void _updatePreference(String key, String value) async {
@@ -109,6 +121,49 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
         audioPlayer.setVolume(0.3);
         break;
     }
+  }
+
+  Future<void> _cacheAndNavigate(
+      String moduleName, List<AnswerGroup> answerGroups) async {
+    if (_voiceType == null) {
+      print("Voice type not set. Unable to cache module words.");
+      return;
+    }
+
+    // Show loading indicator while caching
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 10),
+              Text("Loading..."),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Caching all words
+    await cacheUtil.cacheModuleWords(answerGroups, _voiceType!);
+
+    // Check if the widget is still in the tree (mounted) after the async operation
+    if (!mounted) return; // Early return if not mounted
+
+    Navigator.pop(context); // Close the loading dialog if still mounted
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ModuleWidget(
+          title: moduleName,
+          answerGroups: answerGroups,
+          isWord: true,
+        ),
+      ),
+    );
   }
 
   @override
@@ -391,16 +446,8 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ModuleWidget(
-                                        title: widget.moduleName,
-                                        answerGroups: widget.answerGroups,
-                                        isWord: true,
-                                      ),
-                                    ),
-                                  );
+                                  _cacheAndNavigate(
+                                      widget.moduleName, widget.answerGroups);
                                 },
                                 child: Text('Go to Module'),
                               ),

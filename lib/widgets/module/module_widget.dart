@@ -119,26 +119,34 @@ class _ModulePageState extends State<ModuleWidget> {
                   itemCount: incorrectAnswerPairs.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                      padding:
+                          const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           // Incorrect answer button
                           Expanded(
                             child: ElevatedButton.icon(
-                              onPressed: () => playAnswer(incorrectAnswerPairs[index][0]),
-                              icon: const Icon(Icons.volume_up, color: Colors.white, size: 30),
+                              onPressed: () =>
+                                  playAnswer(incorrectAnswerPairs[index][0]),
+                              icon: const Icon(Icons.volume_up,
+                                  color: Colors.white, size: 30),
                               label: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
                                   incorrectAnswerPairs[index][0].answer,
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.redAccent,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                backgroundColor: Colors.redAccent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
                                 elevation: 3,
                                 shadowColor: Colors.grey[900],
                               ),
@@ -148,19 +156,26 @@ class _ModulePageState extends State<ModuleWidget> {
                           // Correct answer button
                           Expanded(
                             child: ElevatedButton.icon(
-                              onPressed: () => playAnswer(incorrectAnswerPairs[index][1]),
-                              icon: const Icon(Icons.volume_up, color: Colors.white, size: 30),
+                              onPressed: () =>
+                                  playAnswer(incorrectAnswerPairs[index][1]),
+                              icon: const Icon(Icons.volume_up,
+                                  color: Colors.white, size: 30),
                               label: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
                                   incorrectAnswerPairs[index][1].answer,
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                backgroundColor: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
                                 elevation: 3,
                                 shadowColor: Colors.grey[900],
                               ),
@@ -240,7 +255,8 @@ class _ModulePageState extends State<ModuleWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 120.0, right: 120.0, top: 60.0),
-          child: Image.asset("assets/visuals/HBCompletion.png", fit: BoxFit.contain),
+          child: Image.asset("assets/visuals/HBCompletion.png",
+              fit: BoxFit.contain),
         ),
         // Spacer(flex: 1),
         Padding(
@@ -248,7 +264,10 @@ class _ModulePageState extends State<ModuleWidget> {
           child: AutoSizeText(
             'Lesson Complete!',
             maxLines: 1,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 7, 45, 78)),
+            style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 7, 45, 78)),
             textAlign: TextAlign.center,
           ),
         ),
@@ -276,29 +295,29 @@ class _ModulePageState extends State<ModuleWidget> {
           boxDecoration: blueBoxDecoration,
         ),
         Expanded(
-          flex: 2, 
+          flex: 2,
           child: listIncorrectAnswers(),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
           child: ElevatedButton(
             onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor:Color.fromARGB(255, 94, 224, 82),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                minimumSize: Size(350, 50),
-                elevation: 5,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 94, 224, 82),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(
-                'CONTINUE',
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
+              minimumSize: Size(350, 50),
+              elevation: 5,
+            ),
+            child: Text(
+              'CONTINUE',
+              style: TextStyle(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
               ),
+            ),
           ),
         ),
       ],
@@ -316,14 +335,14 @@ var gradientBoxDecoration = BoxDecoration(
       Color.fromARGB(255, 213, 177, 239),
     ],
   ),
-  borderRadius: BorderRadius.circular(8.0), 
+  borderRadius: BorderRadius.circular(8.0),
   border: Border.all(
     color: Color.fromARGB(255, 7, 45, 78),
     width: 3.0,
   ),
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.5), 
+      color: Colors.grey.withOpacity(0.5),
       spreadRadius: 5,
       blurRadius: 7,
       offset: Offset(0, 3),
@@ -333,14 +352,14 @@ var gradientBoxDecoration = BoxDecoration(
 
 var blueBoxDecoration = BoxDecoration(
   color: Color.fromARGB(255, 7, 45, 78),
-  borderRadius: BorderRadius.circular(8.0), 
+  borderRadius: BorderRadius.circular(8.0),
   border: Border.all(
     color: Color.fromARGB(255, 7, 45, 78),
     width: 3.0,
   ),
   boxShadow: [
     BoxShadow(
-      color: Colors.grey.withOpacity(0.5), 
+      color: Colors.grey.withOpacity(0.5),
       spreadRadius: 5,
       blurRadius: 7,
       offset: Offset(0, 3),
@@ -349,19 +368,18 @@ var blueBoxDecoration = BoxDecoration(
 );
 
 class ScoreWidget extends StatelessWidget {
-  const ScoreWidget({
-    super.key,
-    required this.context,
-    required this.correctAnswersCount,
-    required this.subtitleText,
-    required this.icon,
-    required this.boxDecoration
-  });
+  const ScoreWidget(
+      {super.key,
+      required this.context,
+      required this.correctAnswersCount,
+      required this.subtitleText,
+      required this.icon,
+      required this.boxDecoration});
 
   final BuildContext context;
   final int correctAnswersCount;
   final String subtitleText;
-  final Icon  icon;
+  final Icon icon;
   final BoxDecoration boxDecoration;
 
   @override
@@ -381,19 +399,29 @@ class ScoreWidget extends StatelessWidget {
               children: [
                 AutoSizeText(
                   '$correctAnswersCount / 10',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900, color: subtitleText == "Highest Score" ? Colors.white : Color.fromARGB(255, 7, 45, 78)),
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                      color: subtitleText == "Highest Score"
+                          ? Colors.white
+                          : Color.fromARGB(255, 7, 45, 78)),
                 ),
                 AutoSizeText(
                   subtitleText,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: subtitleText == "Highest Score" ? Colors.white : Color.fromARGB(255, 7, 45, 78)),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: subtitleText == "Highest Score"
+                          ? Colors.white
+                          : Color.fromARGB(255, 7, 45, 78)),
                 ),
               ],
             ),
           ),
           Positioned(
-            top: 10, 
+            top: 10,
             right: 10,
-            child: icon, 
+            child: icon,
           ),
         ],
       ),
