@@ -284,22 +284,22 @@ class _ModulePageState extends State<ModuleWidget> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:Color.fromARGB(255, 94, 224, 82),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    minimumSize: Size(350, 50),
-                    elevation: 5,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:Color.fromARGB(255, 94, 224, 82),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(
-                    'CONTINUE',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  minimumSize: Size(350, 50),
+                  elevation: 5,
+                ),
+                child: Text(
+                  'CONTINUE',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
+                ),
               ),
             ),
           ],

@@ -24,36 +24,20 @@ class _SoundTriangularPathLayoutState extends State<SoundTriangularPathLayout> {
   Widget build(BuildContext context) {
     List<Widget> positionedItems = [];
 
-    // Calculate the total width of the layout
     double layoutWidth = MediaQuery.of(context).size.width;
-    // Calculate the initial horizontal offset to center the triangles
-    double initialXOffset = (layoutWidth - 300) / 2;
+    double initialXOffset = (layoutWidth / 2) - 125;
 
     double xOffset = initialXOffset;
-    double yOffset = widget.spacing - 15;
+    double yOffset = 30;
 
-    // Create triangles
-    for (int i = 0; i < widget.itemCount; i += 3) {
-      // Calculate the position for the top circle of the triangle
-      positionedItems.add(_buildPositionedItem(context, widget.itemBuilder,
-          xOffset + (widget.itemSize + widget.spacing) / 2, yOffset, i));
-
-      // Calculate the positions for the bottom two circles of the triangle
-      if (i + 1 < widget.itemCount) {
-        positionedItems.add(_buildPositionedItem(context, widget.itemBuilder,
-            xOffset, yOffset + widget.itemSize + (widget.spacing / 2), i + 1));
-      }
-      if (i + 2 < widget.itemCount) {
-        positionedItems.add(_buildPositionedItem(
-            context,
-            widget.itemBuilder,
-            xOffset + widget.itemSize + widget.spacing,
-            yOffset + widget.itemSize + (widget.spacing / 2),
-            i + 2));
-      }
-
-      xOffset = initialXOffset;
-      yOffset += 330;
+   for (int i = 0; i < widget.itemCount; i++) {
+    if (i % 2 == 0) {  
+        xOffset = initialXOffset;
+    } else {  
+        xOffset = initialXOffset + 125; 
+    }
+    positionedItems.add(_buildPositionedItem(context, widget.itemBuilder, xOffset, yOffset, i));
+    yOffset += widget.itemSize + 60;  
     }
     double totalHeight = yOffset;
 
