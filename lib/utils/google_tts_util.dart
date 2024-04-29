@@ -31,7 +31,9 @@ class GoogleTTSUtil {
 
   Future<void> speak(String text, String voicetype) async {
     String textToSpeak =
-        _difficulty == 'Hard' ? "Please select $text as the answer" : text;
+        (_difficulty == 'Hard' && text != "Hello this is how I sound")
+            ? "Please select $text as the answer"
+            : text;
     String safeText = textToSpeak.replaceAll(RegExp(r'\s+'), '').toLowerCase();
     String? audioPath = cache["${safeText}_$voicetype"];
 
