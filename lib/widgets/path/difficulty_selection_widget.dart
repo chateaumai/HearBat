@@ -67,6 +67,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
     setState(() {
       _backgroundSound = prefs.getString('backgroundSoundPreference') ?? 'None';
       _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
+      _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
     });
     _adjustVolume(_audioVolume);
   }
