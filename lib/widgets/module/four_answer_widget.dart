@@ -130,9 +130,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      _difficulty == 'Hard'
-                          ? "Please select ___ as the answer."
-                          : "What do you hear?",
+                      "What do you hear?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
