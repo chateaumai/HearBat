@@ -8,7 +8,6 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/texttospeech/v1.dart' as tts;
 import '../utils/config_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:math';
 
 class GoogleTTSUtil {
   final AudioPlayer audioPlayer = AudioPlayer();
@@ -30,20 +29,9 @@ class GoogleTTSUtil {
     return apiKey;
   }
 
-  List<String> getSentences(String word) {
-    return ["The correct word is $word.", "Please select $word as the answer."];
-  }
-
   Future<void> speak(String text, String voicetype) async {
-    String textToSpeak;
-    if (_difficulty == 'Hard') {
-      Random random = Random();
-      List<String> sentences = getSentences(text);
-      textToSpeak = sentences[random.nextInt(sentences.length)];
-    } else {
-      textToSpeak = text;
-    }
-
+    String textToSpeak =
+        _difficulty == 'Hard' ? "Please select $text as the answer." : text;
     String safeText = textToSpeak.replaceAll(RegExp(r'\s+'), '').toLowerCase();
     String? audioPath = cache["${safeText}_$voicetype"];
 
@@ -64,7 +52,12 @@ class GoogleTTSUtil {
   Future<void> downloadMP3(String text, String voicetype) async {
     String dir = (await getTemporaryDirectory()).path;
 
-    List<String> textsToDownload = [text] + getSentences(text);
+    List<String> textsToDownload;
+    if (_difficulty == 'Hard') {
+      textsToDownload = [text, "Please select $text as the answer."];
+    } else {
+      textsToDownload = [text];
+    }
 
     for (String textToDownload in textsToDownload) {
       String safeText =
