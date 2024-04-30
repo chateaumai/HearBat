@@ -6,9 +6,8 @@ import '../../../widgets/top_bar_widget.dart';
 
 class SoundPath extends StatefulWidget {
   final String chapter;
-  final String background;
 
-  SoundPath({Key? key, required this.chapter, required this.background}) : super(key: key);
+  SoundPath({Key? key, required this.chapter}) : super(key: key);
 
   @override
   State<SoundPath> createState() => _SoundPathState();
@@ -26,10 +25,16 @@ class _SoundPathState extends State<SoundPath> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(widget.background),
-            fit: BoxFit.cover,
-          )
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.4, 0.9, 1.0],
+            colors: [
+              Color.fromARGB(255, 212, 176, 237),
+              Color.fromARGB(255, 251, 191, 203),
+              Color.fromARGB(255, 255, 238, 247),
+            ],
+          ),
         ),
         child: Column(
           children: [
