@@ -9,18 +9,15 @@ class SoundChapters extends StatelessWidget {
     List<Map<String, String>> chapters = [
       { "name": "Home Sounds",
         "image": "assets/visuals/HBSoundChapterOne.png",
-        "background": "assets/visuals/PathMoon.png"
       },
 
       { "name": "Music Sounds",
         "image": "assets/visuals/HBSoundChapterTwo.png",
-        "background": "assets/visuals/PathOne.png"
       },
 
       {
         "name": "Nature Sounds",
         "image": "assets/visuals/HBSoundChapterThree.png",
-        "background": "assets/visuals/PathThree.png"
       },
     ];
 
@@ -37,7 +34,7 @@ class SoundChapters extends StatelessWidget {
               chapterName: chapters[index]["name"]!,
               chapterNumber: index,
               image: chapters[index]["image"]!,
-              destinationPage: SoundPath(chapter: chapters[index]["name"]!, background: chapters[index]["background"]!),
+              destinationPage: SoundPath(chapter: chapters[index]["name"]!),
             );
           }),
           SizedBox(height: 10.0),

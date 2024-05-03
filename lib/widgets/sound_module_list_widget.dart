@@ -33,15 +33,17 @@ class SoundModuleListWidget extends StatelessWidget {
             final module = moduleList[index];
             return Stack(
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 8),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    // color: Color.fromARGB(255, 34, 38, 110), 
-                    color: Color.fromARGB(255, 94, 63, 117),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50 * 1.2,
+                    width: 100 * 1.5,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 7, 45, 78),
+                      borderRadius: BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
+                    ),
                   ),
-                  width: 100.0,
-                  height: 100.0,
                 ),
                 AnimatedButton(
                   moduleName: module.key,

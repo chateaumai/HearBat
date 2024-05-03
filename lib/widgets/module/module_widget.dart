@@ -226,12 +226,12 @@ class _ModulePageState extends State<ModuleWidget> {
       children: [
         ConfettiWidget(
         confettiController: _confettiController,
-        blastDirectionality: BlastDirectionality.explosive, // use a preset or customize as needed
-        particleDrag: 0.05, // apply drag to the confetti
-        emissionFrequency: 0.1, // how often it should emit
-        numberOfParticles: 8, // number of particles to emit
-        gravity: 0.2, // gravity - or fall speed
-        colors: const [Colors.yellow, Colors.blue, Colors.pink, Colors.orange, Colors.green], // manually specify the colors to be used
+        blastDirectionality: BlastDirectionality.explosive, 
+        particleDrag: 0.05, 
+        emissionFrequency: 0.1, 
+        numberOfParticles: 8,
+        gravity: 0.2, 
+        colors: const [Colors.yellow, Colors.blue, Colors.pink, Colors.orange, Colors.green], 
       ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -280,23 +280,26 @@ class _ModulePageState extends State<ModuleWidget> {
             Padding(
               padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
               child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:Color.fromARGB(255, 94, 224, 82),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    minimumSize: Size(350, 50),
-                    elevation: 5,
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:Color.fromARGB(255, 94, 224, 82),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Text(
-                    'CONTINUE',
-                    style: TextStyle(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  minimumSize: Size(350, 50),
+                  elevation: 5,
+                ),
+                child: Text(
+                  'CONTINUE',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
+                ),
               ),
             ),
           ],

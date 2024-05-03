@@ -67,21 +67,25 @@ class AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvide
       builder: (context, child) {
         return Container(
           margin: _buttonMarginAnimation.value,
-          child: ElevatedButton(
-            onPressed: () {}, // The actual functionality is handled by GestureDetector
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(20),
-              //backgroundColor: const Color.fromARGB(255, 81, 87, 240),
-              backgroundColor: const Color.fromARGB(255, 154, 107, 187),
-              elevation: 0,
-            ),
-            child: GestureDetector(
-              onTapDown: _handleTapDown,
-              onTapUp: _handleTapUp,
-              onTapCancel: _handleTapCancel, 
-              child: Icon(Icons.menu_book, color: Colors.white, size: 60),
-            ),
+          alignment: Alignment.center,
+          height: 50 * 1.2,
+          width: 100 * 1.5,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 241, 223, 254),
+            borderRadius: BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), 
+              ),
+            ],
+          ),
+          child: GestureDetector(
+            onTapDown: _handleTapDown,
+            onTapUp: _handleTapUp,
+            onTapCancel: _handleTapCancel,
           ),
         );
       },

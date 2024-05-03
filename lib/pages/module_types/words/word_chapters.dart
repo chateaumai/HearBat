@@ -10,27 +10,22 @@ class WordChapters extends StatelessWidget {
       {
         "name": "Beginner Foundations",
         "image": "assets/visuals/HBWordsChapterOne.png",
-        "background": "assets/visuals/PathMoon.png"
       },
       {
         "name": "Intermediate Progress",
         "image": "assets/visuals/HB_WordsChapterTwo.png",
-        "background": "assets/visuals/PathOne.png"
       },
       {
         "name": "Advanced Exploration",
         "image": "assets/visuals/HBWordsChapterThree.png",
-        "background": "assets/visuals/PathThree.png"
       },
       {
         "name": "Proficient Application",
         "image": "assets/visuals/HBWordsChapterFour.png",
-        "background": "assets/visuals/PathFour.png"
       },
       {
         "name": "Expert Mastery",
         "image": "assets/visuals/HBWordsChapterFive.png",
-        "background": "assets/visuals/PathFive.png"
       },
     ];
 
@@ -47,7 +42,7 @@ class WordChapters extends StatelessWidget {
               chapterName: chapters[index]["name"]!,
               chapterNumber: index,
               image: chapters[index]["image"]!,
-              destinationPage: WordPath(chapter: chapters[index]["name"]!, background: chapters[index]["background"]!),
+              destinationPage: WordPath(chapter: chapters[index]["name"]!),
             );
           }),
           SizedBox(height: 10.0),
