@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../utils/google_stt_util.dart';
 import '../utils/google_tts_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/module/module_progress_bar_widget.dart'; // Import the ModuleProgressBarWidget
 
 class TestPage extends StatefulWidget {
   @override
@@ -34,6 +35,9 @@ class TestPageState extends State<TestPage> {
   ];
 
   final GoogleTTSUtil _ttsUtil = GoogleTTSUtil(); // Initialize TTS utility
+
+  int currentSentenceIndex =
+      0; // New variable to keep track of the current sentence index
 
   @override
   void initState() {
@@ -116,6 +120,7 @@ class TestPageState extends State<TestPage> {
   // New method
   void _submitRecording() {
     setState(() {
+      currentSentenceIndex++; // Increment the current sentence index after submission
       _sentence = _getRandomSentence(); // Get a new sentence after submission
       _isSubmitted = true; // Set _isSubmitted to true here
     });
@@ -133,6 +138,12 @@ class TestPageState extends State<TestPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (_isSubmitted)
+              ModuleProgressBarWidget(
+                // Add the ModuleProgressBarWidget here
+                currentIndex: currentSentenceIndex,
+                total: _sentences.length,
+              ),
             SizedBox(height: 20),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
