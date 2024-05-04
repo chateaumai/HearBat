@@ -1,10 +1,12 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../utils/google_stt_util.dart';
+import '../utils/google_tts_util.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/module/module_progress_bar_widget.dart'; // Import the ModuleProgressBarWidget
 
 class TestPage extends StatefulWidget {
   @override
@@ -17,6 +19,9 @@ class TestPageState extends State<TestPage> {
   String _transcription = '';
   String _sentence = '';
   double _grade = 0.0;
+  String voiceType = 'en-US-Wavenet-D'; // Default voice type
+  bool _isSubmitted = false; // New variable
+
   final List<String> _sentences = [
     'The quick brown fox jumps over the lazy dog.',
     'Flutter makes it easy and fast to build beautiful apps.',
@@ -29,10 +34,16 @@ class TestPageState extends State<TestPage> {
     'Nothing will work unless you do.'
   ];
 
+  final GoogleTTSUtil _ttsUtil = GoogleTTSUtil(); // Initialize TTS utility
+
+  int currentSentenceIndex =
+      0; // New variable to keep track of the current sentence index
+
   @override
   void initState() {
     super.initState();
     _init();
+    _loadVoiceType(); // Load voiceType preference
     _sentence = _getRandomSentence();
   }
 
@@ -44,6 +55,12 @@ class TestPageState extends State<TestPage> {
     }
   }
 
+  Future<void> _loadVoiceType() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    voiceType = prefs.getString('voiceType') ??
+        'en-US-Wavenet-D'; // Load voiceType from prefs or use default
+  }
+
   String _getRandomSentence() {
     return _sentences[Random().nextInt(_sentences.length)];
   }
@@ -52,22 +69,18 @@ class TestPageState extends State<TestPage> {
     int totalChars = original.length;
     int missedChars = 0;
 
-    // Normalize the strings to lower case to make the comparison case insensitive
     original = original.toLowerCase();
     transcription = transcription.toLowerCase();
 
-    // Split the sentences into words to compare
     List<String> originalWords = original.split(' ');
     List<String> transcribedWords = transcription.split(' ');
 
-    // Calculate the missed characters by word comparison
     for (String word in originalWords) {
       if (!transcribedWords.contains(word)) {
         missedChars += word.length;
       }
     }
 
-    // Calculate the grade based on the characters that were correctly transcribed
     double correctChars = (totalChars - missedChars).toDouble();
     return (correctChars / totalChars) * 100;
   }
@@ -79,7 +92,6 @@ class TestPageState extends State<TestPage> {
     if (_isRecording) {
       await _recorder.stopRecorder();
 
-      // Transcribe the recorded audio
       final sttUtil = GoogleSTTUtil();
       try {
         final transcription = await sttUtil.transcribeAudio(path);
@@ -87,15 +99,12 @@ class TestPageState extends State<TestPage> {
         setState(() {
           _transcription = transcription;
           _grade = grade;
-          _sentence =
-              _getRandomSentence(); // Get a new sentence after recording
         });
       } catch (e) {
         print('Error in transcription: $e');
         setState(() {
           _transcription = 'Could not transcribe audio.';
           _grade = 0.0;
-          _sentence = _getRandomSentence(); // Get a new sentence even on error
         });
       }
     } else {
@@ -108,6 +117,19 @@ class TestPageState extends State<TestPage> {
     });
   }
 
+  // New method
+  void _submitRecording() {
+    setState(() {
+      currentSentenceIndex++; // Increment the current sentence index after submission
+      _sentence = _getRandomSentence(); // Get a new sentence after submission
+      _isSubmitted = true; // Set _isSubmitted to true here
+    });
+  }
+
+  Future<void> _playSentence() async {
+    await _ttsUtil.speak(_sentence, voiceType); // Use specified voice type
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,10 +138,28 @@ class TestPageState extends State<TestPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              _sentence,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+            if (_isSubmitted)
+              ModuleProgressBarWidget(
+                // Add the ModuleProgressBarWidget here
+                currentIndex: currentSentenceIndex,
+                total: _sentences.length,
+              ),
+            SizedBox(height: 20),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 7, 45, 78),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                minimumSize: Size(355, 90),
+              ),
+              onPressed: _playSentence,
+              icon: Icon(
+                Icons.volume_up,
+                color: Colors.white,
+                size: 50,
+              ),
+              label: Text(""),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -127,9 +167,17 @@ class TestPageState extends State<TestPage> {
               child: Text(_isRecording ? 'Stop Recording' : 'Start Recording'),
             ),
             SizedBox(height: 20),
-            Text(_transcription),
+            ElevatedButton(
+              onPressed: _submitRecording,
+              child: Text('Submit'),
+            ),
             SizedBox(height: 20),
-            Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+            if (_transcription.isNotEmpty)
+              Text('Transcription: $_transcription'),
+            if (_isSubmitted) ...[
+              Text('Original: $_sentence'),
+              Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+            ],
           ],
         ),
       ),

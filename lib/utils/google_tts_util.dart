@@ -30,10 +30,13 @@ class GoogleTTSUtil {
   }
 
   Future<void> speak(String text, String voicetype) async {
-    String textToSpeak =
-        (_difficulty == 'Hard' && text != "Hello this is how I sound")
-            ? "Please select $text as the answer"
-            : text;
+    // Determine the text to speak based on difficulty
+    String textToSpeak = (_difficulty == 'Hard' &&
+            text != "Hello this is how I sound" &&
+            text.length < 15)
+        ? "Please select $text as the answer"
+        : text;
+
     String safeText = textToSpeak.replaceAll(RegExp(r'\s+'), '').toLowerCase();
     String? audioPath = cache["${safeText}_$voicetype"];
 
@@ -42,8 +45,13 @@ class GoogleTTSUtil {
     } else {
       await downloadMP3(textToSpeak, voicetype);
 
+      // Delay to ensure the file is fully downloaded
+      await Future.delayed(Duration(seconds: 1));
+
+      // Update the cache after downloading
       audioPath = cache["${safeText}_$voicetype"];
-      if (audioPath != null) {
+
+      if (audioPath != null && await File(audioPath).exists()) {
         await audioPlayer.play(DeviceFileSource(audioPath));
       } else {
         throw Exception("Failed to download MP3 for: $textToSpeak");
