@@ -23,6 +23,29 @@ final List<AnswerGroup> chapter1module1WordGroups = [
       Answer("Apple", null, null), Answer("Orange", null, null)),
 ];
 
+final List<AnswerGroup> chapter1module1WordGroupsVn = [
+  AnswerGroup(Answer("Chìa khóa", null, null), Answer("Bàn chải", null, null),
+      Answer("Hôn", null, null), Answer("Diều", null, null)),
+  AnswerGroup(Answer("Phấn", null, null), Answer("Thịt", null, null),
+      Answer("Cằm", null, null), Answer("Phô mai", null, null)),
+  AnswerGroup(Answer("Dao", null, null), Answer("Cháu gái", null, null),
+      Answer("Trưa", null, null), Answer("Khéo léo", null, null)),
+  AnswerGroup(Answer("Cá", null, null), Answer("ít", null, null),
+      Answer("Cảm giác", null, null), Answer("Xa", null, null)),
+  AnswerGroup(Answer("Bóc", null, null), Answer("Chảo", null, null),
+      Answer("Bùng nổ", null, null), Answer("Bánh", null, null)),
+  AnswerGroup(Answer("đống", null, null), Answer("Nhìn trộm", null, null),
+      Answer("Ghim", null, null), Answer("đẩy", null, null)),
+  AnswerGroup(Answer("Hang", null, null), Answer("Than", null, null),
+      Answer("Tiền mặt", null, null), Answer("Diều", null, null)),
+  AnswerGroup(Answer("Gà", null, null), Answer("Mũ", null, null),
+      Answer("Anh ấy", null, null), Answer("Cỏ khô", null, null)),
+  AnswerGroup(Answer("ốm", null, null), Answer("Xà phòng", null, null),
+      Answer("Kiện", null, null), Answer("Mặt trời", null, null)),
+  AnswerGroup(Answer("Chân", null, null), Answer("Cá", null, null),
+      Answer("Mặt", null, null), Answer("Quạt", null, null)),
+];
+
 final List<AnswerGroup> chapter1module2WordGroups = [
   AnswerGroup(Answer("Ten", null, null), Answer("Republican", null, null),
       Answer("Telescope", null, null), Answer("Party", null, null)),
@@ -493,4 +516,8 @@ final Map<String, List<AnswerGroup>> chapter5wordModules = {
   'Module 2': chapter5module2WordGroups,
   'Module 3': chapter5module3WordGroups,
   'Module 4': chapter5module4WordGroups,
+};
+
+final Map<String, List<AnswerGroup>> chapter1wordModulesVn = {
+  'Module 1': chapter1module1WordGroupsVn,
 };

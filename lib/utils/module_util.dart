@@ -14,6 +14,9 @@ Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
       return chapter4wordModules;
     case "Expert Mastery":
       return chapter5wordModules;
+    case "Từ Dễ":
+      return chapter1wordModulesVn; 
+
 
     // Sound Chapters
     case "Home Sounds":
