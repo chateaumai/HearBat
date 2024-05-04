@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,8 +11,6 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   String? _voicePreference;
-  String _backgroundSound = 'None';
-  String _audioVolume = 'Low';
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
   bool isCaching = false;
   AudioPlayer audioPlayer = AudioPlayer();
@@ -57,20 +54,13 @@ class ProfilePageState extends State<ProfilePage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _voicePreference = prefs.getString('voicePreference') ?? "en-US-Studio-O";
-      _backgroundSound = prefs.getString('backgroundSoundPreference') ?? 'None';
-      _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
-      selectedLanguage = prefs.getString('languagePreference') ?? 'English'; 
-
+      selectedLanguage = prefs.getString('languagePreference') ?? 'English';
     });
-    _adjustVolume(_audioVolume);
   }
 
   void _updatePreference(String key, String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
-    if (key == 'audioVolumePreference') {
-      _adjustVolume(value);
-    }
     _loadPreferences();
   }
 
@@ -91,20 +81,6 @@ class ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  void _adjustVolume(String volumeLevel) {
-    switch (volumeLevel) {
-      case 'Low':
-        audioPlayer.setVolume(0.2);
-      case 'Medium':
-        audioPlayer.setVolume(0.6);
-      case 'High':
-        audioPlayer.setVolume(1.0);
-      default:
-        audioPlayer.setVolume(0.3);
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +90,72 @@ class ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      "Language",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: selectedLanguage == 'English'
+                                ? const Color.fromARGB(
+                                    255, 154, 107, 187) // Active color
+                                : const Color.fromARGB(
+                                    255, 255, 255, 255), // Inactive color
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _updatePreference(
+                                  'languagePreference', 'English');
+                            });
+                          },
+                          child: Image.asset(
+                            'assets/visuals/us_flag.png',
+                            width: 30,
+                            height: 20,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: selectedLanguage == 'Vietnamese'
+                                ? const Color.fromARGB(255, 154, 107, 187)
+                                : Color.fromARGB(255, 255, 255, 255),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _updatePreference(
+                                  'languagePreference', 'Vietnamese');
+                            });
+                          },
+                          child: Image.asset(
+                            'assets/visuals/vietnam_flag.png',
+                            width: 30,
+                            height: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
               child: Container(
@@ -223,237 +265,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "Background Sound",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5.0),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_backgroundSound != 'None') {
-                          String fileName = _backgroundSound
-                              .replaceAll(' Sound', '')
-                              .toLowerCase();
-                          await audioPlayer.play(
-                              AssetSource("audio/background/$fileName.mp3"));
-                          await Future.delayed(Duration(seconds: 3));
-                          await audioPlayer.stop();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 154, 107, 187),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        child: Text('Test',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: Text(
-                                    'Rain Sound',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  leading: Radio<String>(
-                                    value: 'Rain Sound',
-                                    groupValue: _backgroundSound,
-                                    onChanged: (String? value) {
-                                      _updatePreference(
-                                          'backgroundSoundPreference', value!);
-                                    },
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    'Shop Sound',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  leading: Radio<String>(
-                                    value: 'Shop Sound',
-                                    groupValue: _backgroundSound,
-                                    onChanged: (String? value) {
-                                      _updatePreference(
-                                          'backgroundSoundPreference', value!);
-                                    },
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    'None',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  leading: Radio<String>(
-                                    value: 'None',
-                                    groupValue: _backgroundSound,
-                                    onChanged: (String? value) {
-                                      _updatePreference(
-                                          'backgroundSoundPreference', value!);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text(
-                                  'Low',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                leading: Radio<String>(
-                                  value: 'Low',
-                                  groupValue: _audioVolume,
-                                  onChanged: (String? value) {
-                                    _updatePreference(
-                                        'audioVolumePreference', value!);
-                                  },
-                                ),
-                              ),
-                              ListTile(
-                                title: AutoSizeText(
-                                  'Medium',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                leading: Radio<String>(
-                                  value: 'Medium',
-                                  groupValue: _audioVolume,
-                                  onChanged: (String? value) {
-                                    _updatePreference(
-                                        'audioVolumePreference', value!);
-                                  },
-                                ),
-                              ),
-                              ListTile(
-                                title: Text(
-                                  'High',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                leading: Radio<String>(
-                                  value: 'High',
-                                  groupValue: _audioVolume,
-                                  onChanged: (String? value) {
-                                    _updatePreference(
-                                        'audioVolumePreference', value!);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      "Language",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                    Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: selectedLanguage == 'English'
-                            ? const Color.fromARGB(255, 154, 107, 187) // Active color
-                            : const Color.fromARGB(255, 255, 255, 255), // Inactive color
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _updatePreference('languagePreference', 'English');
-                        });
-                      },
-                      child: Image.asset(
-                        'assets/visuals/us_flag.png',
-                        width: 30,
-                        height: 20,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: selectedLanguage == 'Vietnamese'
-                            ? const Color.fromARGB(255, 154, 107, 187) 
-                            : Color.fromARGB(255, 255, 255, 255), 
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _updatePreference('languagePreference', 'Vietnamese');
-                        });
-                      },
-                      child: Image.asset(
-                        'assets/visuals/vietnam_flag.png',
-                        width: 30,
-                        height: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-                ],
-              ),
-            ) 
+            )
           ],
         ),
       ),
