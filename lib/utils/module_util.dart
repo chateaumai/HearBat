@@ -1,6 +1,7 @@
 import '../data/answer_pair.dart';
 import '../data/word_modules_data.dart';
 import '../data/sound_modules_data.dart';
+import '../data/speech_modules_data.dart';
 
 Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
   switch (chapter) {
@@ -15,8 +16,7 @@ Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
     case "Expert Mastery":
       return chapter5wordModules;
     case "Từ Dễ":
-      return chapter1wordModulesVn; 
-
+      return chapter1wordModulesVn;
 
     // Sound Chapters
     case "Home Sounds":

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'module_types/words/word_chapters.dart';
 import 'module_types/sound/sound_chapters.dart';
+import 'module_types/speech/speech_chapters.dart';
 import 'module_types/custom/custom_path.dart';
 import '../widgets/home_card_widget.dart';
 import '../utils/text_util.dart';
@@ -71,6 +72,12 @@ class HomePage extends StatelessWidget {
                 description: customDesc,
                 destinationPage: CustomPath(),
                 image: "assets/visuals/HB_Custom.png",
+              ),
+              HomeCardWidget(
+                cardText: 'Train Speech',
+                description: speechDesc,
+                destinationPage: SpeechChapters(),
+                image: "assets/visuals/HB_Music.png",
               ),
             ],
           ),
