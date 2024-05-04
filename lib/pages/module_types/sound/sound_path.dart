@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'package:hearbat/widgets/sound_module_list_widget.dart';
+import 'package:hearbat/widgets/path/sound_module_list_widget.dart';
 import '../../../utils/module_util.dart';
 import '../../../widgets/top_bar_widget.dart';
 
@@ -16,7 +16,8 @@ class SoundPath extends StatefulWidget {
 class _SoundPathState extends State<SoundPath> {
   @override
   Widget build(BuildContext context) {
-    Map<String, List<AnswerGroup>> modules = getModulesForChapter(widget.chapter);
+    Map<String, List<AnswerGroup>> modules =
+        getModulesForChapter(widget.chapter);
     return Scaffold(
       appBar: TopBar(
         title: widget.chapter.toUpperCase(),
@@ -38,7 +39,7 @@ class _SoundPathState extends State<SoundPath> {
         child: Stack(
           children: <Widget>[
             Container(
-              alignment: FractionalOffset(-0.35, 0.05), 
+              alignment: FractionalOffset(-0.35, 0.05),
               child: Container(
                 width: 200,
                 height: 80,
@@ -80,7 +81,7 @@ class _SoundPathState extends State<SoundPath> {
               ),
             ),
             Container(
-              alignment: FractionalOffset(-0.1, 0.5), 
+              alignment: FractionalOffset(-0.1, 0.5),
               child: Container(
                 width: 200,
                 height: 200,
@@ -94,7 +95,7 @@ class _SoundPathState extends State<SoundPath> {
               ),
             ),
             Container(
-              alignment: FractionalOffset(1.2, 0.7), 
+              alignment: FractionalOffset(1.2, 0.7),
               child: Container(
                 width: 200,
                 height: 200,
@@ -108,7 +109,7 @@ class _SoundPathState extends State<SoundPath> {
               ),
             ),
             Container(
-              alignment: FractionalOffset(0.5, 0.95), 
+              alignment: FractionalOffset(0.5, 0.95),
               child: Container(
                 width: 300,
                 height: 150,
@@ -124,8 +125,7 @@ class _SoundPathState extends State<SoundPath> {
             Column(
               children: [
                 Expanded(
-                  child: SoundModuleListWidget(
-                  modules: modules), 
+                  child: SoundModuleListWidget(modules: modules),
                 ),
               ],
             ),

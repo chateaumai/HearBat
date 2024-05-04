@@ -30,3 +30,16 @@ Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
       return {}; // Return an empty map if none of the cases match
   }
 }
+
+Map<String, List<String>> getModulesForSpeech(String chapter) {
+  switch (chapter) {
+    case "Basic Speech":
+      return chapter1speechModules;
+    case "Basic Speech1":
+      return chapter2speechModules;
+    case "Basic Speech2":
+      return chapter3speechModules;
+    default:
+      return {}; // Return an empty map if none of the cases match
+  }
+}

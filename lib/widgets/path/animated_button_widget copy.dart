@@ -3,8 +3,9 @@ import 'package:hearbat/data/answer_pair.dart';
 
 class AnimatedButton extends StatefulWidget {
   final String moduleName;
-  final List<dynamic> answerGroups;
-  final Function(String moduleName, List<dynamic> answerGroups) onButtonPressed;
+  final List<AnswerGroup> answerGroups;
+  final Function(String moduleName, List<AnswerGroup> answerGroups)
+      onButtonPressed;
 
   AnimatedButton({
     Key? key,
@@ -53,14 +54,7 @@ class AnimatedButtonState extends State<AnimatedButton>
 
   void _handleTapUp(TapUpDetails details) {
     _animationController.reverse().then((_) {
-      if (widget.answerGroups.every((element) => element is String)) {
-        widget.onButtonPressed(
-            widget.moduleName, widget.answerGroups.cast<String>());
-      } else if (widget.answerGroups
-          .every((element) => element is AnswerGroup)) {
-        widget.onButtonPressed(
-            widget.moduleName, widget.answerGroups.cast<AnswerGroup>());
-      }
+      widget.onButtonPressed(widget.moduleName, widget.answerGroups);
     });
   }
 

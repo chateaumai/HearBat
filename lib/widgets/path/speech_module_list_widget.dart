@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/data/answer_pair.dart';
-import 'package:hearbat/widgets/path/animated_button_widget.dart';
-import 'module/module_widget.dart';
-import '../widgets/path/sound_trangular_path_layout_widget.dart';
+import '../module/speech_module_widget.dart';
+import 'sound_trangular_path_layout_widget.dart';
+import 'animated_button_widget.dart';
 
-class SoundModuleListWidget extends StatelessWidget {
-  final Map<String, List<AnswerGroup>> modules;
+class SpeechModuleListWidget extends StatelessWidget {
+  final Map<String, List<String>> modules;
 
-  SoundModuleListWidget({Key? key, required this.modules}) : super(key: key);
+  SpeechModuleListWidget({Key? key, required this.modules}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var moduleList = modules.entries.toList();
-    void navigate(String moduleName, List<AnswerGroup> answerGroups) {
+    void navigate(String moduleName, List<String> sentences) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ModuleWidget(
-            title: moduleName,
-            answerGroups: answerGroups,
-            isWord: false, 
-          ),
+          builder: (context) => SpeechModuleWidget(),
         ),
       );
     }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
@@ -41,22 +37,23 @@ class SoundModuleListWidget extends StatelessWidget {
                     width: 100 * 1.5,
                     decoration: BoxDecoration(
                       color: Color.fromARGB(255, 7, 45, 78),
-                      borderRadius: BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
+                      borderRadius: BorderRadius.all(
+                          Radius.elliptical(100 * 1.5, 50 * 1.5)),
                     ),
                   ),
                 ),
                 AnimatedButton(
                   moduleName: module.key,
                   answerGroups: module.value,
-                  onButtonPressed: (String moduleName, List<AnswerGroup> answerGroups) {
-                    navigate(moduleName, answerGroups);    
-                  }
+                  onButtonPressed: (String key, List<dynamic> value) {
+                    navigate(module.key, module.value);
+                  },
                 ),
               ],
             );
           },
-          itemSize: 120.0, 
-          spacing: 80.0, 
+          itemSize: 120.0,
+          spacing: 80.0,
         ),
       ),
     );

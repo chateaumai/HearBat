@@ -17,7 +17,7 @@ class ModuleListWidget extends StatefulWidget {
 
 class ModuleListWidgetState extends State<ModuleListWidget>
     with TickerProviderStateMixin {
-  void _navigate(String moduleName, List<AnswerGroup> answerGroups) {
+  void navigate(String moduleName, List<AnswerGroup> answerGroups) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -48,16 +48,16 @@ class ModuleListWidgetState extends State<ModuleListWidget>
                     width: 100 * 1.5,
                     decoration: BoxDecoration(
                       color: Color.fromARGB(255, 7, 45, 78),
-                      borderRadius: BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
+                      borderRadius: BorderRadius.all(
+                          Radius.elliptical(100 * 1.5, 50 * 1.5)),
                     ),
                   ),
                 ),
                 AnimatedButton(
                   moduleName: module.key,
                   answerGroups: module.value,
-                  onButtonPressed:
-                      (String moduleName, List<AnswerGroup> answerGroups) {
-                    _navigate(moduleName, answerGroups);
+                  onButtonPressed: (String key, List<dynamic> value) {
+                    navigate(key, value.cast<AnswerGroup>());
                   },
                 ),
               ],

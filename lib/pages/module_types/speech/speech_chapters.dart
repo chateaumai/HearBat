@@ -9,7 +9,15 @@ class SpeechChapters extends StatelessWidget {
     List<Map<String, String>> chapters = [
       {
         "name": "Basic Speech",
-        "image": "assets/visuals/HBSoundChapterOne.png",
+        "image": "assets/visuals/HBWordsChapterOne.png",
+      },
+      {
+        "name": "Basic Speech1",
+        "image": "assets/visuals/HB_WordsChapterTwo.png",
+      },
+      {
+        "name": "Basic Speech2",
+        "image": "assets/visuals/HBWordsChapterThree.png",
       },
     ];
 

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../utils/google_stt_util.dart';
-import '../utils/google_tts_util.dart';
+import '../../utils/google_stt_util.dart';
+import '../../utils/google_tts_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../widgets/module/module_progress_bar_widget.dart'; // Import the ModuleProgressBarWidget
+import 'module_progress_bar_widget.dart'; // Import the ModuleProgressBarWidget
 
-class TestPage extends StatefulWidget {
+class SpeechModuleWidget extends StatefulWidget {
   @override
-  TestPageState createState() => TestPageState();
+  SpeechModuleWidgetState createState() => SpeechModuleWidgetState();
 }
 
-class TestPageState extends State<TestPage> {
+class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   late FlutterSoundRecorder _recorder;
   bool _isRecording = false;
   String _transcription = '';
