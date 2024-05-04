@@ -17,6 +17,7 @@ class ProfilePageState extends State<ProfilePage> {
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
   bool isCaching = false;
   AudioPlayer audioPlayer = AudioPlayer();
+  String selectedLanguage = 'English';
 
   List<String> voiceTypes = [
     "en-US-Studio-O",
@@ -58,6 +59,8 @@ class ProfilePageState extends State<ProfilePage> {
       _voicePreference = prefs.getString('voicePreference') ?? "en-US-Studio-O";
       _backgroundSound = prefs.getString('backgroundSoundPreference') ?? 'None';
       _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
+      selectedLanguage = prefs.getString('languagePreference') ?? 'English'; 
+
     });
     _adjustVolume(_audioVolume);
   }
@@ -389,6 +392,68 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
+           Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      "Language",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                    Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: selectedLanguage == 'English'
+                            ? const Color.fromARGB(255, 154, 107, 187) // Active color
+                            : const Color.fromARGB(255, 255, 255, 255), // Inactive color
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _updatePreference('languagePreference', 'English');
+                        });
+                      },
+                      child: Image.asset(
+                        'assets/visuals/us_flag.png',
+                        width: 30,
+                        height: 20,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: selectedLanguage == 'Vietnamese'
+                            ? const Color.fromARGB(255, 154, 107, 187) 
+                            : Color.fromARGB(255, 255, 255, 255), 
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _updatePreference('languagePreference', 'Vietnamese');
+                        });
+                      },
+                      child: Image.asset(
+                        'assets/visuals/vietnam_flag.png',
+                        width: 30,
+                        height: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+                ],
+              ),
+            ) 
           ],
         ),
       ),
