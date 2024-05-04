@@ -15,7 +15,10 @@ class SpeechModuleListWidget extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SpeechModuleWidget(),
+          builder: (context) => SpeechModuleWidget(
+            chapter: moduleName,
+            sentences: sentences,
+          ),
         ),
       );
     }
