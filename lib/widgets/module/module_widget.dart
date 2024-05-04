@@ -54,9 +54,13 @@ class _ModulePageState extends State<ModuleWidget> {
   void getVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedVoiceType = prefs.getString('voicePreference');
+    String? language = prefs.getString('languagePreference');
+    if (language == 'Vietnamese') {
+      storedVoiceType = 'vi-VN-Standard-A';
+    }
     if (storedVoiceType != null) {
       setState(() {
-        voiceType = storedVoiceType;
+        voiceType = storedVoiceType!;
       });
     }
   }

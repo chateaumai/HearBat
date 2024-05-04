@@ -107,12 +107,8 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
 
   void playAnswer() {
     if (widget.isWord) {
-      if (language == 'Vietnamese') {
-        googleTTSUtil.speak(correctWord.answer, "vi-VN-Standard-A");  
-      } else {
         googleTTSUtil.speak(correctWord.answer, widget.voiceType);
-      }
-    } else {
+    }else {
       AudioUtil.playSound(correctWord.path!);
     }
   }

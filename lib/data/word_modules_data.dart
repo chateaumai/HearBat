@@ -520,4 +520,7 @@ final Map<String, List<AnswerGroup>> chapter5wordModules = {
 
 final Map<String, List<AnswerGroup>> chapter1wordModulesVn = {
   'Module 1': chapter1module1WordGroupsVn,
+  'Module 2': chapter1module1WordGroupsVn,
+  'Module 3': chapter1module1WordGroupsVn,
+  'Module 4': chapter1module1WordGroupsVn,
 };

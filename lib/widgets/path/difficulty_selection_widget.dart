@@ -74,9 +74,13 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
 
   void _loadVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String language = prefs.getString('languagePreference') ?? 'English';
     setState(() {
       _voiceType = prefs.getString('voicePreference') ??
-          "en-US-Studio-O"; // Default voice type
+          "en-US-Studio-O";
+      if (language == 'Vietnamese') {
+        _voiceType = 'vi-VN-Standard-A';
+      }
     });
   }
 
