@@ -46,18 +46,20 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   bool readyForCompletion = false;
   int currentIndex = 0;
   String _difficulty = 'Normal';
+  String language = 'English';
 
   @override
   void initState() {
     super.initState();
-    _loadDifficultyPreference();
+    _loadPreference();
     answerGroups = List<AnswerGroup>.from(widget.answerGroups);
     setNextPair();
   }
 
-  Future<void> _loadDifficultyPreference() async {
+  Future<void> _loadPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
+    language = prefs.getString('languagePreference') ?? 'English';
   }
 
   void setNextPair() {
@@ -105,7 +107,11 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
 
   void playAnswer() {
     if (widget.isWord) {
-      googleTTSUtil.speak(correctWord.answer, widget.voiceType);
+      if (language == 'Vietnamese') {
+        googleTTSUtil.speak(correctWord.answer, "vi-VN-Standard-A");  
+      } else {
+        googleTTSUtil.speak(correctWord.answer, widget.voiceType);
+      }
     } else {
       AudioUtil.playSound(correctWord.path!);
     }
@@ -130,7 +136,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "What do you hear?",
+                      language == 'English' ? "What do you hear?" : "Bạn nghe chữ gì?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
