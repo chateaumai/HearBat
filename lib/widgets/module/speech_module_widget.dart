@@ -71,6 +71,9 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   }
 
   double _calculateGrade(String original, String transcription) {
+    original = original.replaceAll(RegExp(r'\W'), '');
+    transcription = transcription.replaceAll(RegExp(r'\W'), '');
+
     int totalChars = original.length;
     int missedChars = 0;
     original = original.toLowerCase();
@@ -203,8 +206,9 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                         ElevatedButton(
                           onPressed: _toggleRecording,
                           style: ElevatedButton.styleFrom(
-                            primary: _isRecording ? Colors.red : Colors.green,
-                            onPrimary: Colors.white,
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                _isRecording ? Colors.red : Colors.green,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 20),
                             shape: RoundedRectangleBorder(
