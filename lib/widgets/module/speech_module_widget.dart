@@ -161,14 +161,6 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
       ),
     );
   }
-          /*
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ModuleProgressBarWidget(
-              currentIndex: currentSentenceIndex,
-              total: widget.sentences.length,
-            ),
-          ),*/
 
   Widget buildModuleContent() {
     return SingleChildScrollView(
