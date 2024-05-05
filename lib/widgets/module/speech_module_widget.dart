@@ -176,7 +176,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
               children: [
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(30.0, 20.0, 20.0, 20.0),
+                    padding: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 20.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
