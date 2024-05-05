@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
-import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../module/module_widget.dart';
@@ -274,8 +273,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                       _cacheAndNavigate(widget.moduleName, widget.answerGroups);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Color.fromARGB(255, 7, 45, 78),
+                      backgroundColor: Color.fromARGB(255, 7, 45, 78),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -298,20 +296,19 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).scaffoldBackgroundColor, 
-                      shape: RoundedRectangleBorder(  
-                        borderRadius: BorderRadius.circular(8),  
-                        side: BorderSide(
-                          color: Color.fromARGB(255, 7, 45, 78),  
-                          width: 4.0  
-                        )
-                      ),
+                      backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: BorderSide(
+                              color: Color.fromARGB(255, 7, 45, 78),
+                              width: 4.0)),
                       minimumSize: Size(380, 50),
                     ),
                     child: Text(
                       'CANCEL',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 7, 45, 78),  
+                        color: Color.fromARGB(255, 7, 45, 78),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -381,18 +378,18 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
     return Column(
       children: <Widget>[
         _buildOption('None', 'None'),
-         Divider(
+        Divider(
           color: Color.fromARGB(255, 7, 45, 78),
-          thickness: 3, 
+          thickness: 3,
           indent: 20,
-          endIndent: 20, 
+          endIndent: 20,
         ),
         _buildOption('Rain', 'Rain Sound'),
-         Divider(
+        Divider(
           color: Color.fromARGB(255, 7, 45, 78),
-          thickness: 3, 
+          thickness: 3,
           indent: 20,
-          endIndent: 20, 
+          endIndent: 20,
         ),
         _buildOption('Coffee Shop', 'Shop Sound'),
       ],
@@ -454,18 +451,18 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
     return Column(
       children: <Widget>[
         _buildOption('Low'),
-         Divider(
+        Divider(
           color: Color.fromARGB(255, 7, 45, 78),
-          thickness: 3, 
+          thickness: 3,
           indent: 20,
-          endIndent: 20, 
+          endIndent: 20,
         ),
         _buildOption('Medium'),
-         Divider(
+        Divider(
           color: Color.fromARGB(255, 7, 45, 78),
-          thickness: 3, 
+          thickness: 3,
           indent: 20,
-          endIndent: 20, 
+          endIndent: 20,
         ),
         _buildOption('High'),
       ],
@@ -526,11 +523,11 @@ class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
     return Column(
       children: <Widget>[
         _buildOption('Normal'),
-         Divider(
+        Divider(
           color: Color.fromARGB(255, 7, 45, 78),
-          thickness: 3, 
+          thickness: 3,
           indent: 20,
-          endIndent: 20, 
+          endIndent: 20,
         ),
         _buildOption('Hard'),
       ],

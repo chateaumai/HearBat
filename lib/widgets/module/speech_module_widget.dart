@@ -13,8 +13,12 @@ import 'package:confetti/confetti.dart';
 class SpeechModuleWidget extends StatefulWidget {
   final String chapter;
   final List<String> sentences;
+  final String voiceType;
 
-  SpeechModuleWidget({required this.chapter, required this.sentences});
+  SpeechModuleWidget(
+      {required this.chapter,
+      required this.sentences,
+      required this.voiceType});
 
   @override
   SpeechModuleWidgetState createState() => SpeechModuleWidgetState();
@@ -26,7 +30,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   String _transcription = '';
   String _sentence = '';
   double _grade = 0.0;
-  String voiceType = 'en-US-Wavenet-D';
+  String voiceType = '';
   bool _isSubmitted = false;
   bool _isCompleted = false;
   int currentSentenceIndex = 0;
@@ -40,10 +44,12 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   @override
   void initState() {
     super.initState();
+    voiceType = widget.voiceType;
     _init();
     _loadVoiceType();
     _sentence = _getRandomSentence();
     _confettiController.play();
+    setState(() {});
   }
 
   Future<void> _init() async {
@@ -55,8 +61,12 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
 
   Future<void> _loadVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    voiceType = prefs.getString('voiceType') ?? 'en-US-Wavenet-D';
+    voiceType = prefs.getString('voicePreference') ?? voiceType;
     language = prefs.getString('languagePreference')!;
+  }
+
+  Future<void> _playSentence() async {
+    await _ttsUtil.speak(_sentence, voiceType);
   }
 
   List<String> shuffledSentences = [];
@@ -136,10 +146,6 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
         _transcription = '';
       }
     });
-  }
-
-  Future<void> _playSentence() async {
-    await _ttsUtil.speak(_sentence, voiceType);
   }
 
   @override
