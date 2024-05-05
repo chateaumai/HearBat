@@ -34,7 +34,7 @@ class GoogleTTSUtil {
     String textToSpeak = (_difficulty == 'Hard' &&
             text != "Hello this is how I sound" &&
             text.length < 15)
-        ? "Please select $text as the answer"
+        ? "Please, select $text as the answer"
         : text;
 
     String safeTextToSpeak =

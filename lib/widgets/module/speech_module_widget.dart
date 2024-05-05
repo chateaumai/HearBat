@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'module_progress_bar_widget.dart';
 import 'check_button_widget.dart';
 import 'package:confetti/confetti.dart';
+import 'dart:math';
 
 class SpeechModuleWidget extends StatefulWidget {
   final String chapter;
@@ -85,22 +86,41 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   }
 
   double _calculateGrade(String original, String transcription) {
-    original = original.replaceAll(RegExp(r'\W'), '');
-    transcription = transcription.replaceAll(RegExp(r'\W'), '');
+    original = original.replaceAll(RegExp(r'\W'), '').toLowerCase();
+    transcription = transcription.replaceAll(RegExp(r'\W'), '').toLowerCase();
 
-    int totalChars = original.length;
-    int missedChars = 0;
-    original = original.toLowerCase();
-    transcription = transcription.toLowerCase();
-    List<String> originalWords = original.split(' ');
-    List<String> transcribedWords = transcription.split(' ');
+    int distance = _levenshteinDistance(original, transcription);
+    int maxLength = max(original.length, transcription.length);
 
-    for (String word in originalWords) {
-      if (!transcribedWords.contains(word)) {
-        missedChars += word.length;
+    return (1 - distance / maxLength) * 100;
+  }
+
+  int _levenshteinDistance(String s, String t) {
+    if (s == t) return 0;
+    if (s.isEmpty) return t.length;
+    if (t.isEmpty) return s.length;
+
+    List<int> v0 = List.filled(t.length + 1, 0);
+    List<int> v1 = List.filled(t.length + 1, 0);
+
+    for (int i = 0; i < t.length + 1; i++) {
+      v0[i] = i;
+    }
+
+    for (int i = 0; i < s.length; i++) {
+      v1[0] = i + 1;
+
+      for (int j = 0; j < t.length; j++) {
+        int cost = (s[i] == t[j]) ? 0 : 1;
+        v1[j + 1] = min(min(v1[j] + 1, v0[j + 1] + 1), v0[j] + cost);
+      }
+
+      for (int j = 0; j < t.length + 1; j++) {
+        v0[j] = v1[j];
       }
     }
-    return (totalChars - missedChars).toDouble() / totalChars * 100;
+
+    return v1[t.length];
   }
 
   Future<void> _toggleRecording() async {

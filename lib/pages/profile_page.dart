@@ -10,7 +10,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  String? _voicePreference;
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
   bool isCaching = false;
   AudioPlayer audioPlayer = AudioPlayer();
@@ -53,7 +52,6 @@ class ProfilePageState extends State<ProfilePage> {
   void _loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _voicePreference = prefs.getString('voicePreference') ?? "en-US-Studio-O";
       selectedLanguage = prefs.getString('languagePreference') ?? 'English';
     });
   }
@@ -132,13 +130,13 @@ class ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                Text(
-                  "Voice Select",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    "Voice Select",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0),
                     width: double.infinity,
@@ -150,9 +148,11 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Column(
                       children: <Widget>[
-                      VoiceOptionsWidget(updatePreferenceCallback: _updatePreference,),
+                        VoiceOptionsWidget(
+                          updatePreferenceCallback: _updatePreference,
+                        ),
                       ],
-                          ),
+                    ),
                   ),
                 ],
               ),
@@ -183,50 +183,50 @@ class LanguageOptionsWidgetState extends State<LanguageOptionsWidget> {
     });
   }
 
- Widget _buildOption(String language, String value, String assetName) {
-  bool isSelected = _selectedLanguage == value;
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(8.0),
-    child: InkWell(
-      onTap: () => _handleTap(value),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-        ),
-        child: ListTile(
-          leading: Image.asset(
-            assetName,
-            width: 30,
-            height: 20,
+  Widget _buildOption(String language, String value, String assetName) {
+    bool isSelected = _selectedLanguage == value;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: InkWell(
+        onTap: () => _handleTap(value),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
           ),
-          title: Text(
-            language,
-            style: TextStyle(
-              fontSize: 14,
+          child: ListTile(
+            leading: Image.asset(
+              assetName,
+              width: 30,
+              height: 20,
             ),
+            title: Text(
+              language,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            trailing: isSelected
+                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                : null,
           ),
-          trailing: isSelected
-            ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
-            : null,
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         _buildOption('English', 'English', 'assets/visuals/us_flag.png'),
-         Divider(
+        Divider(
           color: Color.fromARGB(255, 7, 45, 78),
-          thickness: 3, 
+          thickness: 3,
           indent: 20,
-          endIndent: 20, 
+          endIndent: 20,
         ),
-        _buildOption('Vietnamese', 'Vietnamese', 'assets/visuals/vietnam_flag.png'),
+        _buildOption(
+            'Vietnamese', 'Vietnamese', 'assets/visuals/vietnam_flag.png'),
       ],
     );
   }
@@ -244,7 +244,7 @@ class VoiceOptionsWidget extends StatefulWidget {
 class VoiceOptionsWidgetState extends State<VoiceOptionsWidget> {
   String? _selectedVoicePreference;
   final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
-   List<String> voiceTypes = [
+  List<String> voiceTypes = [
     "en-US-Studio-O", // US Female
     "en-US-Studio-Q", // US Male
     "en-GB-Neural2-C", // UK Female
@@ -277,26 +277,27 @@ class VoiceOptionsWidgetState extends State<VoiceOptionsWidget> {
     });
   }
 
-Widget _buildOption(String title, String value) {
-  bool isSelected = _selectedVoicePreference == value;
-  return ListTile(
-    onTap: () => _handleTap(value),
-    title: Text(
-      title,
-      style: TextStyle(fontSize: 14),
-    ),
-    trailing: isSelected
-        ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
-        : null,
-  );
-}
+  Widget _buildOption(String title, String value) {
+    bool isSelected = _selectedVoicePreference == value;
+    return ListTile(
+      onTap: () => _handleTap(value),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 14),
+      ),
+      trailing: isSelected
+          ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+          : null,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> voiceOptionWidgets = [];
     for (int i = 0; i < voiceTypes.length; i++) {
-      voiceOptionWidgets.add(_buildOption(voiceTypeTitles[voiceTypes[i]] ?? "", voiceTypes[i]));
-      if (i < voiceTypes.length - 1) { 
+      voiceOptionWidgets.add(
+          _buildOption(voiceTypeTitles[voiceTypes[i]] ?? "", voiceTypes[i]));
+      if (i < voiceTypes.length - 1) {
         voiceOptionWidgets.add(Divider(
           color: Color.fromARGB(255, 7, 45, 78),
           thickness: 3,
@@ -311,5 +312,3 @@ Widget _buildOption(String title, String value) {
     );
   }
 }
-
-
