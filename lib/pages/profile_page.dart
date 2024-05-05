@@ -85,190 +85,231 @@ class ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        title: 'Setting',
+        title: 'SETTINGS',
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 20.0),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                    child: Text(
-                      "Language",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    "Language",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: selectedLanguage == 'English'
-                                ? const Color.fromARGB(
-                                    255, 154, 107, 187) // Active color
-                                : const Color.fromARGB(
-                                    255, 255, 255, 255), // Inactive color
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _updatePreference(
-                                  'languagePreference', 'English');
-                            });
-                          },
-                          child: Image.asset(
-                            'assets/visuals/us_flag.png',
-                            width: 30,
-                            height: 20,
-                          ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10.0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(
+                          color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        LanguageOptionsWidget(
+                          updatePreferenceCallback: _updatePreference,
                         ),
-                      ),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: selectedLanguage == 'Vietnamese'
-                                ? const Color.fromARGB(255, 154, 107, 187)
-                                : Color.fromARGB(255, 255, 255, 255),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _updatePreference(
-                                  'languagePreference', 'Vietnamese');
-                            });
-                          },
-                          child: Image.asset(
-                            'assets/visuals/vietnam_flag.png',
-                            width: 30,
-                            height: 20,
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 20.0),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Text(
+                  "Voice Select",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "Voice Type",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10.0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(
+                          color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
                     ),
-                    SizedBox(height: 5.0),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_voicePreference != null) {
-                            _googleTTSUtil.speak(
-                                "Hello this is how I sound", _voicePreference!);
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 154, 107, 187),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                          child: Text('Test',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 10.0),
-                                for (int i = 0; i < 4; i++)
-                                  ListTile(
-                                    title: Text(
-                                      voiceTypeTitles[voiceTypes[i]] ?? "",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    leading: Radio<String>(
-                                      value: voiceTypes[i],
-                                      groupValue: _voicePreference,
-                                      onChanged: (String? value) {
-                                        _updatePreference(
-                                            'voicePreference', value!);
-                                      },
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 10.0),
-                                for (int i = 4; i < 8; i++)
-                                  ListTile(
-                                    title: Text(
-                                      voiceTypeTitles[voiceTypes[i]] ?? "",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    leading: Radio<String>(
-                                      value: voiceTypes[i],
-                                      groupValue: _voicePreference,
-                                      onChanged: (String? value) {
-                                        _updatePreference(
-                                            'voicePreference', value!);
-                                      },
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
+                    child: Column(
+                      children: <Widget>[
+                      VoiceOptionsWidget(updatePreferenceCallback: _updatePreference,),
                       ],
-                    ),
-                  ],
-                ),
+                          ),
+                  ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+class LanguageOptionsWidget extends StatefulWidget {
+  final Function(String, String) updatePreferenceCallback;
+
+  LanguageOptionsWidget({required this.updatePreferenceCallback});
+
+  @override
+  LanguageOptionsWidgetState createState() => LanguageOptionsWidgetState();
+}
+
+class LanguageOptionsWidgetState extends State<LanguageOptionsWidget> {
+  String _selectedLanguage = 'English';
+
+  void _handleTap(String value) {
+    setState(() {
+      _selectedLanguage = value;
+      widget.updatePreferenceCallback('languagePreference', value);
+    });
+  }
+
+ Widget _buildOption(String language, String value, String assetName) {
+  bool isSelected = _selectedLanguage == value;
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(8.0),
+    child: InkWell(
+      onTap: () => _handleTap(value),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+        ),
+        child: ListTile(
+          leading: Image.asset(
+            assetName,
+            width: 30,
+            height: 20,
+          ),
+          title: Text(
+            language,
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+          trailing: isSelected
+            ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+            : null,
+        ),
+      ),
+    ),
+  );
+}
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        _buildOption('English', 'English', 'assets/visuals/us_flag.png'),
+         Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3, 
+          indent: 20,
+          endIndent: 20, 
+        ),
+        _buildOption('Vietnamese', 'Vietnamese', 'assets/visuals/vietnam_flag.png'),
+      ],
+    );
+  }
+}
+
+class VoiceOptionsWidget extends StatefulWidget {
+  final Function(String, String) updatePreferenceCallback;
+
+  VoiceOptionsWidget({required this.updatePreferenceCallback});
+
+  @override
+  VoiceOptionsWidgetState createState() => VoiceOptionsWidgetState();
+}
+
+class VoiceOptionsWidgetState extends State<VoiceOptionsWidget> {
+  String? _selectedVoicePreference;
+  final GoogleTTSUtil _googleTTSUtil = GoogleTTSUtil();
+   List<String> voiceTypes = [
+    "en-US-Studio-O", // US Female
+    "en-US-Studio-Q", // US Male
+    "en-GB-Neural2-C", // UK Female
+    "en-GB-Neural2-B", // UK Male
+    "en-IN-Neural2-A", // IN Female
+    "en-IN-Neural2-B", // IN Male
+    "en-AU-Neural2-C", // AU Female
+    "en-AU-Neural2-B", // AU Male
+  ];
+
+  Map<String, String> voiceTypeTitles = {
+    "en-US-Studio-O": "American Female",
+    "en-US-Studio-Q": "American Male",
+    "en-GB-Neural2-C": "English Female",
+    "en-GB-Neural2-B": "English Male",
+    "en-IN-Neural2-A": "Indian Female",
+    "en-IN-Neural2-B": "Indian Male",
+    "en-AU-Neural2-C": "Australian Female",
+    "en-AU-Neural2-B": "Australian Male",
+  };
+
+  void _handleTap(String value) {
+    setState(() {
+      _selectedVoicePreference = value;
+      widget.updatePreferenceCallback('voicePreference', value);
+      if (_selectedVoicePreference != null) {
+        _googleTTSUtil.speak(
+            "Hello this is how I sound", _selectedVoicePreference!);
+      }
+    });
+  }
+
+Widget _buildOption(String title, String value) {
+  bool isSelected = _selectedVoicePreference == value;
+  return ListTile(
+    onTap: () => _handleTap(value),
+    title: Text(
+      title,
+      style: TextStyle(fontSize: 14),
+    ),
+    trailing: isSelected
+        ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+        : null,
+  );
+}
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> voiceOptionWidgets = [];
+    for (int i = 0; i < voiceTypes.length; i++) {
+      voiceOptionWidgets.add(_buildOption(voiceTypeTitles[voiceTypes[i]] ?? "", voiceTypes[i]));
+      if (i < voiceTypes.length - 1) { 
+        voiceOptionWidgets.add(Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3,
+          indent: 20,
+          endIndent: 20,
+        ));
+      }
+    }
+
+    return Column(
+      children: voiceOptionWidgets,
+    );
+  }
+}
+
+
