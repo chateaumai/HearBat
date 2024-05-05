@@ -156,145 +156,171 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopBar(
-        title: 'Module Settings',
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 20.0),
-              Text(
-                "Difficulty",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "By completing modules, you can unlock difficulty levels",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10.0),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                      color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    DifficultyOptionsWidget(
-                      updateDifficultyCallback: (difficulty) =>
-                          _updateDifficulty(difficulty),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                "Background Noise",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "Background noises to add an extra challenge",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10.0),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                      color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    SoundOptionsWidget(
-                      updatePreferenceCallback: (preference, value) =>
-                          _updatePreference(preference, value),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                "Noise Intensity",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "Choose the intensity of background noises",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10.0),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                      color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    VolumeOptionsWidget(
-                      updatePreferenceCallback: (preference, value) =>
-                          _updatePreference(preference, value),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    _cacheAndNavigate(widget.moduleName, widget.answerGroups);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Color.fromARGB(255, 7, 45, 78), // Set the button color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    minimumSize: Size(350, 50),
-                    elevation: 5,
-                  ),
-                  child: Text(
-                    'Start Exercise',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+      appBar: null,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20.0),
+                Text(
+                  "Difficulty",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              SizedBox(height: 20.0),
-            ],
+                Text(
+                  "By completing modules, you can unlock difficulty levels",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                        color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      DifficultyOptionsWidget(
+                        updateDifficultyCallback: (difficulty) =>
+                            _updateDifficulty(difficulty),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  "Background Noise",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Background noises to add an extra challenge",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                        color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      SoundOptionsWidget(
+                        updatePreferenceCallback: (preference, value) =>
+                            _updatePreference(preference, value),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Text(
+                  "Noise Intensity",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Choose the intensity of background noises",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                        color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      VolumeOptionsWidget(
+                        updatePreferenceCallback: (preference, value) =>
+                            _updatePreference(preference, value),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _cacheAndNavigate(widget.moduleName, widget.answerGroups);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Color.fromARGB(255, 7, 45, 78),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      minimumSize: Size(380, 50),
+                    ),
+                    child: Text(
+                      'START EXCERCISE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor, 
+                      shape: RoundedRectangleBorder(  
+                        borderRadius: BorderRadius.circular(8),  
+                        side: BorderSide(
+                          color: Color.fromARGB(255, 7, 45, 78),  
+                          width: 4.0  
+                        )
+                      ),
+                      minimumSize: Size(380, 50),
+                    ),
+                    child: Text(
+                      'CANCEL',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 7, 45, 78),  
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+              ],
+            ),
           ),
         ),
       ),
@@ -329,18 +355,21 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
         onTap: () => _handleTap(value),
         child: Container(
           decoration: BoxDecoration(
-            color: isSelected ? Colors.blue[100] : Colors.transparent,
+            color: Colors.transparent,
           ),
-          child: ListTile(
-            title: Text(
-              sound,
-              style: TextStyle(
-                fontSize: 14,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: ListTile(
+              title: Text(
+                sound,
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
+              trailing: isSelected
+                  ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                  : null,
             ),
-            trailing: isSelected
-                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
-                : null,
           ),
         ),
       ),
@@ -352,7 +381,19 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
     return Column(
       children: <Widget>[
         _buildOption('None', 'None'),
+         Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3, 
+          indent: 20,
+          endIndent: 20, 
+        ),
         _buildOption('Rain', 'Rain Sound'),
+         Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3, 
+          indent: 20,
+          endIndent: 20, 
+        ),
         _buildOption('Coffee Shop', 'Shop Sound'),
       ],
     );
@@ -387,18 +428,21 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
         onTap: () => _handleTap(volume),
         child: Container(
           decoration: BoxDecoration(
-            color: isSelected ? Colors.blue[100] : Colors.transparent,
+            color: Colors.transparent,
           ),
-          child: ListTile(
-            title: Text(
-              volume,
-              style: TextStyle(
-                fontSize: 14,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: ListTile(
+              title: Text(
+                volume,
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
+              trailing: isSelected
+                  ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                  : null,
             ),
-            trailing: isSelected
-                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
-                : null,
           ),
         ),
       ),
@@ -410,7 +454,19 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
     return Column(
       children: <Widget>[
         _buildOption('Low'),
+         Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3, 
+          indent: 20,
+          endIndent: 20, 
+        ),
         _buildOption('Medium'),
+         Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3, 
+          indent: 20,
+          endIndent: 20, 
+        ),
         _buildOption('High'),
       ],
     );
@@ -444,18 +500,21 @@ class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
         onTap: () => _handleTap(difficulty),
         child: Container(
           decoration: BoxDecoration(
-            color: isSelected ? Colors.blue[100] : Colors.transparent,
+            color: Colors.transparent,
           ),
-          child: ListTile(
-            title: Text(
-              difficulty,
-              style: TextStyle(
-                fontSize: 14,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: ListTile(
+              title: Text(
+                difficulty,
+                style: TextStyle(
+                  fontSize: 14,
+                ),
               ),
+              trailing: isSelected
+                  ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                  : null,
             ),
-            trailing: isSelected
-                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
-                : null,
           ),
         ),
       ),
@@ -467,6 +526,12 @@ class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
     return Column(
       children: <Widget>[
         _buildOption('Normal'),
+         Divider(
+          color: Color.fromARGB(255, 7, 45, 78),
+          thickness: 3, 
+          indent: 20,
+          endIndent: 20, 
+        ),
         _buildOption('Hard'),
       ],
     );
