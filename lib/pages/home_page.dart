@@ -68,16 +68,16 @@ class HomePage extends StatelessWidget {
                 image: "assets/visuals/HB_Music.png",
               ),
               HomeCardWidget(
-                cardText: 'Custom Module Builder',
-                description: customDesc,
-                destinationPage: CustomPath(),
-                image: "assets/visuals/HB_Custom.png",
-              ),
-              HomeCardWidget(
                 cardText: 'Train Speech',
                 description: speechDesc,
                 destinationPage: SpeechChapters(),
                 image: "assets/visuals/HB_Music.png",
+              ),
+              HomeCardWidget(
+                cardText: 'Custom Module Builder',
+                description: customDesc,
+                destinationPage: CustomPath(),
+                image: "assets/visuals/HB_Custom.png",
               ),
             ],
           ),

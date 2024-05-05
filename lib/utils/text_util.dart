@@ -4,7 +4,8 @@ String wordDesc =
     'Sharpen your listening with an extensive collection of diverse words';
 String soundDesc =
     'Discover and recognize a wide range of sounds, from urban buzz to tranquil nature';
-String speechDesc = 'TEMP TEMP TEMP';
+String speechDesc =
+    'Refine your listening by hearing sentences and repeating them back';
 String customDesc =
     'Personalize your auditory learning by creating your own modules';
 String getPrompt(int wordsNeeded, String wordInput) {
