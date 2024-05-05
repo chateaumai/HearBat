@@ -176,11 +176,10 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
               children: [
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 60.0), // Space for the button
+                    padding: const EdgeInsets.fromLTRB(30.0, 20.0, 20.0, 20.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text('Repeat back what you hear!',
                             style: TextStyle(
@@ -204,72 +203,50 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                         ElevatedButton(
                           onPressed: _toggleRecording,
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: _isRecording
-                                ? Colors.red
-                                : Colors
-                                    .green, // Change the color of the text and icon
+                            primary: _isRecording ? Colors.red : Colors.green,
+                            onPrimary: Colors.white,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 20),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Add rounded corners
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            side: BorderSide(
-                                color: Colors.black, width: 2), // Add a border
                           ),
                           child: Text(
                             _isRecording ? 'Stop Recording' : 'Start Recording',
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
+                        SizedBox(height: 30),
                         if (_transcription.isNotEmpty)
-                          Column(
-                            children: [
-                              SizedBox(height: 20),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  padding: EdgeInsets.all(30),
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[100],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text('What you said: $_transcription',
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.black),
-                                      textAlign: TextAlign.center),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                            ],
+                          Container(
+                            padding: EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              color: Colors.blue[100],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text('What you said: $_transcription',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                                textAlign: TextAlign.center),
                           ),
+                        SizedBox(height: 30),
                         if (_isSubmitted && _isCheckPressed) ...[
-                          Column(
-                            children: [
-                              SizedBox(height: 20),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  padding: EdgeInsets.all(30),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green[100],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text('Original: $_sentence',
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.black),
-                                      textAlign: TextAlign.center),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                            ],
+                          Container(
+                            padding: EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              color: Colors.green[100],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text('Original: $_sentence',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                                textAlign: TextAlign.center),
                           ),
+                          SizedBox(height: 30),
                           Text('Accuracy: ${_grade.toStringAsFixed(2)}%',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center),
                         ],
                       ],
                     ),
