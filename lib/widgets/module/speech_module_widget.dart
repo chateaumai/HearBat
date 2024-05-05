@@ -138,115 +138,133 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _isCompleted ? null : AppBar(
+        surfaceTintColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 18.0),
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();  
+            },
+            icon: Icon(Icons.close, size: 40),
+          ),
+        ),
+        titleSpacing: 0,
+        title: ModuleProgressBarWidget(
+          currentIndex: currentSentenceIndex, 
+          total: widget.sentences.length, 
+        ),
+        backgroundColor: Color.fromARGB(255, 232, 218, 255),
+      ),
       body: SafeArea(
         child: _isCompleted ? buildCompletionScreen() : buildModuleContent(),
       ),
     );
   }
-
-  Widget buildModuleContent() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
+          /*
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: ModuleProgressBarWidget(
               currentIndex: currentSentenceIndex,
               total: widget.sentences.length,
             ),
-          ),
-          Text('What do you hear?',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          SizedBox(height: 20),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 7, 45, 78),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              minimumSize: Size(355, 90),
+          ),*/
+
+  Widget buildModuleContent() {
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('What do you hear?',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 7, 45, 78),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                minimumSize: Size(355, 90),
+              ),
+              onPressed: _playSentence,
+              icon: Icon(Icons.volume_up, color: Colors.white, size: 30),
+              label: Text('Play',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
             ),
-            onPressed: _playSentence,
-            icon: Icon(Icons.volume_up, color: Colors.white, size: 30),
-            label: Text('Play',
-                style: TextStyle(fontSize: 20, color: Colors.white)),
-          ),
-          SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: _toggleRecording,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey[300],
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: _toggleRecording,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey[300],
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
+              child: Text(_isRecording ? 'Stop Recording' : 'Start Recording',
+                  style: TextStyle(fontSize: 20)),
             ),
-            child: Text(_isRecording ? 'Stop Recording' : 'Start Recording',
-                style: TextStyle(fontSize: 20)),
-          ),
-          if (_transcription.isNotEmpty)
-            Text('Transcription: $_transcription',
-                style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
-          if (_isSubmitted && _isCheckPressed) ...[
-            Text('Original: $_sentence'),
-            Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+            if (_transcription.isNotEmpty)
+              Text('Transcription: $_transcription',
+                  style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
+            if (_isSubmitted && _isCheckPressed) ...[
+              Text('Original: $_sentence'),
+              Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+            ],
+            CheckButtonWidget(
+              isCheckingAnswer: !_isCheckPressed,
+              isSelectedWordValid: !_isRecording && _transcription.isNotEmpty,
+              onPressed: _submitRecording,
+              language: language,
+            ),
           ],
-          CheckButtonWidget(
-            isCheckingAnswer: !_isCheckPressed,
-            isSelectedWordValid: !_isRecording && _transcription.isNotEmpty,
-            onPressed: _submitRecording,
-            language: language,
-          ),
-        ],
+        ),
       ),
     );
   }
 
   Widget buildCompletionScreen() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Spacer(flex: 1),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
-            child: AutoSizeText(
-              'Good Job Completing the Module!',
-              maxLines: 3,
-              style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 7, 45, 78)),
-              textAlign: TextAlign.center,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacer(flex: 1),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
+              child: AutoSizeText(
+                'Good Job Completing the Module!',
+                maxLines: 3,
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 7, 45, 78)),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Image.asset("assets/visuals/HBCompletion.png",
-              fit: BoxFit.contain),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
-          child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-            ),
-            child: AutoSizeText(
-              'Return to Path',
-              maxLines: 1,
-              style: TextStyle(
-                  fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: Image.asset("assets/visuals/HBCompletion.png",
+                fit: BoxFit.contain),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+            child: ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+              ),
+              child: AutoSizeText(
+                'Return to Path',
+                maxLines: 1,
+                style: TextStyle(
+                    fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
