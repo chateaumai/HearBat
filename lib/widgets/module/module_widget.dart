@@ -34,6 +34,7 @@ class _ModulePageState extends State<ModuleWidget> {
   List<List<Answer>> incorrectAnswerPairs = [];
   String voiceType = "en-US-Studio-O";
   ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 3));
+  String language = 'English';
 
   @override
   void initState() {
@@ -54,7 +55,7 @@ class _ModulePageState extends State<ModuleWidget> {
   void getVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedVoiceType = prefs.getString('voicePreference');
-    String? language = prefs.getString('languagePreference');
+    language = prefs.getString('languagePreference')!;
     if (language == 'Vietnamese') {
       storedVoiceType = 'vi-VN-Standard-A';
     }
@@ -115,7 +116,7 @@ class _ModulePageState extends State<ModuleWidget> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    'Words Missed',
+                    language == 'Vietnamese' ? 'Từ đã sai' : 'Words Missed',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -145,14 +146,16 @@ class _ModulePageState extends State<ModuleWidget> {
                             AnswerButton(
                               answer: incorrectAnswerPairs[index][0].answer,
                               onPressed: () => playAnswer(incorrectAnswerPairs[index][0]),
-                              headerText: "You Chose",
+                              headerText: 
+                                language == 'Vietnamese' ? 'Đã chọn' : 'You Chose',
                               color: Color.fromARGB(255, 195, 74, 74),
                             ),
                             SizedBox(width: 8), 
                             AnswerButton(
                               answer: incorrectAnswerPairs[index][1].answer,
                               onPressed: () => playAnswer(incorrectAnswerPairs[index][1]),
-                              headerText: "Correct Answer",
+                              headerText:
+                              language == 'Vietnamese' ? "Từ Đúng": 'Correct Answer',
                               color: Color.fromARGB(255, 129, 221, 121)
                             ),
                           ],

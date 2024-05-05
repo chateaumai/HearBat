@@ -265,7 +265,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                           Padding(
                             padding: const EdgeInsets.only(right: 30.0),
                             child: Text(
-                              "Incorrect",
+                              language == 'Vietnamese' ? 'Sai' : 'Incorrect',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -274,7 +274,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                             ),
                           ),
                           Text(
-                            "Correct",
+                            language == 'Vietnamese' ? 'Đúng' : 'Correct',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -299,9 +299,9 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 60),
                     child: Text(
-                      "Great!",
+                      language == 'Vietnamese' ? 'Xuất Sắc' : 'Great',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18, 
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -329,6 +329,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                     }
                     setState(() {});
                   },
+                  language: language,
                 ),
               ),
             ),

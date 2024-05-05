@@ -181,6 +181,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         "Difficulty",
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -294,6 +295,21 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
       children: [
         ListTile(
           title: Text(
+            'None',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+          leading: Radio<String>(
+            value: 'None',
+            groupValue: _backgroundSound,
+            onChanged: (String? value) {
+              _updatePreference('backgroundSoundPreference', value!);
+            },
+          ),
+        ),
+        ListTile(
+          title: Text(
             'Rain',
             style: TextStyle(
               fontSize: 14,
@@ -316,21 +332,6 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
           ),
           leading: Radio<String>(
             value: 'Shop Sound',
-            groupValue: _backgroundSound,
-            onChanged: (String? value) {
-              _updatePreference('backgroundSoundPreference', value!);
-            },
-          ),
-        ),
-        ListTile(
-          title: Text(
-            'None',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'None',
             groupValue: _backgroundSound,
             onChanged: (String? value) {
               _updatePreference('backgroundSoundPreference', value!);
