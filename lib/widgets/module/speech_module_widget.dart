@@ -29,6 +29,8 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   bool _isSubmitted = false;
   bool _isCompleted = false;
   int currentSentenceIndex = 0;
+  String language = 'English';
+  bool _isCheckPressed = false; // Add this line
 
   final GoogleTTSUtil _ttsUtil = GoogleTTSUtil();
 
@@ -103,11 +105,16 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
 
   void _submitRecording() {
     setState(() {
-      currentSentenceIndex++;
-      if (currentSentenceIndex < widget.sentences.length) {
-        _sentence = _getRandomSentence();
-      } else {
-        _isCompleted = true;
+      _isCheckPressed = !_isCheckPressed;
+      if (_isCheckPressed == false) {
+        currentSentenceIndex++;
+        if (currentSentenceIndex < widget.sentences.length) {
+          _sentence = _getRandomSentence();
+        } else {
+          _isCompleted = true;
+        }
+        _isSubmitted = false;
+        _transcription = '';
       }
     });
   }
@@ -126,61 +133,63 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   }
 
   Widget buildModuleContent() {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: ModuleProgressBarWidget(
-            currentIndex: currentSentenceIndex,
-            total: widget.sentences.length,
-          ),
-        ),
-        Text('What do you hear?',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-        SizedBox(height: 20),
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 7, 45, 78),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-            minimumSize: Size(355, 90),
           ),
-          onPressed: _playSentence,
-          icon: Icon(Icons.volume_up, color: Colors.white, size: 30),
-          label:
-              Text('Play', style: TextStyle(fontSize: 20, color: Colors.white)),
-        ),
-        SizedBox(height: 30),
-        ElevatedButton(
-          onPressed: _toggleRecording,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.grey[300],
-            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ModuleProgressBarWidget(
+              currentIndex: currentSentenceIndex,
+              total: widget.sentences.length,
+            ),
           ),
-          child: Text(_isRecording ? 'Stop Recording' : 'Start Recording',
-              style: TextStyle(fontSize: 20)),
-        ),
-        if (_transcription.isNotEmpty)
-          Text('Transcription: $_transcription',
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
-        CheckButtonWidget(
-          isCheckingAnswer: _isRecording,
-          isSelectedWordValid: _transcription.isNotEmpty,
-          onPressed: _submitRecording,
-        ),
-        if (_isSubmitted) ...[
-          Text('Original: $_sentence'),
-          Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+          Text('What do you hear?',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          SizedBox(height: 20),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 7, 45, 78),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              minimumSize: Size(355, 90),
+            ),
+            onPressed: _playSentence,
+            icon: Icon(Icons.volume_up, color: Colors.white, size: 30),
+            label: Text('Play',
+                style: TextStyle(fontSize: 20, color: Colors.white)),
+          ),
+          SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: _toggleRecording,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey[300],
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            ),
+            child: Text(_isRecording ? 'Stop Recording' : 'Start Recording',
+                style: TextStyle(fontSize: 20)),
+          ),
+          if (_transcription.isNotEmpty)
+            Text('Transcription: $_transcription',
+                style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
+          if (_isSubmitted && _isCheckPressed) ...[
+            Text('Original: $_sentence'),
+            Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+          ],
+          CheckButtonWidget(
+            isCheckingAnswer: _isSubmitted,
+            isSelectedWordValid: _transcription.isNotEmpty,
+            onPressed: _submitRecording,
+            language: language,
+          ),
         ],
-      ],
+      ),
     );
   }
 
