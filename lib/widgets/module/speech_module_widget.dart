@@ -26,6 +26,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   String _sentence = '';
   double _grade = 0.0;
   String voiceType = 'en-US-Wavenet-D'; // Default voice type
+  String language = 'English';
   bool _isSubmitted = false; // New variable
   bool _isCompleted = false; // New variable
 
@@ -54,6 +55,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     voiceType = prefs.getString('voiceType') ??
         'en-US-Wavenet-D'; // Load voiceType from prefs or use default
+    language = prefs.getString('languagePreference')!;
   }
 
   String _getRandomSentence() {
@@ -171,6 +173,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
               isCheckingAnswer: _isRecording,
               isSelectedWordValid: _transcription.isNotEmpty,
               onPressed: _submitRecording,
+              language: language,
             ),
             SizedBox(height: 20),
             if (_transcription.isNotEmpty)
