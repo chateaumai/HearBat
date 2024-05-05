@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import 'package:hearbat/widgets/top_bar_widget.dart';
@@ -21,7 +20,6 @@ class DifficultySelectionWidget extends StatefulWidget {
 
 class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   String _difficulty = 'Normal';
-  String _backgroundSound = 'None';
   String _audioVolume = 'Low';
   final CacheWordsUtil cacheUtil = CacheWordsUtil();
   bool isCaching = false;
@@ -65,7 +63,6 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   void _loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _backgroundSound = prefs.getString('backgroundSoundPreference') ?? 'None';
       _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
       _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
     });
@@ -76,8 +73,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String language = prefs.getString('languagePreference') ?? 'English';
     setState(() {
-      _voiceType = prefs.getString('voicePreference') ??
-          "en-US-Studio-O";
+      _voiceType = prefs.getString('voicePreference') ?? "en-US-Studio-O";
       if (language == 'Vietnamese') {
         _voiceType = 'vi-VN-Standard-A';
       }
@@ -190,14 +186,16 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                 margin: const EdgeInsets.only(top: 10.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).scaffoldBackgroundColor, 
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Color.fromARGB(255, 7, 45, 78), width: 4.0), 
+                  border: Border.all(
+                      color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
                 ),
                 child: Column(
                   children: <Widget>[
                     DifficultyOptionsWidget(
-                      updateDifficultyCallback: (difficulty) => _updateDifficulty(difficulty),
+                      updateDifficultyCallback: (difficulty) =>
+                          _updateDifficulty(difficulty),
                     ),
                   ],
                 ),
@@ -224,12 +222,14 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Color.fromARGB(255, 7, 45, 78), width: 4.0), 
+                  border: Border.all(
+                      color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
                 ),
                 child: Column(
                   children: <Widget>[
                     SoundOptionsWidget(
-                      updatePreferenceCallback: (preference, value) => _updatePreference(preference, value),
+                      updatePreferenceCallback: (preference, value) =>
+                          _updatePreference(preference, value),
                     ),
                   ],
                 ),
@@ -256,12 +256,14 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Color.fromARGB(255, 7, 45, 78), width: 4.0), 
+                  border: Border.all(
+                      color: Color.fromARGB(255, 7, 45, 78), width: 4.0),
                 ),
                 child: Column(
                   children: <Widget>[
                     VolumeOptionsWidget(
-                      updatePreferenceCallback: (preference, value) => _updatePreference(preference, value),
+                      updatePreferenceCallback: (preference, value) =>
+                          _updatePreference(preference, value),
                     ),
                   ],
                 ),
@@ -273,15 +275,16 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                     _cacheAndNavigate(widget.moduleName, widget.answerGroups);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 7, 45, 78), // Set the button color
+                    backgroundColor:
+                        Color.fromARGB(255, 7, 45, 78), // Set the button color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    minimumSize: Size(350, 50), 
+                    minimumSize: Size(350, 50),
                     elevation: 5,
                   ),
                   child: Text(
-                    'Start Exercise', 
+                    'Start Exercise',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -290,7 +293,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                   ),
                 ),
               ),
-              SizedBox(height:20.0),
+              SizedBox(height: 20.0),
             ],
           ),
         ),
@@ -309,7 +312,7 @@ class SoundOptionsWidget extends StatefulWidget {
 }
 
 class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
-  String _selectedSound = 'None'; 
+  String _selectedSound = 'None';
 
   void _handleTap(String value) {
     setState(() {
@@ -318,7 +321,7 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
     });
   }
 
- Widget _buildOption(String sound, String value) {
+  Widget _buildOption(String sound, String value) {
     bool isSelected = _selectedSound == value;
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
@@ -335,13 +338,14 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
                 fontSize: 14,
               ),
             ),
-            trailing: isSelected ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78)) : null,
+            trailing: isSelected
+                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                : null,
           ),
         ),
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +381,8 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
   Widget _buildOption(String volume) {
     bool isSelected = _selectedVolume == volume;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0), // Ensure this matches the container's border radius
+      borderRadius: BorderRadius.circular(
+          8.0), // Ensure this matches the container's border radius
       child: InkWell(
         onTap: () => _handleTap(volume),
         child: Container(
@@ -391,7 +396,9 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
                 fontSize: 14,
               ),
             ),
-            trailing: isSelected ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78)) : null,
+            trailing: isSelected
+                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                : null,
           ),
         ),
       ),
@@ -420,7 +427,7 @@ class DifficultyOptionsWidget extends StatefulWidget {
 }
 
 class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
-  String _selectedDifficulty = 'Normal'; 
+  String _selectedDifficulty = 'Normal';
 
   void _handleTap(String difficulty) {
     setState(() {
@@ -432,7 +439,7 @@ class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
   Widget _buildOption(String difficulty) {
     bool isSelected = _selectedDifficulty == difficulty;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0), 
+      borderRadius: BorderRadius.circular(8.0),
       child: InkWell(
         onTap: () => _handleTap(difficulty),
         child: Container(
@@ -446,7 +453,9 @@ class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
                 fontSize: 14,
               ),
             ),
-            trailing: isSelected ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78)) : null,
+            trailing: isSelected
+                ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78))
+                : null,
           ),
         ),
       ),
