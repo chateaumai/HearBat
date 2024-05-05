@@ -204,15 +204,24 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                         ElevatedButton(
                           onPressed: _toggleRecording,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[300],
+                            foregroundColor: Colors.white,
+                            backgroundColor: _isRecording
+                                ? Colors.red
+                                : Colors
+                                    .green, // Change the color of the text and icon
                             padding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10), // Add rounded corners
+                            ),
+                            side: BorderSide(
+                                color: Colors.black, width: 2), // Add a border
                           ),
                           child: Text(
-                              _isRecording
-                                  ? 'Stop Recording'
-                                  : 'Start Recording',
-                              style: TextStyle(fontSize: 20)),
+                            _isRecording ? 'Stop Recording' : 'Start Recording',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                         if (_transcription.isNotEmpty)
                           Column(
