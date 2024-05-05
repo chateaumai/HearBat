@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
@@ -54,8 +53,19 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
     voiceType = prefs.getString('voiceType') ?? 'en-US-Wavenet-D';
   }
 
+  List<String> shuffledSentences = [];
+
   String _getRandomSentence() {
-    return widget.sentences[Random().nextInt(widget.sentences.length)];
+    // If shuffledSentences is empty, copy all sentences and shuffle them
+    if (shuffledSentences.isEmpty) {
+      shuffledSentences = List<String>.from(widget.sentences);
+      shuffledSentences.shuffle();
+    }
+
+    // Take the last sentence from shuffledSentences
+    String sentence = shuffledSentences.removeLast();
+
+    return sentence;
   }
 
   double _calculateGrade(String original, String transcription) {
@@ -109,7 +119,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
       if (_isCheckPressed == false) {
         currentSentenceIndex++;
         if (currentSentenceIndex < widget.sentences.length) {
-          _sentence = _getNextSentence();
+          _sentence = _getRandomSentence();
         } else {
           _isCompleted = true;
         }
@@ -117,10 +127,6 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
         _transcription = '';
       }
     });
-  }
-
-  String _getNextSentence() {
-    return widget.sentences[currentSentenceIndex];
   }
 
   Future<void> _playSentence() async {
