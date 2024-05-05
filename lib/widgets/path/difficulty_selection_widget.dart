@@ -161,236 +161,304 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBar(
-        title: 'Select Difficulties',
+        title: 'Module Settings',
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20.0),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(20.0),
+              Text(
+                "Difficulty",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "Difficulty",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5.0),
-                    _buildDifficultyOptions(),
-                  ],
+              ),
+              Text(
+                "By completing modules, you can unlock difficulty levels",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.only(top: 10.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(20.0),
+                  color: Theme.of(context).scaffoldBackgroundColor, 
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(color: Color.fromARGB(255, 7, 45, 78), width: 4.0), 
                 ),
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "Background Noise",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    DifficultyOptionsWidget(
+                      updateDifficultyCallback: (difficulty) => _updateDifficulty(difficulty),
                     ),
-                    SizedBox(height: 5.0),
-                    _buildSoundOptions(),
                   ],
                 ),
               ),
+              SizedBox(height: 20.0),
+              Text(
+                "Background Noise",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Background noises to add an extra challenge",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
               Container(
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.only(top: 10.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(20.0),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(color: Color.fromARGB(255, 7, 45, 78), width: 4.0), 
                 ),
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        "Noise Intensity",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    SoundOptionsWidget(
+                      updatePreferenceCallback: (preference, value) => _updatePreference(preference, value),
                     ),
-                    SizedBox(height: 5.0),
-                    _buildVolumeOptions(),
                   ],
                 ),
               ),
+              SizedBox(height: 20.0),
+              Text(
+                "Noise Intensity",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Choose the intensity of background noises",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
               Container(
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.only(top: 10.0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(color: Color.fromARGB(255, 7, 45, 78), width: 4.0), 
+                ),
+                child: Column(
+                  children: <Widget>[
+                    VolumeOptionsWidget(
+                      updatePreferenceCallback: (preference, value) => _updatePreference(preference, value),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.0),
+              Center(
                 child: ElevatedButton(
                   onPressed: () {
                     _cacheAndNavigate(widget.moduleName, widget.answerGroups);
                   },
-                  child: Text('Go to Module'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 7, 45, 78), // Set the button color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    minimumSize: Size(350, 50), 
+                    elevation: 5,
+                  ),
+                  child: Text(
+                    'Start Exercise', 
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
+              SizedBox(height:20.0),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildDifficultyOptions() {
-    return Column(
-      children: [
-        ListTile(
-          title: Text(
-            'Normal',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+class SoundOptionsWidget extends StatefulWidget {
+  final Function(String, String) updatePreferenceCallback;
+
+  SoundOptionsWidget({required this.updatePreferenceCallback});
+
+  @override
+  SoundOptionsWidgetState createState() => SoundOptionsWidgetState();
+}
+
+class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
+  String _selectedSound = 'None'; 
+
+  void _handleTap(String value) {
+    setState(() {
+      _selectedSound = value;
+      widget.updatePreferenceCallback('backgroundSoundPreference', value);
+    });
+  }
+
+ Widget _buildOption(String sound, String value) {
+    bool isSelected = _selectedSound == value;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: InkWell(
+        onTap: () => _handleTap(value),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.blue[100] : Colors.transparent,
           ),
-          leading: Radio<String>(
-            value: 'Normal',
-            groupValue: _difficulty,
-            onChanged: _updateDifficulty,
+          child: ListTile(
+            title: Text(
+              sound,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            trailing: isSelected ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78)) : null,
           ),
         ),
-        ListTile(
-          title: Text(
-            'Hard',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'Hard',
-            groupValue: _difficulty,
-            onChanged: _updateDifficulty,
-          ),
-        ),
-      ],
+      ),
     );
   }
 
-  Widget _buildSoundOptions() {
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
-      children: [
-        ListTile(
-          title: Text(
-            'None',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'None',
-            groupValue: _backgroundSound,
-            onChanged: (String? value) {
-              _updatePreference('backgroundSoundPreference', value!);
-            },
-          ),
-        ),
-        ListTile(
-          title: Text(
-            'Rain',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'Rain Sound',
-            groupValue: _backgroundSound,
-            onChanged: (String? value) {
-              _updatePreference('backgroundSoundPreference', value!);
-            },
-          ),
-        ),
-        ListTile(
-          title: Text(
-            'Coffee Shop',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'Shop Sound',
-            groupValue: _backgroundSound,
-            onChanged: (String? value) {
-              _updatePreference('backgroundSoundPreference', value!);
-            },
-          ),
-        ),
+      children: <Widget>[
+        _buildOption('None', 'None'),
+        _buildOption('Rain', 'Rain Sound'),
+        _buildOption('Coffee Shop', 'Shop Sound'),
       ],
     );
   }
+}
 
-  Widget _buildVolumeOptions() {
+class VolumeOptionsWidget extends StatefulWidget {
+  final Function(String, String) updatePreferenceCallback;
+
+  VolumeOptionsWidget({required this.updatePreferenceCallback});
+
+  @override
+  VolumeOptionsWidgetState createState() => VolumeOptionsWidgetState();
+}
+
+class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
+  String _selectedVolume = 'Low'; // Default selected value
+
+  void _handleTap(String value) {
+    setState(() {
+      _selectedVolume = value;
+      widget.updatePreferenceCallback('audioVolumePreference', value);
+    });
+  }
+
+  Widget _buildOption(String volume) {
+    bool isSelected = _selectedVolume == volume;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0), // Ensure this matches the container's border radius
+      child: InkWell(
+        onTap: () => _handleTap(volume),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.blue[100] : Colors.transparent,
+          ),
+          child: ListTile(
+            title: Text(
+              volume,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            trailing: isSelected ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78)) : null,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
-      children: [
-        ListTile(
-          title: Text(
-            'Low',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+      children: <Widget>[
+        _buildOption('Low'),
+        _buildOption('Medium'),
+        _buildOption('High'),
+      ],
+    );
+  }
+}
+
+class DifficultyOptionsWidget extends StatefulWidget {
+  final Function(String) updateDifficultyCallback;
+
+  DifficultyOptionsWidget({required this.updateDifficultyCallback});
+
+  @override
+  DifficultyOptionsWidgetState createState() => DifficultyOptionsWidgetState();
+}
+
+class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
+  String _selectedDifficulty = 'Normal'; 
+
+  void _handleTap(String difficulty) {
+    setState(() {
+      _selectedDifficulty = difficulty;
+      widget.updateDifficultyCallback(difficulty);
+    });
+  }
+
+  Widget _buildOption(String difficulty) {
+    bool isSelected = _selectedDifficulty == difficulty;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0), 
+      child: InkWell(
+        onTap: () => _handleTap(difficulty),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.blue[100] : Colors.transparent,
           ),
-          leading: Radio<String>(
-            value: 'Low',
-            groupValue: _audioVolume,
-            onChanged: (String? value) {
-              _updatePreference('audioVolumePreference', value!);
-            },
+          child: ListTile(
+            title: Text(
+              difficulty,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            trailing: isSelected ? Icon(Icons.check, color: Color.fromARGB(255, 7, 45, 78)) : null,
           ),
         ),
-        ListTile(
-          title: AutoSizeText(
-            'Medium',
-            maxLines: 1,
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'Medium',
-            groupValue: _audioVolume,
-            onChanged: (String? value) {
-              _updatePreference('audioVolumePreference', value!);
-            },
-          ),
-        ),
-        ListTile(
-          title: Text(
-            'High',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
-          leading: Radio<String>(
-            value: 'High',
-            groupValue: _audioVolume,
-            onChanged: (String? value) {
-              _updatePreference('audioVolumePreference', value!);
-            },
-          ),
-        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        _buildOption('Normal'),
+        _buildOption('Hard'),
       ],
     );
   }

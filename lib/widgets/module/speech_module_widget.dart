@@ -51,6 +51,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   Future<void> _loadVoiceType() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     voiceType = prefs.getString('voiceType') ?? 'en-US-Wavenet-D';
+    language = prefs.getString('languagePreference')!;
   }
 
   List<String> shuffledSentences = [];
