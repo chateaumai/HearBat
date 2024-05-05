@@ -38,7 +38,7 @@ class _SpeechPathState extends State<SpeechPath> {
           children: <Widget>[
             Container(
               alignment: FractionalOffset(-0.35, 0.05),
-              child: Container(
+              child: SizedBox(
                 width: 200,
                 height: 80,
                 child: Opacity(
@@ -52,7 +52,7 @@ class _SpeechPathState extends State<SpeechPath> {
             ),
             Container(
               alignment: FractionalOffset(1.4, 0.15),
-              child: Container(
+              child: SizedBox(
                 width: 200,
                 height: 80,
                 child: Opacity(
@@ -66,7 +66,7 @@ class _SpeechPathState extends State<SpeechPath> {
             ),
             Container(
               alignment: FractionalOffset(1.8, 0.3),
-              child: Container(
+              child: SizedBox(
                 width: 300,
                 height: 120,
                 child: Opacity(
@@ -80,7 +80,7 @@ class _SpeechPathState extends State<SpeechPath> {
             ),
             Container(
               alignment: FractionalOffset(-0.1, 0.5),
-              child: Container(
+              child: SizedBox(
                 width: 200,
                 height: 200,
                 child: Opacity(
@@ -94,7 +94,7 @@ class _SpeechPathState extends State<SpeechPath> {
             ),
             Container(
               alignment: FractionalOffset(1.2, 0.7),
-              child: Container(
+              child: SizedBox(
                 width: 200,
                 height: 200,
                 child: Opacity(
@@ -108,7 +108,7 @@ class _SpeechPathState extends State<SpeechPath> {
             ),
             Container(
               alignment: FractionalOffset(0.5, 0.95),
-              child: Container(
+              child: SizedBox(
                 width: 300,
                 height: 150,
                 child: Opacity(
