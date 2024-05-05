@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hearbat/utils/google_tts_util.dart';
 import '../module/speech_module_widget.dart';
 import 'sound_trangular_path_layout_widget.dart';
 import 'animated_button_widget.dart';
@@ -19,16 +20,51 @@ class SpeechModuleListWidget extends StatelessWidget {
     });
 
     void navigate(String moduleName, List<String> sentences) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SpeechModuleWidget(
-            chapter: moduleName,
-            sentences: sentences,
-            voiceType: voiceType,
-          ),
-        ),
+      // Show a loading dialog while caching
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 10),
+                Text("Loading..."),
+              ],
+            ),
+          );
+        },
       );
+
+      // Create a list of Futures for all the downloads
+      List<Future> downloads = sentences
+          .map((sentence) => GoogleTTSUtil().downloadMP3(sentence, voiceType))
+          .toList();
+
+      // Wait for all downloads to complete
+      Future.wait(downloads).then((_) {
+        // Dismiss the loading dialog
+        Navigator.pop(context);
+
+        // Navigate to the SpeechModuleWidget
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SpeechModuleWidget(
+              chapter: moduleName,
+              sentences: sentences,
+              voiceType: voiceType,
+            ),
+          ),
+        );
+      }).catchError((error) {
+        // Dismiss the loading dialog
+        Navigator.pop(context);
+
+        // Handle any errors that occurred during the downloads
+        print('Failed to download all sentences: $error');
+      });
     }
 
     return Scaffold(

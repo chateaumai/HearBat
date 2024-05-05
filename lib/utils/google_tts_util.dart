@@ -37,19 +37,15 @@ class GoogleTTSUtil {
         ? "Please select $text as the answer"
         : text;
 
-    String safeText = textToSpeak.replaceAll(RegExp(r'\s+'), '').toLowerCase();
-    String? audioPath = cache["${safeText}_$voicetype"];
+    String? audioPath = cache["${text}_$voicetype"];
 
     if (audioPath != null && await File(audioPath).exists()) {
       await audioPlayer.play(DeviceFileSource(audioPath));
     } else {
       await downloadMP3(textToSpeak, voicetype);
 
-      // Delay to ensure the file is fully downloaded
-      await Future.delayed(Duration(seconds: 1));
-
       // Update the cache after downloading
-      audioPath = cache["${safeText}_$voicetype"];
+      audioPath = cache["${text}_$voicetype"];
 
       if (audioPath != null && await File(audioPath).exists()) {
         await audioPlayer.play(DeviceFileSource(audioPath));
