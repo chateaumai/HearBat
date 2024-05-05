@@ -30,7 +30,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   bool _isCompleted = false;
   int currentSentenceIndex = 0;
   String language = 'English';
-  bool _isCheckPressed = false; // Add this line
+  bool _isCheckPressed = false;
 
   final GoogleTTSUtil _ttsUtil = GoogleTTSUtil();
 
@@ -109,7 +109,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
       if (_isCheckPressed == false) {
         currentSentenceIndex++;
         if (currentSentenceIndex < widget.sentences.length) {
-          _sentence = _getRandomSentence();
+          _sentence = _getNextSentence();
         } else {
           _isCompleted = true;
         }
@@ -117,6 +117,10 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
         _transcription = '';
       }
     });
+  }
+
+  String _getNextSentence() {
+    return widget.sentences[currentSentenceIndex];
   }
 
   Future<void> _playSentence() async {
@@ -183,8 +187,8 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
             Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
           ],
           CheckButtonWidget(
-            isCheckingAnswer: _isSubmitted,
-            isSelectedWordValid: _transcription.isNotEmpty,
+            isCheckingAnswer: !_isCheckPressed,
+            isSelectedWordValid: !_isRecording && _transcription.isNotEmpty,
             onPressed: _submitRecording,
             language: language,
           ),
