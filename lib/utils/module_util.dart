@@ -33,11 +33,11 @@ Map<String, List<AnswerGroup>> getModulesForChapter(String chapter) {
 
 Map<String, List<String>> getModulesForSpeech(String chapter) {
   switch (chapter) {
-    case "Basic Speech":
+    case "Vowels":
       return chapter1speechModules;
-    case "Basic Speech1":
+    case "Consonants":
       return chapter2speechModules;
-    case "Basic Speech2":
+    case "Prosody and Intonation":
       return chapter3speechModules;
     default:
       return {}; // Return an empty map if none of the cases match

@@ -8,15 +8,15 @@ class SpeechChapters extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String, String>> chapters = [
       {
-        "name": "Basic Speech",
+        "name": "Vowels",
         "image": "assets/visuals/HBWordsChapterOne.png",
       },
       {
-        "name": "Basic Speech1",
+        "name": "Consonants",
         "image": "assets/visuals/HB_WordsChapterTwo.png",
       },
       {
-        "name": "Basic Speech2",
+        "name": "Prosody and Intonation",
         "image": "assets/visuals/HBWordsChapterThree.png",
       },
     ];
