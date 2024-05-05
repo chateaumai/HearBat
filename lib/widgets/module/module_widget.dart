@@ -285,7 +285,7 @@ class _ModulePageState extends State<ModuleWidget> {
               child: listIncorrectAnswers(),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+              padding: const EdgeInsets.only(top: 40.0, bottom: 40.0, left: 20, right: 20),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -296,7 +296,7 @@ class _ModulePageState extends State<ModuleWidget> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  minimumSize: Size(350, 50),
+                  minimumSize: Size(400, 50),
                   elevation: 5,
                 ),
                 child: Text(
@@ -376,7 +376,7 @@ class ScoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * .85,
+      width: MediaQuery.of(context).size.width * .90,
       height: MediaQuery.of(context).size.height * .1,
       margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
       padding: EdgeInsets.all(8.0),
