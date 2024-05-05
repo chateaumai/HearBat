@@ -57,80 +57,61 @@ class GoogleTTSUtil {
 
   Future<void> downloadMP3(String text, String voicetype) async {
     String dir = (await getTemporaryDirectory()).path;
+    String filePath = "$dir/${text}_$voicetype.mp3";
+    File file = File(filePath);
 
-    List<String> textsToDownload;
-    if (_difficulty == 'Hard') {
-      textsToDownload = [text, "Please select $text as the answer"];
-    } else {
-      textsToDownload = [text];
+    if (await file.exists()) {
+      cache["${text}_$voicetype"] = filePath;
+      return;
     }
 
-    for (String textToDownload in textsToDownload) {
-      String safeText =
-          textToDownload.replaceAll(RegExp(r'\s+'), '').toLowerCase();
-      String filePath = "$dir/${safeText}_$voicetype.mp3";
-      File file = File(filePath);
+    http.Client client = http.Client();
+    try {
+      String jsonString = await _loadCredentials();
+      var jsonCredentials = jsonDecode(jsonString);
 
-      if (await file.exists()) {
-        cache["${safeText}_$voicetype"] = filePath;
-        continue;
+      final accountCredentials =
+          ServiceAccountCredentials.fromJson(jsonCredentials);
+      AccessCredentials credentials =
+          await obtainAccessCredentialsViaServiceAccount(
+        accountCredentials,
+        [tts.TexttospeechApi.cloudPlatformScope],
+        http.Client(),
+      );
+
+      String url = "https://texttospeech.googleapis.com/v1/text:synthesize";
+      var body = json.encode({
+        "audioConfig": {"audioEncoding": "MP3", "pitch": 0, "speakingRate": 1},
+        "input": {"text": text},
+        "voice": {"languageCode": voicetype.substring(0, 5), "name": voicetype}
+      });
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${credentials.accessToken.data}"
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        String audioBase64 = jsonData['audioContent'];
+
+        Uint8List bytes = base64Decode(audioBase64);
+        await file.writeAsBytes(bytes);
+
+        cache["${text}_$voicetype"] = filePath;
+      } else {
+        throw Exception(
+            "Failed to get a valid response from the API: ${response.statusCode}");
       }
-
-      http.Client client = http.Client();
-      try {
-        String jsonString = await _loadCredentials();
-        var jsonCredentials = jsonDecode(jsonString);
-
-        final accountCredentials =
-            ServiceAccountCredentials.fromJson(jsonCredentials);
-        AccessCredentials credentials =
-            await obtainAccessCredentialsViaServiceAccount(
-          accountCredentials,
-          [tts.TexttospeechApi.cloudPlatformScope],
-          http.Client(),
-        );
-
-        String url = "https://texttospeech.googleapis.com/v1/text:synthesize";
-        var body = json.encode({
-          "audioConfig": {
-            "audioEncoding": "MP3",
-            "pitch": 0,
-            "speakingRate": 1
-          },
-          "input": {"text": textToDownload},
-          "voice": {
-            "languageCode": voicetype.substring(0, 5),
-            "name": voicetype
-          }
-        });
-
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${credentials.accessToken.data}"
-          },
-          body: body,
-        );
-
-        if (response.statusCode == 200) {
-          var jsonData = jsonDecode(response.body);
-          String audioBase64 = jsonData['audioContent'];
-
-          Uint8List bytes = base64Decode(audioBase64);
-          await file.writeAsBytes(bytes);
-
-          cache["${textToDownload}_$voicetype"] = filePath;
-        } else {
-          throw Exception(
-              "Failed to get a valid response from the API: ${response.statusCode}");
-        }
-      } catch (e) {
-        print("Error in GoogleTTSUtil.downloadMP3: $e");
-        throw Exception("Error occurred in GoogleTTSUtil.downloadMP3: $e");
-      } finally {
-        client.close();
-      }
+    } catch (e) {
+      print("Error in GoogleTTSUtil.downloadMP3: $e");
+      throw Exception("Error occurred in GoogleTTSUtil.downloadMP3: $e");
+    } finally {
+      client.close();
     }
   }
 }

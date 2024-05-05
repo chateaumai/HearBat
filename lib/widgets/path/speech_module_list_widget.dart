@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/utils/google_tts_util.dart';
 import '../module/speech_module_widget.dart';
 import 'sound_trangular_path_layout_widget.dart';
 import 'animated_button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hearbat/utils/cache_sentences_util.dart';
 
 class SpeechModuleListWidget extends StatelessWidget {
   final Map<String, List<String>> modules;
@@ -37,13 +37,8 @@ class SpeechModuleListWidget extends StatelessWidget {
         },
       );
 
-      // Create a list of Futures for all the downloads
-      List<Future> downloads = sentences
-          .map((sentence) => GoogleTTSUtil().downloadMP3(sentence, voiceType))
-          .toList();
-
-      // Wait for all downloads to complete
-      Future.wait(downloads).then((_) {
+      // Use CacheSentencesUtil to cache all the sentences
+      CacheSentencesUtil().cacheSentences(sentences, voiceType).then((_) {
         // Dismiss the loading dialog
         Navigator.pop(context);
 
