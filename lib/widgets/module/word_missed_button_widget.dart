@@ -18,13 +18,17 @@ class AnswerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: button(onPressed: onPressed, answer: answer, color: color, header: headerText),
+      child: Button(
+          onPressed: onPressed,
+          answer: answer,
+          color: color,
+          header: headerText),
     );
   }
 }
 
-class button extends StatelessWidget {
-  const button({
+class Button extends StatelessWidget {
+  const Button({
     super.key,
     required this.onPressed,
     required this.answer,
@@ -58,8 +62,9 @@ class button extends StatelessWidget {
           ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 255, 255, 255), 
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               elevation: 3,
               shadowColor: Colors.grey[900],
@@ -67,12 +72,16 @@ class button extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.volume_up, color: Color.fromARGB(255, 7, 45, 78), size: 24),
-                SizedBox(width: 10), 
+                Icon(Icons.volume_up,
+                    color: Color.fromARGB(255, 7, 45, 78), size: 24),
+                SizedBox(width: 10),
                 Expanded(
                   child: AutoSizeText(
                     answer,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: color),
                     maxLines: 1,
                   ),
                 ),

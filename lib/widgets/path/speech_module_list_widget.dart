@@ -1,40 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/widgets/path/difficulty_selection_widget.dart';
-import 'package:hearbat/data/answer_pair.dart';
-import 'trangular_path_layout_widget.dart';
+import '../module/speech_module_widget.dart';
+import 'sound_trangular_path_layout_widget.dart';
 import 'animated_button_widget.dart';
 
-class ModuleListWidget extends StatefulWidget {
-  final Map<String, List<AnswerGroup>> modules;
-  final String chapter;
+class SpeechModuleListWidget extends StatelessWidget {
+  final Map<String, List<String>> modules;
 
-  ModuleListWidget({Key? key, required this.modules, required this.chapter})
-      : super(key: key);
-
-  @override
-  ModuleListWidgetState createState() => ModuleListWidgetState();
-}
-
-class ModuleListWidgetState extends State<ModuleListWidget>
-    with TickerProviderStateMixin {
-  void navigate(String moduleName, List<AnswerGroup> answerGroups) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DifficultySelectionWidget(
-            moduleName: moduleName, answerGroups: answerGroups),
-      ),
-    );
-  }
+  SpeechModuleListWidget({Key? key, required this.modules}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var moduleList = widget.modules.entries.toList();
+    var moduleList = modules.entries.toList();
+    void navigate(String moduleName, List<String> sentences) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SpeechModuleWidget(
+            chapter: moduleName,
+            sentences: sentences,
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: TriangularPathLayout(
+        child: SoundTriangularPathLayout(
           itemCount: moduleList.length,
           itemBuilder: (context, index) {
             final module = moduleList[index];
@@ -57,14 +49,14 @@ class ModuleListWidgetState extends State<ModuleListWidget>
                   moduleName: module.key,
                   answerGroups: module.value,
                   onButtonPressed: (String key, List<dynamic> value) {
-                    navigate(key, value.cast<AnswerGroup>());
+                    navigate(module.key, module.value);
                   },
                 ),
               ],
             );
           },
           itemSize: 120.0,
-          chapter: widget.chapter,
+          spacing: 80.0,
         ),
       ),
     );

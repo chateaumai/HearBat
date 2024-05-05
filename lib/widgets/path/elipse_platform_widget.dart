@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(home: Scaffold(body: Center(child: FloatingPlatformButton()))));
+  runApp(MaterialApp(
+      home: Scaffold(body: Center(child: FloatingPlatformButton()))));
 }
 
 class FloatingPlatformButton extends StatelessWidget {
@@ -18,10 +19,11 @@ class FloatingPlatformButton extends StatelessWidget {
             // Button tap logic
           },
           style: ElevatedButton.styleFrom(
-            primary: Colors.transparent, // Use a transparent background
+            backgroundColor: Colors.transparent, // Use a transparent background
             shadowColor: Colors.transparent, // No shadow for the button itself
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50), // Rounded edges for the button
+              borderRadius:
+                  BorderRadius.circular(50), // Rounded edges for the button
             ),
             padding: EdgeInsets.symmetric(horizontal: 48, vertical: 20),
           ),

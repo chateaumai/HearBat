@@ -1,11 +1,12 @@
 String lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do .';
 String wordDesc =
-  'Sharpen your listening with an extensive collection of diverse words';
+    'Sharpen your listening with an extensive collection of diverse words';
 String soundDesc =
-  'Discover and recognize a wide range of sounds, from urban buzz to tranquil nature';
+    'Discover and recognize a wide range of sounds, from urban buzz to tranquil nature';
+String speechDesc = 'TEMP TEMP TEMP';
 String customDesc =
-  'Personalize your auditory learning by creating your own modules';
+    'Personalize your auditory learning by creating your own modules';
 String getPrompt(int wordsNeeded, String wordInput) {
   /* String prompt = 
     """

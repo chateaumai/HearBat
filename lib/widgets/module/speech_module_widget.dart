@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../utils/google_stt_util.dart';
-import '../utils/google_tts_util.dart';
+import '../../utils/google_stt_util.dart';
+import '../../utils/google_tts_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../widgets/module/module_progress_bar_widget.dart'; // Import the ModuleProgressBarWidget
+import 'module_progress_bar_widget.dart';
+import 'check_button_widget.dart';
 
-class TestPage extends StatefulWidget {
+class SpeechModuleWidget extends StatefulWidget {
+  final String chapter;
+  final List<String> sentences;
+
+  SpeechModuleWidget({required this.chapter, required this.sentences});
+
   @override
-  TestPageState createState() => TestPageState();
+  SpeechModuleWidgetState createState() => SpeechModuleWidgetState();
 }
 
-class TestPageState extends State<TestPage> {
+class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   late FlutterSoundRecorder _recorder;
   bool _isRecording = false;
   String _transcription = '';
@@ -21,23 +27,12 @@ class TestPageState extends State<TestPage> {
   double _grade = 0.0;
   String voiceType = 'en-US-Wavenet-D'; // Default voice type
   bool _isSubmitted = false; // New variable
-
-  final List<String> _sentences = [
-    'The quick brown fox jumps over the lazy dog.',
-    'Flutter makes it easy and fast to build beautiful apps.',
-    'A journey of a thousand miles begins with a single step.',
-    'Every moment is a fresh beginning.',
-    'Stay hungry, stay foolish.',
-    'All limitations are self-imposed.',
-    'Tough times never last, but tough people do.',
-    'Have enough courage to start and enough heart to finish.',
-    'Nothing will work unless you do.'
-  ];
-
-  final GoogleTTSUtil _ttsUtil = GoogleTTSUtil(); // Initialize TTS utility
+  bool _isCompleted = false; // New variable
 
   int currentSentenceIndex =
       0; // New variable to keep track of the current sentence index
+
+  final GoogleTTSUtil _ttsUtil = GoogleTTSUtil(); // Initialize TTS utility
 
   @override
   void initState() {
@@ -62,7 +57,7 @@ class TestPageState extends State<TestPage> {
   }
 
   String _getRandomSentence() {
-    return _sentences[Random().nextInt(_sentences.length)];
+    return widget.sentences[Random().nextInt(widget.sentences.length)];
   }
 
   double _calculateGrade(String original, String transcription) {
@@ -121,7 +116,12 @@ class TestPageState extends State<TestPage> {
   void _submitRecording() {
     setState(() {
       currentSentenceIndex++; // Increment the current sentence index after submission
-      _sentence = _getRandomSentence(); // Get a new sentence after submission
+      if (currentSentenceIndex < widget.sentences.length) {
+        _sentence = _getRandomSentence(); // Get a new sentence after submission
+      } else {
+        _isCompleted =
+            true; // Set _isCompleted to true when all sentences are submitted
+      }
       _isSubmitted = true; // Set _isSubmitted to true here
     });
   }
@@ -142,7 +142,7 @@ class TestPageState extends State<TestPage> {
               ModuleProgressBarWidget(
                 // Add the ModuleProgressBarWidget here
                 currentIndex: currentSentenceIndex,
-                total: _sentences.length,
+                total: widget.sentences.length,
               ),
             SizedBox(height: 20),
             ElevatedButton.icon(
@@ -167,9 +167,10 @@ class TestPageState extends State<TestPage> {
               child: Text(_isRecording ? 'Stop Recording' : 'Start Recording'),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
+            CheckButtonWidget(
+              isCheckingAnswer: _isRecording,
+              isSelectedWordValid: _transcription.isNotEmpty,
               onPressed: _submitRecording,
-              child: Text('Submit'),
             ),
             SizedBox(height: 20),
             if (_transcription.isNotEmpty)
@@ -178,6 +179,8 @@ class TestPageState extends State<TestPage> {
               Text('Original: $_sentence'),
               Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
             ],
+            if (_isCompleted)
+              Text('Congratulations! You have completed all sentences.'),
           ],
         ),
       ),

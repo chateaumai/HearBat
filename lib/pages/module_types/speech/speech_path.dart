@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:hearbat/data/answer_pair.dart';
-import 'package:hearbat/widgets/path/sound_module_list_widget.dart';
+import 'package:hearbat/widgets/path/speech_module_list_widget.dart';
 import '../../../utils/module_util.dart';
 import '../../../widgets/top_bar_widget.dart';
 
-class SoundPath extends StatefulWidget {
+class SpeechPath extends StatefulWidget {
   final String chapter;
 
-  SoundPath({Key? key, required this.chapter}) : super(key: key);
+  SpeechPath({Key? key, required this.chapter}) : super(key: key);
 
   @override
-  State<SoundPath> createState() => _SoundPathState();
+  State<SpeechPath> createState() => _SpeechPathState();
 }
 
-class _SoundPathState extends State<SoundPath> {
+class _SpeechPathState extends State<SpeechPath> {
   @override
   Widget build(BuildContext context) {
-    Map<String, List<AnswerGroup>> modules =
-        getModulesForChapter(widget.chapter);
+    Map<String, List<String>> modules = getModulesForSpeech(widget.chapter);
     return Scaffold(
       appBar: TopBar(
         title: widget.chapter.toUpperCase(),
@@ -125,7 +123,7 @@ class _SoundPathState extends State<SoundPath> {
             Column(
               children: [
                 Expanded(
-                  child: SoundModuleListWidget(modules: modules),
+                  child: SpeechModuleListWidget(modules: modules),
                 ),
               ],
             ),

@@ -3,8 +3,8 @@ import 'package:hearbat/data/answer_pair.dart';
 
 class AnimatedButton extends StatefulWidget {
   final String moduleName;
-  final List<AnswerGroup> answerGroups;
-  final Function(String moduleName, List<AnswerGroup> answerGroups) onButtonPressed;
+  final List<dynamic> answerGroups;
+  final Function(String moduleName, List<dynamic> answerGroups) onButtonPressed;
 
   AnimatedButton({
     Key? key,
@@ -17,7 +17,8 @@ class AnimatedButton extends StatefulWidget {
   AnimatedButtonState createState() => AnimatedButtonState();
 }
 
-class AnimatedButtonState extends State<AnimatedButton> with SingleTickerProviderStateMixin {
+class AnimatedButtonState extends State<AnimatedButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<EdgeInsets> _buttonMarginAnimation;
 
@@ -52,7 +53,14 @@ class AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvide
 
   void _handleTapUp(TapUpDetails details) {
     _animationController.reverse().then((_) {
-      widget.onButtonPressed(widget.moduleName, widget.answerGroups);
+      if (widget.answerGroups.every((element) => element is String)) {
+        widget.onButtonPressed(
+            widget.moduleName, widget.answerGroups.cast<String>());
+      } else if (widget.answerGroups
+          .every((element) => element is AnswerGroup)) {
+        widget.onButtonPressed(
+            widget.moduleName, widget.answerGroups.cast<AnswerGroup>());
+      }
     });
   }
 
@@ -72,13 +80,14 @@ class AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvide
           width: 100 * 1.5,
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 241, 223, 254),
-            borderRadius: BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
+            borderRadius:
+                BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), 
+                offset: Offset(0, 3),
               ),
             ],
           ),

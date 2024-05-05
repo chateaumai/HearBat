@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'profile_page.dart';
-import 'test_page.dart';
 
 class MyNavBar extends StatefulWidget {
   @override
@@ -17,7 +16,6 @@ class _MyNavBarState extends State<MyNavBar> {
   final List<Widget> pages = [
     HomePage(),
     ProfilePage(),
-    TestPage(),
   ];
 
   @override
@@ -41,10 +39,6 @@ class _MyNavBarState extends State<MyNavBar> {
             icon: Icon(Icons.settings),
             label: 'Setting',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'Test',
-          )
         ],
       ),
     );

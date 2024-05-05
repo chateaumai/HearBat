@@ -45,7 +45,6 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   bool isAnswerTrue = false;
   bool readyForCompletion = false;
   int currentIndex = 0;
-  String _difficulty = 'Normal';
   String language = 'English';
 
   @override
@@ -58,7 +57,6 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
 
   Future<void> _loadPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
     language = prefs.getString('languagePreference') ?? 'English';
   }
 
@@ -107,8 +105,8 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
 
   void playAnswer() {
     if (widget.isWord) {
-        googleTTSUtil.speak(correctWord.answer, widget.voiceType);
-    }else {
+      googleTTSUtil.speak(correctWord.answer, widget.voiceType);
+    } else {
       AudioUtil.playSound(correctWord.path!);
     }
   }
@@ -132,7 +130,9 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      language == 'English' ? "What do you hear?" : "Bạn nghe chữ gì?",
+                      language == 'English'
+                          ? "What do you hear?"
+                          : "Bạn nghe chữ gì?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
