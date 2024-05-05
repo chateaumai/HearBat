@@ -30,7 +30,7 @@ class GeminiUtil {
       String wordInput = wordsToBeCompared.join(' ');
       int wordsNeeded = 4 - wordsToBeCompared.length;
       String prompt = getPrompt(wordsNeeded, wordInput);
-
+      print(prompt);
       var body = json.encode({
         "contents": [
           {
@@ -79,9 +79,20 @@ class GeminiUtil {
       
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        print(jsonData);
-        return jsonData[0]['candidates'][0]['content']['parts'][0]['text'];
-
+        
+        List<String> allTexts = [];
+        for (var candidateData in jsonData) {
+          for (var candidate in candidateData['candidates']) {
+            for (var part in candidate['content']['parts']) {
+              if (part.containsKey('text')) {
+                allTexts.add(part['text']);
+              }
+            }
+          }
+        }
+        String combinedTexts = allTexts.join(' ');
+        // print(combinedTexts); 
+        return combinedTexts;
       } else {
         throw Exception("Failed to get a valid response from the API: ${response.statusCode}");
       }
