@@ -4,16 +4,24 @@ class CheckButtonWidget extends StatelessWidget {
   final bool isCheckingAnswer;
   final bool isSelectedWordValid;
   final VoidCallback onPressed;
+  final String language;
 
   CheckButtonWidget({
     Key? key,
     required this.isCheckingAnswer,
     required this.isSelectedWordValid,
     required this.onPressed,
+    required this.language,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String check = "CHECK";
+    String continueWord = 'CONTINUE';
+    if (language == 'Vietnamese') {
+      check = "Xác Nhận";
+      continueWord = "Tiếp Tục"; 
+    }
     return ElevatedButton(
       onPressed: isSelectedWordValid ? onPressed : null, 
       style: ElevatedButton.styleFrom(
@@ -30,7 +38,7 @@ class CheckButtonWidget extends StatelessWidget {
         elevation: 5,
       ),
       child: Text(
-        isCheckingAnswer ? 'CHECK' : 'CONTINUE',
+        isCheckingAnswer ? check : continueWord,
         style: TextStyle(
           color: const Color.fromARGB(255, 255, 255, 255),
           fontSize: 20,
