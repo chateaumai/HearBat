@@ -215,12 +215,27 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                               style: TextStyle(fontSize: 20)),
                         ),
                         if (_transcription.isNotEmpty)
-                          Text('What you said: $_transcription',
-                              style: TextStyle(fontSize: 18),
-                              textAlign: TextAlign.center),
+                          Column(
+                            children: [
+                              SizedBox(height: 20),
+                              Text('What you said: $_transcription',
+                                  style: TextStyle(fontSize: 18),
+                                  textAlign: TextAlign.center),
+                              SizedBox(height: 20),
+                            ],
+                          ),
                         if (_isSubmitted && _isCheckPressed) ...[
-                          Text('Original: $_sentence'),
-                          Text('Accuracy: ${_grade.toStringAsFixed(2)}%'),
+                          Column(
+                            children: [
+                              SizedBox(height: 20),
+                              Text('Original: $_sentence',
+                                  style: TextStyle(fontSize: 18),
+                                  textAlign: TextAlign.center),
+                              SizedBox(height: 20),
+                            ],
+                          ),
+                          Text('Accuracy: ${_grade.toStringAsFixed(2)}%',
+                              style: TextStyle(fontSize: 20)),
                         ],
                       ],
                     ),
