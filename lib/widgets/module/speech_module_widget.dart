@@ -218,9 +218,21 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                           Column(
                             children: [
                               SizedBox(height: 20),
-                              Text('What you said: $_transcription',
-                                  style: TextStyle(fontSize: 18),
-                                  textAlign: TextAlign.center),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  padding: EdgeInsets.all(30),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[100],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text('What you said: $_transcription',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                      textAlign: TextAlign.center),
+                                ),
+                              ),
                               SizedBox(height: 20),
                             ],
                           ),
@@ -228,14 +240,27 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                           Column(
                             children: [
                               SizedBox(height: 20),
-                              Text('Original: $_sentence',
-                                  style: TextStyle(fontSize: 18),
-                                  textAlign: TextAlign.center),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  padding: EdgeInsets.all(30),
+                                  decoration: BoxDecoration(
+                                    color: Colors.green[100],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text('Original: $_sentence',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                      textAlign: TextAlign.center),
+                                ),
+                              ),
                               SizedBox(height: 20),
                             ],
                           ),
                           Text('Accuracy: ${_grade.toStringAsFixed(2)}%',
-                              style: TextStyle(fontSize: 20)),
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
                         ],
                       ],
                     ),
