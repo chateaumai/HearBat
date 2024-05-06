@@ -184,11 +184,16 @@ class LanguageOptionsWidgetState extends State<LanguageOptionsWidget> {
 
   void _loadSavedPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String savedLanguage = prefs.getString('languagePreference') ?? 'English'; 
+    String? savedLanguage = prefs.getString('languagePreference');
+    if (savedLanguage == null || savedLanguage.isEmpty) {
+      savedLanguage = 'English';
+      await prefs.setString('languagePreference', savedLanguage);
+    }
     setState(() {
-      _selectedLanguage = savedLanguage;
+      _selectedLanguage = savedLanguage!;
     });
   }
+
 
   void _handleTap(String value) {
     setState(() {
@@ -289,11 +294,13 @@ class VoiceOptionsWidgetState extends State<VoiceOptionsWidget> {
   void _loadSavedPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedVoice = prefs.getString('voicePreference');
-    if (savedVoice != null) {
+    if (savedVoice == null || savedVoice.isEmpty) {
+      savedVoice = 'en-US-Studio-O';
+      await prefs.setString('voicePreference', savedVoice);
+    }
       setState(() {
         _selectedVoicePreference = savedVoice;
       });
-    }
   }
   
   void _handleTap(String value) {
