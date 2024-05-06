@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                 cardText: 'Train Speech',
                 description: speechDesc,
                 destinationPage: SpeechChapters(),
-                image: "assets/visuals/HB_Music.png",
+                image: "assets/visuals/HB_Speech.png",
               ),
               HomeCardWidget(
                 cardText: 'Custom Module Builder',
