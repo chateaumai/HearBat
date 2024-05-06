@@ -176,6 +176,20 @@ class LanguageOptionsWidget extends StatefulWidget {
 class LanguageOptionsWidgetState extends State<LanguageOptionsWidget> {
   String _selectedLanguage = 'English';
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedPreference();
+  }
+
+  void _loadSavedPreference() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String savedLanguage = prefs.getString('languagePreference') ?? 'English'; 
+    setState(() {
+      _selectedLanguage = savedLanguage;
+    });
+  }
+
   void _handleTap(String value) {
     setState(() {
       _selectedLanguage = value;
@@ -266,6 +280,22 @@ class VoiceOptionsWidgetState extends State<VoiceOptionsWidget> {
     "en-AU-Neural2-B": "Australian Male",
   };
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedPreference();
+  }
+
+  void _loadSavedPreference() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedVoice = prefs.getString('voicePreference');
+    if (savedVoice != null) {
+      setState(() {
+        _selectedVoicePreference = savedVoice;
+      });
+    }
+  }
+  
   void _handleTap(String value) {
     setState(() {
       _selectedVoicePreference = value;

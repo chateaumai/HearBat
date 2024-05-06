@@ -27,12 +27,10 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
 
   List<String> voiceTypes = [
     "en-US-Studio-O",
-    // "en-US-Neural2-C",
     "en-GB-Neural2-C",
     "en-IN-Neural2-A",
     "en-AU-Neural2-C",
     "en-US-Studio-Q",
-    // "en-US-Neural2-D",
     "en-GB-Neural2-B",
     "en-IN-Neural2-B",
     "en-AU-Neural2-B",
@@ -40,12 +38,10 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
 
   Map<String, String> voiceTypeTitles = {
     "en-US-Studio-O": "US Female",
-    //"en-US-Neural2-C": "US2 Female",
     "en-GB-Neural2-C": "UK Female",
     "en-IN-Neural2-A": "IN Female",
     "en-AU-Neural2-C": "AU Female",
     "en-US-Studio-Q": "US Male",
-    // "en-US-Neural2-D": "US2 Male",
     "en-GB-Neural2-B": "UK Male",
     "en-IN-Neural2-B": "IN Male",
     "en-AU-Neural2-B": "AU Male",
@@ -337,6 +333,22 @@ class SoundOptionsWidget extends StatefulWidget {
 class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
   String _selectedSound = 'None';
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedPreference();
+  }
+
+  void _loadSavedPreference() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedSound = prefs.getString('backgroundSoundPreference');
+    if (savedSound != null) {
+      setState(() {
+        _selectedSound = savedSound;
+      });
+    }
+  }
+
   void _handleTap(String value) {
     setState(() {
       _selectedSound = value;
@@ -409,6 +421,22 @@ class VolumeOptionsWidget extends StatefulWidget {
 class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
   String _selectedVolume = 'Low'; // Default selected value
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedPreference();
+  }
+
+  void _loadSavedPreference() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedVolume = prefs.getString('audioVolumePreference');
+    if (savedVolume != null) {
+      setState(() {
+        _selectedVolume = savedVolume;
+      });
+    }
+  }
+
   void _handleTap(String value) {
     setState(() {
       _selectedVolume = value;
@@ -420,7 +448,7 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
     bool isSelected = _selectedVolume == volume;
     return ClipRRect(
       borderRadius: BorderRadius.circular(
-          8.0), // Ensure this matches the container's border radius
+          8.0), 
       child: InkWell(
         onTap: () => _handleTap(volume),
         child: Container(
@@ -481,6 +509,20 @@ class DifficultyOptionsWidget extends StatefulWidget {
 
 class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
   String _selectedDifficulty = 'Normal';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedPreference();
+  }
+
+  void _loadSavedPreference() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? savedDifficulty = prefs.getString('difficultyPreference');
+  if (savedDifficulty != null) {
+    _selectedDifficulty = savedDifficulty;
+  }
+}
 
   void _handleTap(String difficulty) {
     setState(() {
