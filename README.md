@@ -15,7 +15,7 @@ Follow the steps below to successfully run the application:
 
 ## Mobile Installation
 
-Download APK file [here](https://drive.google.com/file/d/1Okakmugma_qdoDDyJso5jTsRqYdJ2h2E/view?usp=drive_link)
+Download APK file [here](https://drive.google.com/file/d/11Fm5nk-UJnQtKkolB9zE87pldnlwx8U2/view?usp=drive_link)
 
 ## Local Installation
 
