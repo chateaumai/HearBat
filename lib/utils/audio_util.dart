@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 
+// Utility for handling audio playback in Sound modules.
 class AudioUtil {
   static final AudioPlayer _soundAudioPlayer = AudioPlayer();
 
@@ -8,6 +9,7 @@ class AudioUtil {
     await _soundAudioPlayer.play(AssetSource(audioFilePath));
   }
 
+  // Stops any currently playing audio.
   static Future<void> stop() async {
     await _soundAudioPlayer.stop();
   }

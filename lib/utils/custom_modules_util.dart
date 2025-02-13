@@ -29,6 +29,7 @@ class CustomModuleState extends State<CustomModule> {
     cacheWords();
   }
 
+  // Caches words before displaying the module.
   Future<void> cacheWords() async {
     setState(() {
       isCaching = true; // Show loading indicator
@@ -61,6 +62,7 @@ class CustomModuleState extends State<CustomModule> {
         ),
       );
     }
+
     // Once caching is done, show the WordModuleWidget
     return ModuleWidget(
       title: widget.moduleName,

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class BackgroundNoiseUtil {
   static final AudioPlayer _audioPlayer = AudioPlayer();
 
+  // Plays the saved background sound based on user preference.
   static Future<void> playSavedSound() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? backgroundSound = prefs.getString('backgroundSoundPreference');
@@ -18,10 +19,12 @@ class BackgroundNoiseUtil {
     }
   }
 
+  // Stops the currently playing background sound.
   static Future<void> stopSound() async {
     await _audioPlayer.stop();
   }
 
+  // Adjusts the volume level based on user preference.
   static Future<void> _adjustVolume(String? volumeLevel) async {
     switch (volumeLevel) {
       case 'Low':

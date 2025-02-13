@@ -5,6 +5,7 @@ import 'dart:async';
 class CacheWordsUtil {
   final GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
 
+  // Caches words from a module by downloading their audio using Google TTS.
   Future<void> cacheModuleWords(
       List<AnswerGroup> module, String voiceType) async {
     // Create a list to hold all the futures for the concurrent downloads

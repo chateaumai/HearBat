@@ -5,6 +5,7 @@ import 'package:hearbat/widgets/top_bar_widget.dart';
 import '../utils/gemini_util.dart';
 import '../utils/text_util.dart';
 
+// Utility for creating and saving custom learning modules.
 class CustomUtil extends StatefulWidget {
   final Function(String) onModuleSaved;
 
@@ -23,6 +24,7 @@ class CustomUtilState extends State<CustomUtil> {
   ];
   TextEditingController _moduleNameController = TextEditingController();
 
+  // Adds a new set of four word input fields.
   void _addNewPair() {
     if (_controllers.length < 40) {
       setState(() {
@@ -36,6 +38,7 @@ class CustomUtilState extends State<CustomUtil> {
     }
   }
 
+  // Removes a set of four word input fields.
   void _removePair(int index) {
     if (_controllers.length > 4) {
       setState(() {
@@ -44,6 +47,7 @@ class CustomUtilState extends State<CustomUtil> {
     }
   }
 
+  // Saves the custom module with provided words, generating missing ones if needed.
   void _saveModule() async {
     List<AnswerGroup> answerGroups = [];
     for (int i = 0; i < _controllers.length; i += 4) {
@@ -51,11 +55,12 @@ class CustomUtilState extends State<CustomUtil> {
       String answer2 = _controllers[i + 1].text.trim();
       String answer3 = _controllers[i + 2].text.trim();
       String answer4 = _controllers[i + 3].text.trim();
-      
+
       if (answer1.isNotEmpty &&
           answer2.isNotEmpty &&
           answer3.isNotEmpty &&
           answer4.isNotEmpty) {
+        // Creates a complete answer group.
         AnswerGroup group = AnswerGroup(
           Answer(answer1, "", ""),
           Answer(answer2, "", ""),
@@ -67,7 +72,7 @@ class CustomUtilState extends State<CustomUtil> {
           answer2.isNotEmpty ||
           answer3.isNotEmpty ||
           answer4.isNotEmpty) {
-
+        // Collects words to generate missing ones.
         List<String> wordsToBeCompared = [];
         if (answer1.isNotEmpty) {
           wordsToBeCompared.add(answer1);
@@ -89,9 +94,11 @@ class CustomUtilState extends State<CustomUtil> {
           String trimmedWord = word.trim();
           trimmedWord = stripNonAlphaCharacters(trimmedWord);
           if (trimmedWord.isNotEmpty) {
-            wordsToBeCompared.add(trimmedWord); 
+            wordsToBeCompared.add(trimmedWord);
           }
         }
+
+        // Ensures we have a complete set of four words.
         if (wordsToBeCompared.length == 4) {
           AnswerGroup group = AnswerGroup(
             Answer(wordsToBeCompared[0], "", ""),
@@ -100,13 +107,13 @@ class CustomUtilState extends State<CustomUtil> {
             Answer(wordsToBeCompared[3], "", ""),
           );
           answerGroups.add(group);
-        }
-        else {
+        } else {
           print("Not enough words");
         }
       }
     }
 
+    // Saves the module if the name and answer groups are valid.
     String moduleName = _moduleNameController.text.trim();
     if (moduleName.isNotEmpty && answerGroups.isNotEmpty) {
       try {
@@ -122,39 +129,42 @@ class CustomUtilState extends State<CustomUtil> {
     }
   }
 
+  // Builds the UI for the module creator.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Top bar displaying the module title.
       appBar: TopBar(
         title: "Module Creator",
       ),
       body: ListView(
         children: <Widget>[
           SizedBox(height: 30),
+          // Title text for the module creation screen.
           Text(
             "Enter your desired words!",
-            style:
-              TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 7, 45, 78),
-                height: 1,
-              ),
-              textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 7, 45, 78),
+              height: 1,
             ),
+            textAlign: TextAlign.center,
+          ),
           SizedBox(height: 20),
+          // Instruction text explaining automatic word filling.
           Text(
             "We'll fill in the rest of your set if\nyou enter less than four words",
-            style:
-              TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 7, 45, 78),
-                height: 1,
-              ),
-              textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 7, 45, 78),
+              height: 1,
             ),
+            textAlign: TextAlign.center,
+          ),
           SizedBox(height: 50),
+          // Input field for the module name.
           Padding(
             padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
             child: TextField(
@@ -177,8 +187,9 @@ class CustomUtilState extends State<CustomUtil> {
                 ),
               ),
             ),
-          ), 
+          ),
           SizedBox(height: 12),
+          // Dynamically generates input fields for each word set.
           ...List.generate(
             _controllers.length ~/ 4,
             (index) => Padding(
@@ -187,17 +198,19 @@ class CustomUtilState extends State<CustomUtil> {
                 children: [
                   Row(
                     children: [
+                      // Displays the set number.
                       Expanded(
                         child: Text(
-                          'Set ${index +1}', 
+                          'Set ${index + 1}',
                           style: TextStyle(
-                            fontSize: 16, 
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black, 
+                            color: Colors.black,
                           ),
                           textAlign: TextAlign.left,
                         ),
                       ),
+                      // Delete button for removing a word set.
                       Visibility(
                         visible: _controllers.length > 4,
                         maintainSize: true,
@@ -211,6 +224,7 @@ class CustomUtilState extends State<CustomUtil> {
                       ),
                     ],
                   ),
+                  // Input fields for four words in the set.
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -306,19 +320,20 @@ class CustomUtilState extends State<CustomUtil> {
               ),
             ),
           ),
+          // Button to add a new word set if under limit.
           if (_controllers.length < 40)
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
               child: ElevatedButton.icon(
-                onPressed: _addNewPair, 
+                onPressed: _addNewPair,
                 icon: Icon(
-                  Icons.add, 
-                  color: Colors.white, 
+                  Icons.add,
+                  color: Colors.white,
                 ),
                 label: Text(
-                  'Add Set', 
+                  'Add Set',
                   style: TextStyle(
-                    color: Colors.white, 
+                    color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
@@ -326,9 +341,9 @@ class CustomUtilState extends State<CustomUtil> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 94, 224, 82),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16), 
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20), 
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 ),
               ),
             ),
@@ -337,18 +352,18 @@ class CustomUtilState extends State<CustomUtil> {
             child: ElevatedButton(
               onPressed: _saveModule,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 154, 107, 187), 
+                backgroundColor: Color.fromARGB(255, 154, 107, 187),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16), 
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20), 
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               ),
               child: Text(
                 "Save Module",
                 style: TextStyle(
                   color: const Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),

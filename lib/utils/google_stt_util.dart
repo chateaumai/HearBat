@@ -5,19 +5,24 @@ import 'package:googleapis_auth/auth_io.dart';
 import '../utils/config_util.dart';
 
 class GoogleSTTUtil {
+  // Cache to store previously transcribed audio to avoid redundant API calls.
   final Map<String, String> cache = {};
 
+  // Loads the Google Cloud API key from the configuration manager.
   Future<String> _loadCredentials() async {
     String apiKey = ConfigurationManager().googleCloudAPIKey;
     return apiKey;
   }
 
+  // Transcribes an audio file using Google Speech-to-Text API.
+  // Takes `filePath` as input and returns the transcript of the audio.
   Future<String> transcribeAudio(String filePath) async {
     File file = File(filePath);
     if (!await file.exists()) {
       throw Exception("Audio file does not exist at the specified path.");
     }
 
+    // Returns cached transcript if available.
     String? transcript = cache[filePath];
     if (transcript != null) {
       return transcript;
@@ -44,9 +49,9 @@ class GoogleSTTUtil {
           "sampleRateHertz": 16000,
           "languageCode": "en-US",
           "model": "default",
-          "enableAutomaticPunctuation": true,
+          "enableAutomaticPunctuation": true
         },
-        "audio": {"content": base64Encode(await file.readAsBytes())},
+        "audio": {"content": base64Encode(await file.readAsBytes())}
       });
 
       final response = await http.post(
@@ -60,6 +65,8 @@ class GoogleSTTUtil {
 
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
+
+        // Extracts the transcript from the API response.
         if (jsonData['results'] != null) {
           transcript = jsonData['results'][0]['alternatives'][0]['transcript'];
           if (transcript != null) {

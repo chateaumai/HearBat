@@ -9,6 +9,8 @@ import 'package:googleapis/texttospeech/v1.dart' as tts;
 import '../utils/config_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Utility for handling text-to-speech (TTS) using Google's API.
+// This class downloads, caches, and plays synthesized speech audio.
 class GoogleTTSUtil {
   final AudioPlayer audioPlayer = AudioPlayer();
   final Map<String, String> cache = {};
@@ -24,24 +26,29 @@ class GoogleTTSUtil {
     _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
   }
 
+  // Loads the Google Cloud API key from the configuration manager.
   Future<String> _loadCredentials() async {
     String apiKey = ConfigurationManager().googleCloudAPIKey;
     return apiKey;
   }
 
+  // Converts text to speech and plays the audio.
+  // Downloads the MP3 file if it's not cached.
   Future<void> speak(String text, String voicetype) async {
-    // Determine the text to speak based on difficulty
+    // Adjusts the spoken text based on difficulty level.
     String textToSpeak = (_difficulty == 'Hard' &&
             text != "Hello this is how I sound" &&
             text.length < 15)
         ? "Please, select $text as the answer"
         : text;
 
+    // Removes spaces for 'Hard' mode speech to ensure proper processing.
     String safeTextToSpeak =
         (_difficulty == 'Hard' && textToSpeak.contains(' '))
             ? textToSpeak.replaceAll(RegExp(r'\s+'), '').toLowerCase()
             : textToSpeak;
 
+    // Checks if the audio is already cached.
     String? audioPath = cache["${safeTextToSpeak}_$voicetype"];
 
     if (audioPath != null && await File(audioPath).exists()) {
@@ -63,9 +70,11 @@ class GoogleTTSUtil {
     }
   }
 
+  // Downloads MP3 files for the given text and stores them locally.
   Future<void> downloadMP3(String text, String voicetype) async {
     String dir = (await getTemporaryDirectory()).path;
 
+    // Determines text variations to download based on difficulty level.
     List<String> textsToDownload;
     if (_difficulty == 'Hard') {
       String safeText = text.replaceAll(RegExp(r'\s+'), '').toLowerCase();
@@ -78,6 +87,7 @@ class GoogleTTSUtil {
       String filePath = "$dir/${textToDownload}_$voicetype.mp3";
       File file = File(filePath);
 
+      // Skips download if the file already exists.
       if (await file.exists()) {
         cache["${textToDownload}_$voicetype"] = filePath;
         continue;
@@ -124,9 +134,11 @@ class GoogleTTSUtil {
           var jsonData = jsonDecode(response.body);
           String audioBase64 = jsonData['audioContent'];
 
+          // Decodes and saves the MP3 audio file.
           Uint8List bytes = base64Decode(audioBase64);
           await file.writeAsBytes(bytes);
 
+          // Updates cache with the downloaded file path.
           cache["${textToDownload}_$voicetype"] = filePath;
         } else {
           throw Exception(

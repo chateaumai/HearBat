@@ -4,6 +4,7 @@ import 'dart:async';
 class CacheSentencesUtil {
   final GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
 
+  // Caches sentences as audio files using Google TTS.
   Future<void> cacheSentences(List<String> sentences, String voiceType) async {
     // Create a list to hold all the futures for the concurrent downloads
     List<Future> downloadFutures = [];
@@ -12,7 +13,7 @@ class CacheSentencesUtil {
       // Instead of awaiting each download, add it to the list
       downloadFutures
           .add(googleTTSUtil.downloadMP3(sentence, voiceType).catchError((e) {
-        print("Error downloading $sentence: $e");
+        print("Error downloading $sentence: $e"); // Logs any download errors.
       }));
     }
 
