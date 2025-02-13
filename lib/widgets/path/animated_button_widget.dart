@@ -7,11 +7,11 @@ class AnimatedButton extends StatefulWidget {
   final Function(String moduleName, List<dynamic> answerGroups) onButtonPressed;
 
   AnimatedButton({
-    Key? key,
+    super.key,
     required this.moduleName,
     required this.answerGroups,
     required this.onButtonPressed,
-  }) : super(key: key);
+  });
 
   @override
   AnimatedButtonState createState() => AnimatedButtonState();
@@ -84,7 +84,7 @@ class AnimatedButtonState extends State<AnimatedButton>
                 BorderRadius.all(Radius.elliptical(100 * 1.5, 50 * 1.5)),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.grey.withAlpha((0.5 * 255).toInt()),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: Offset(0, 3),

@@ -9,14 +9,18 @@ class ModuleWordsPage extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
   final String voiceType;
 
-  ModuleWordsPage({Key? key, required this.moduleName, required this.answerGroups, required this.voiceType}) : super(key: key);
+  ModuleWordsPage(
+      {super.key,
+      required this.moduleName,
+      required this.answerGroups,
+      required this.voiceType});
 
   @override
   State<ModuleWordsPage> createState() => _ModuleWordsPageState();
 }
 
 class _ModuleWordsPageState extends State<ModuleWordsPage> {
-  double elevation = 5.0; 
+  double elevation = 5.0;
   GoogleTTSUtil googleTTSUtil = GoogleTTSUtil();
 
   void playAnswer(String answer) {
@@ -25,12 +29,14 @@ class _ModuleWordsPageState extends State<ModuleWordsPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> words = widget.answerGroups.expand((group) => [
-      group.answer1.answer,
-      group.answer2.answer,
-      group.answer3.answer,
-      group.answer4.answer,
-    ]).toList();
+    List<String> words = widget.answerGroups
+        .expand((group) => [
+              group.answer1.answer,
+              group.answer2.answer,
+              group.answer3.answer,
+              group.answer4.answer,
+            ])
+        .toList();
 
     return Scaffold(
       appBar: TopBar(
@@ -46,7 +52,7 @@ class _ModuleWordsPageState extends State<ModuleWordsPage> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                childAspectRatio: 2.4, 
+                childAspectRatio: 2.4,
               ),
               itemCount: words.length,
               itemBuilder: (context, index) {

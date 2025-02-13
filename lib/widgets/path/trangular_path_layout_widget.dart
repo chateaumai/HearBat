@@ -10,12 +10,12 @@ class TriangularPathLayout extends StatefulWidget {
   final String chapter;
 
   const TriangularPathLayout({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.itemBuilder,
     required this.itemSize,
     required this.chapter,
-  }) : super(key: key);
+  });
 
   @override
   State<TriangularPathLayout> createState() => _TriangularPathLayoutState();
@@ -46,14 +46,15 @@ class _TriangularPathLayoutState extends State<TriangularPathLayout> {
     double xOffset = initialXOffset;
     double yOffset = 30;
 
-   for (int i = 0; i < widget.itemCount; i++) {
-    if (i % 2 == 0) {  
+    for (int i = 0; i < widget.itemCount; i++) {
+      if (i % 2 == 0) {
         xOffset = initialXOffset;
-    } else {  
-        xOffset = initialXOffset + 125; 
-    }
-    positionedItems.add(_buildPositionedItem(context, widget.itemBuilder, xOffset, yOffset, i));
-    yOffset += widget.itemSize + 60;  
+      } else {
+        xOffset = initialXOffset + 125;
+      }
+      positionedItems.add(_buildPositionedItem(
+          context, widget.itemBuilder, xOffset, yOffset, i));
+      yOffset += widget.itemSize + 60;
     }
     double totalHeight = yOffset;
 

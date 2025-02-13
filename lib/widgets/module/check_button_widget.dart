@@ -7,12 +7,12 @@ class CheckButtonWidget extends StatelessWidget {
   final String language;
 
   CheckButtonWidget({
-    Key? key,
+    super.key,
     required this.isCheckingAnswer,
     required this.isSelectedWordValid,
     required this.onPressed,
     required this.language,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +20,16 @@ class CheckButtonWidget extends StatelessWidget {
     String continueWord = 'CONTINUE';
     if (language == 'Vietnamese') {
       check = "Xác Nhận";
-      continueWord = "Tiếp Tục"; 
+      continueWord = "Tiếp Tục";
     }
     return ElevatedButton(
-      onPressed: isSelectedWordValid ? onPressed : null, 
+      onPressed: isSelectedWordValid ? onPressed : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: !isCheckingAnswer
-        ? Color.fromARGB(255, 7, 45, 78)
-        : isSelectedWordValid
-          ? Color.fromARGB(255, 94, 224, 82)
-          : Colors.grey,
+            ? Color.fromARGB(255, 7, 45, 78)
+            : isSelectedWordValid
+                ? Color.fromARGB(255, 94, 224, 82)
+                : Colors.grey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

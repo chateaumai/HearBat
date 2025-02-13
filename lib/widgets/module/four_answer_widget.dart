@@ -19,7 +19,7 @@ class FourAnswerWidget extends StatefulWidget {
   final Function(int) onProgressUpdate; //for progress bar in parent
 
   FourAnswerWidget({
-    Key? key,
+    super.key,
     required this.answerGroups,
     required this.onCompletion,
     required this.onCorrectAnswer,
@@ -27,7 +27,7 @@ class FourAnswerWidget extends StatefulWidget {
     required this.voiceType,
     required this.isWord,
     required this.onProgressUpdate,
-  }) : super(key: key);
+  });
 
   @override
   State<FourAnswerWidget> createState() => _FourAnswerWidgetState();
@@ -301,7 +301,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                     child: Text(
                       language == 'Vietnamese' ? 'Xuất Sắc' : 'Great',
                       style: TextStyle(
-                        fontSize: 18, 
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

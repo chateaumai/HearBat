@@ -11,11 +11,11 @@ class ModuleCard extends StatefulWidget {
   final String voiceType;
 
   const ModuleCard({
-    Key? key,
+    super.key,
     required this.moduleName,
     required this.answerGroups,
     required this.voiceType,
-  }) : super(key: key);
+  });
 
   @override
   State<ModuleCard> createState() => _ModuleCardState();

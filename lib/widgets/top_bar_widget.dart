@@ -6,11 +6,11 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onLeadingIconPressed;
 
   const TopBar({
-    Key? key,
+    super.key,
     required this.title,
     this.leadingIcon,
     this.onLeadingIconPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         leading: leadingIcon != null
             ? Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: IconButton(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: IconButton(
                   icon: Icon(leadingIcon, size: 36),
-                  onPressed: onLeadingIconPressed ?? () => Navigator.of(context).pop(),
+                  onPressed:
+                      onLeadingIconPressed ?? () => Navigator.of(context).pop(),
                 ),
-            )
+              )
             : null,
         title: FittedBox(
           fit: BoxFit.scaleDown,
@@ -46,7 +47,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         scrolledUnderElevation: 0.0,
         centerTitle: true,
-        elevation: 0, 
+        elevation: 0,
         backgroundColor: Color.fromARGB(255, 232, 218, 255),
       ),
     );

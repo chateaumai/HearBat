@@ -7,7 +7,7 @@ import '../../../widgets/top_bar_widget.dart';
 class WordPath extends StatefulWidget {
   final String chapter;
 
-  WordPath({Key? key, required this.chapter}) : super(key: key);
+  WordPath({super.key, required this.chapter});
 
   @override
   State<WordPath> createState() => _WordPathState();

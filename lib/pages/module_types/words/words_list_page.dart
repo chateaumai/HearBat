@@ -7,7 +7,7 @@ import '../../../widgets/path/module_card_widget.dart';
 class WordsList extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
   final String chapterName;
-  WordsList({Key? key, required this.modules, required this.chapterName}) : super(key: key);
+  WordsList({super.key, required this.modules, required this.chapterName});
 
   @override
   State<WordsList> createState() => _WordsListState();
@@ -26,16 +26,15 @@ class _WordsListState extends State<WordsList> {
       });
     }
   }
-  
+
   @override
   void initState() {
     super.initState();
     getVoiceType();
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: TopBar(
         title: widget.chapterName,
@@ -50,7 +49,7 @@ class _WordsListState extends State<WordsList> {
           return ModuleCard(
             moduleName: moduleName,
             answerGroups: answerGroups,
-            voiceType: voiceType, 
+            voiceType: voiceType,
           );
         },
       ),

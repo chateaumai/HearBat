@@ -9,12 +9,12 @@ class HomeCardWidget extends StatefulWidget {
   final String image;
 
   const HomeCardWidget({
-    Key? key,
+    super.key,
     required this.cardText,
     required this.description,
     required this.destinationPage,
     required this.image,
-  }) : super(key: key);
+  });
 
   @override
   State<HomeCardWidget> createState() => _HomeCardWidgetState();
@@ -29,7 +29,7 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
     );
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final cardWidth = screenSize.width * 0.9;
@@ -49,10 +49,10 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
           elevation: elevation,
           child: Padding(
             padding: EdgeInsets.all(16.0),
-            child: Row( 
+            child: Row(
               children: [
                 SizedBox(
-                  width: cardWidth * 0.45, 
+                  width: cardWidth * 0.45,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -75,11 +75,11 @@ class _HomeCardWidgetState extends State<HomeCardWidget> {
                     ],
                   ),
                 ),
-                Expanded( 
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      widget.image, 
+                      widget.image,
                       fit: BoxFit.contain,
                     ),
                   ),

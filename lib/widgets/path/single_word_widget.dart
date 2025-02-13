@@ -5,7 +5,7 @@ class WordCard extends StatefulWidget {
   final String word;
   final Function(String word) onWordTap;
 
-  const WordCard({Key? key, required this.word, required this.onWordTap}) : super(key: key);
+  const WordCard({super.key, required this.word, required this.onWordTap});
 
   @override
   State<WordCard> createState() => _WordCardState();
@@ -26,13 +26,13 @@ class _WordCardState extends State<WordCard> {
       child: Card(
         elevation: _elevation,
         child: Padding(
-          padding: EdgeInsets.all(8.0), 
+          padding: EdgeInsets.all(8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start, 
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
                 child: AutoSizeText(
-                  widget.word, 
+                  widget.word,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                   maxLines: 1,

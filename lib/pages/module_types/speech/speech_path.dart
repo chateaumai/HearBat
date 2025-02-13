@@ -6,7 +6,7 @@ import '../../../widgets/top_bar_widget.dart';
 class SpeechPath extends StatefulWidget {
   final String chapter;
 
-  SpeechPath({Key? key, required this.chapter}) : super(key: key);
+  SpeechPath({super.key, required this.chapter});
 
   @override
   State<SpeechPath> createState() => _SpeechPathState();

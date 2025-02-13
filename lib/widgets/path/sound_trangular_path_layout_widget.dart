@@ -7,12 +7,12 @@ class SoundTriangularPathLayout extends StatefulWidget {
   final double spacing;
 
   const SoundTriangularPathLayout({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.itemBuilder,
     required this.itemSize,
     required this.spacing,
-  }) : super(key: key);
+  });
 
   @override
   State<SoundTriangularPathLayout> createState() =>
@@ -30,14 +30,15 @@ class _SoundTriangularPathLayoutState extends State<SoundTriangularPathLayout> {
     double xOffset = initialXOffset;
     double yOffset = 30;
 
-   for (int i = 0; i < widget.itemCount; i++) {
-    if (i % 2 == 0) {  
+    for (int i = 0; i < widget.itemCount; i++) {
+      if (i % 2 == 0) {
         xOffset = initialXOffset;
-    } else {  
-        xOffset = initialXOffset + 125; 
-    }
-    positionedItems.add(_buildPositionedItem(context, widget.itemBuilder, xOffset, yOffset, i));
-    yOffset += widget.itemSize + 60;  
+      } else {
+        xOffset = initialXOffset + 125;
+      }
+      positionedItems.add(_buildPositionedItem(
+          context, widget.itemBuilder, xOffset, yOffset, i));
+      yOffset += widget.itemSize + 60;
     }
     double totalHeight = yOffset;
 

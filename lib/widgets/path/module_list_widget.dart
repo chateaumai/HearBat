@@ -8,8 +8,7 @@ class ModuleListWidget extends StatefulWidget {
   final Map<String, List<AnswerGroup>> modules;
   final String chapter;
 
-  ModuleListWidget({Key? key, required this.modules, required this.chapter})
-      : super(key: key);
+  ModuleListWidget({super.key, required this.modules, required this.chapter});
 
   @override
   ModuleListWidgetState createState() => ModuleListWidgetState();

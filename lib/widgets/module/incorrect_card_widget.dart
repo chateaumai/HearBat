@@ -10,12 +10,12 @@ class IncorrectCardWidget extends StatefulWidget {
   final bool isWord;
 
   IncorrectCardWidget({
-    Key? key,
+    super.key,
     required this.incorrectWord,
     required this.correctWord,
     required this.voiceType,
     required this.isWord,
-  }) : super(key: key);
+  });
 
   @override
   IncorrectCardWidgetState createState() => IncorrectCardWidgetState();
@@ -32,8 +32,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
   void playAnswer(Answer answer) {
     if (widget.isWord) {
       googleTTSUtil.speak(answer.answer, widget.voiceType);
-    }
-    else {
+    } else {
       AudioUtil.playSound(answer.path!);
     }
   }
@@ -63,7 +62,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
                   style: TextStyle(
                     color: const Color.fromARGB(255, 255, 255, 255),
                     fontSize: 22,
-                    fontWeight: FontWeight.bold, 
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

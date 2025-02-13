@@ -94,7 +94,6 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
         audioPlayer.setVolume(1.0);
       default:
         audioPlayer.setVolume(0.3);
-        break;
     }
   }
 
@@ -447,8 +446,7 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
   Widget _buildOption(String volume) {
     bool isSelected = _selectedVolume == volume;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(
-          8.0), 
+      borderRadius: BorderRadius.circular(8.0),
       child: InkWell(
         onTap: () => _handleTap(volume),
         child: Container(
@@ -517,12 +515,12 @@ class DifficultyOptionsWidgetState extends State<DifficultyOptionsWidget> {
   }
 
   void _loadSavedPreference() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? savedDifficulty = prefs.getString('difficultyPreference');
-  if (savedDifficulty != null) {
-    _selectedDifficulty = savedDifficulty;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedDifficulty = prefs.getString('difficultyPreference');
+    if (savedDifficulty != null) {
+      _selectedDifficulty = savedDifficulty;
+    }
   }
-}
 
   void _handleTap(String difficulty) {
     setState(() {

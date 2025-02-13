@@ -8,7 +8,7 @@ import 'package:hearbat/utils/cache_sentences_util.dart';
 class SpeechModuleListWidget extends StatelessWidget {
   final Map<String, List<String>> modules;
 
-  SpeechModuleListWidget({Key? key, required this.modules}) : super(key: key);
+  SpeechModuleListWidget({super.key, required this.modules});
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +40,28 @@ class SpeechModuleListWidget extends StatelessWidget {
       // Use CacheSentencesUtil to cache all the sentences
       CacheSentencesUtil().cacheSentences(sentences, voiceType).then((_) {
         // Dismiss the loading dialog
-        Navigator.pop(context);
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
 
-        // Navigate to the SpeechModuleWidget
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SpeechModuleWidget(
-              chapter: moduleName,
-              sentences: sentences,
-              voiceType: voiceType,
+        // Navigate to the SpeechModuleWidget only if the widget is still mounted
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SpeechModuleWidget(
+                chapter: moduleName,
+                sentences: sentences,
+                voiceType: voiceType,
+              ),
             ),
-          ),
-        );
+          );
+        }
       }).catchError((error) {
-        // Dismiss the loading dialog
-        Navigator.pop(context);
-
-        // Handle any errors that occurred during the downloads
+        // Dismiss the loading dialog only if still mounted
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
         print('Failed to download all sentences: $error');
       });
     }

@@ -8,12 +8,12 @@ class WordButton extends StatelessWidget {
   final ValueChanged<Answer> onSelected;
 
   const WordButton({
-    Key? key,
+    super.key,
     required this.word,
     required this.isWord,
     required this.selectedWord,
     required this.onSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +35,8 @@ class WordButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
       decoration: BoxDecoration(
-        // borrerRadius: BorderRadius.circular(8)
-      ),
+          // borrerRadius: BorderRadius.circular(8)
+          ),
       child: Text(
         word.answer,
         style: TextStyle(

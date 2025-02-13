@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 class CustomModuleCard extends StatelessWidget {
   final String moduleName;
-  final VoidCallback onStart; 
-  final VoidCallback onDelete; 
+  final VoidCallback onStart;
+  final VoidCallback onDelete;
 
   const CustomModuleCard({
-    Key? key,
+    super.key,
     required this.moduleName,
     required this.onStart,
     required this.onDelete,
-  }) : super(key: key);
+  });
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Card(
       child: Stack(
@@ -22,7 +22,7 @@ class CustomModuleCard extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 55, 
+              height: 55,
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 7, 45, 78),
                 borderRadius: BorderRadius.only(
@@ -35,7 +35,7 @@ class CustomModuleCard extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: 15), 
+              SizedBox(height: 15),
               Text(
                 moduleName,
                 style: TextStyle(
@@ -45,7 +45,7 @@ class CustomModuleCard extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 22), 
+              SizedBox(height: 22),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 child: Column(
@@ -57,7 +57,7 @@ class CustomModuleCard extends StatelessWidget {
                         backgroundColor: Color.fromARGB(255, 154, 107, 187),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8), 
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       child: Text('Start', style: TextStyle(fontSize: 16)),
@@ -70,9 +70,10 @@ class CustomModuleCard extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: EdgeInsets.zero, 
+                        padding: EdgeInsets.zero,
                       ),
-                      child: Icon(Icons.delete, color: Color.fromARGB(255, 100, 100, 100), size: 24), 
+                      child: Icon(Icons.delete,
+                          color: Color.fromARGB(255, 100, 100, 100), size: 24),
                     ),
                   ],
                 ),

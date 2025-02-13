@@ -8,12 +8,12 @@ class ChapterCardWidget extends StatefulWidget {
   final Widget destinationPage;
 
   const ChapterCardWidget({
-    Key? key,
+    super.key,
     required this.chapterName,
     required this.chapterNumber,
     required this.image,
     required this.destinationPage,
-  }) : super(key: key);
+  });
 
   @override
   State<ChapterCardWidget> createState() => _ChapterCardWidgetState();

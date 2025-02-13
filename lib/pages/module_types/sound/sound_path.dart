@@ -7,7 +7,7 @@ import '../../../widgets/top_bar_widget.dart';
 class SoundPath extends StatefulWidget {
   final String chapter;
 
-  SoundPath({Key? key, required this.chapter}) : super(key: key);
+  SoundPath({super.key, required this.chapter});
 
   @override
   State<SoundPath> createState() => _SoundPathState();
