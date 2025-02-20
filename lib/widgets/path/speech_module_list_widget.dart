@@ -13,11 +13,6 @@ class SpeechModuleListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var moduleList = modules.entries.toList();
-    String voiceType = '';
-
-    SharedPreferences.getInstance().then((SharedPreferences prefs) {
-      voiceType = prefs.getString('voiceType') ?? 'en-US-Wavenet-D';
-    });
 
     void navigate(String moduleName, List<String> sentences) {
       // Show a loading dialog while caching
@@ -38,25 +33,31 @@ class SpeechModuleListWidget extends StatelessWidget {
       );
 
       // Use CacheSentencesUtil to cache all the sentences
-      CacheSentencesUtil().cacheSentences(sentences, voiceType).then((_) {
+      CacheSentencesUtil().cacheSentences(sentences).then((_) {
         // Dismiss the loading dialog
         if (context.mounted) {
           Navigator.pop(context);
         }
 
-        // Navigate to the SpeechModuleWidget only if the widget is still mounted
-        if (context.mounted) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SpeechModuleWidget(
-                chapter: moduleName,
-                sentences: sentences,
-                voiceType: voiceType,
+        // Load the latest voice type before navigating
+        SharedPreferences.getInstance().then((prefs) {
+          String voiceType =
+              prefs.getString('voicePreference') ?? 'en-US-Wavenet-D';
+
+          // Navigate to the SpeechModuleWidget only if the widget is still mounted
+          if (context.mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SpeechModuleWidget(
+                  chapter: moduleName,
+                  sentences: sentences,
+                  voiceType: voiceType,
+                ),
               ),
-            ),
-          );
-        }
+            );
+          }
+        });
       }).catchError((error) {
         // Dismiss the loading dialog only if still mounted
         if (context.mounted) {

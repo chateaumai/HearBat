@@ -25,6 +25,17 @@ class _ModuleCardState extends State<ModuleCard> {
   final CacheWordsUtil cacheUtil = CacheWordsUtil();
   double elevation = 5.0;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadDifficultyPreference();
+  }
+
+  // Load the difficulty preference to determine whether we are in Hard Mode.
+  Future<void> _loadDifficultyPreference() async {
+    setState(() {});
+  }
+
   Future<void> _cacheAndNavigate() async {
     showDialog(
       context: context,

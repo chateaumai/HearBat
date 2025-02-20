@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'package:http/http.dart' as http;
-import 'package:googleapis_auth/auth_io.dart';
 
 import '../utils/text_util.dart';
-import '../utils/config_util.dart';
 
 class GeminiUtil {
   // Generates AI-generated content based on a list of words.
@@ -18,10 +15,11 @@ class GeminiUtil {
       final prompt = getPrompt(wordsNeeded, wordInput);
 
       // Prompt the LLM
-      final model = FirebaseVertexAI.instance.generativeModel(model: 'gemini-2.0-flash');
+      final model =
+          FirebaseVertexAI.instance.generativeModel(model: 'gemini-2.0-flash');
       final response = await model.generateContent([Content.text(prompt)]);
 
-      return response?.text ?? "";
+      return response.text ?? "";
     } catch (e) {
       print("Error in GeminiUtil.generateContent: $e");
       throw Exception("Error occurred in GeminiUtil.generateContent: $e");
