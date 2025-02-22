@@ -5,7 +5,7 @@ class AudioUtil {
 
   static Future<void> initialize() async {
     await _soundAudioPlayer.setPlayerMode(PlayerMode.mediaPlayer);
-    // Need this so that the audio doesn't get taken over from other audio players 
+    // Need this so that the audio doesn't get taken over from other audio players
     await _soundAudioPlayer.setAudioContext(AudioContext(
       android: AudioContextAndroid(
         isSpeakerphoneOn: false,
@@ -16,11 +16,11 @@ class AudioUtil {
       ),
       iOS: AudioContextIOS(
         category: AVAudioSessionCategory.playback,
-          options: {
-            AVAudioSessionOptions.mixWithOthers, 
-          },
-        ),
-      ));
+        options: {
+          AVAudioSessionOptions.mixWithOthers,
+        },
+      ),
+    ));
   }
 
   // used for Sound modules, word modules use google_tts_util
