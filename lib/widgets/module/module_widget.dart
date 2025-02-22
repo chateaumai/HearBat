@@ -41,7 +41,12 @@ class _ModulePageState extends State<ModuleWidget> {
     super.initState();
     getVoiceType();
     _confettiController.play();
-    BackgroundNoiseUtil.playSavedSound();
+    
+    googleTTSUtil.initialize();
+    AudioUtil.initialize();
+    BackgroundNoiseUtil.initialize().then((_) {
+      BackgroundNoiseUtil.playSavedSound();
+    });
   }
 
   @override
