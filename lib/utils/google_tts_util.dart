@@ -15,7 +15,7 @@ class GoogleTTSUtil {
   final AudioPlayer audioPlayer = AudioPlayer();
   final Map<String, String> cache = {};
 
-  String _difficulty = 'Normal';
+  bool _isHardMode = false;
 
   GoogleTTSUtil() {
     _loadDifficultyPreference();
@@ -42,9 +42,10 @@ class GoogleTTSUtil {
     ));
   }
 
+  // Loads the difficulty preference to determine whether we are in Hard Mode.
   Future<void> _loadDifficultyPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
+    _isHardMode = prefs.getString('difficultyPreference') == 'Hard';
   }
 
   // Loads the Google Cloud API key from the configuration manager.
@@ -56,37 +57,35 @@ class GoogleTTSUtil {
   // Converts text to speech and plays the audio.
   // Downloads the MP3 file if it's not cached.
   Future<void> speak(String text, String voicetype) async {
-    // Adjusts the spoken text based on difficulty level.
-    String textToSpeak = (_difficulty == 'Hard' &&
-            text != "Hello this is how I sound" &&
-            text.length < 15)
-        ? "Please, select $text as the answer"
-        : text;
+    // Check if this is the special accent preview.
+    bool isAccentPreview = (text == "Hello this is how I sound");
 
-    // Removes spaces for 'Hard' mode speech to ensure proper processing.
-    String safeTextToSpeak =
-        (_difficulty == 'Hard' && textToSpeak.contains(' '))
-            ? textToSpeak.replaceAll(RegExp(r'\s+'), '').toLowerCase()
-            : textToSpeak;
+    // If hard mode is enabled, modify the spoken text.
+    if (_isHardMode && !isAccentPreview) {
+      text = "Please select $text as the answer";
+    }
 
-    // Checks if the audio is already cached.
-    String? audioPath = cache["${safeTextToSpeak}_$voicetype"];
+    // Format filename based on context
+    String filename = "${text.replaceAll(" ", "_")}_$voicetype.mp3";
+
+    // Check if the audio is already cached.
+    String? audioPath = cache[filename];
 
     if (audioPath != null && await File(audioPath).exists()) {
       await audioPlayer.play(DeviceFileSource(audioPath));
     } else {
-      await downloadMP3(textToSpeak, voicetype);
+      await downloadMP3(text, voicetype);
 
       // Delay to ensure the file is fully downloaded
       await Future.delayed(Duration(seconds: 1));
 
       // Update the cache after downloading
-      audioPath = cache["${safeTextToSpeak}_$voicetype"];
+      audioPath = cache[filename];
 
       if (audioPath != null && await File(audioPath).exists()) {
         await audioPlayer.play(DeviceFileSource(audioPath));
       } else {
-        throw Exception("Failed to download MP3 for: $textToSpeak");
+        throw Exception("Failed to download MP3 for: $text");
       }
     }
   }
@@ -95,82 +94,66 @@ class GoogleTTSUtil {
   Future<void> downloadMP3(String text, String voicetype) async {
     String dir = (await getTemporaryDirectory()).path;
 
-    // Determines text variations to download based on difficulty level.
-    List<String> textsToDownload;
-    if (_difficulty == 'Hard') {
-      String safeText = text.replaceAll(RegExp(r'\s+'), '').toLowerCase();
-      textsToDownload = [safeText, "Please select $safeText as the answer"];
-    } else {
-      textsToDownload = [text];
+    // Format filename based on context
+    String filename = "${text.replaceAll(" ", "_")}_$voicetype.mp3";
+    String filePath = "$dir/$filename";
+    File file = File(filePath);
+
+    // Skips download if the file already exists.
+    if (await file.exists()) {
+      cache[filename] = filePath;
+      return;
     }
 
-    for (String textToDownload in textsToDownload) {
-      String filePath = "$dir/${textToDownload}_$voicetype.mp3";
-      File file = File(filePath);
+    http.Client client = http.Client();
+    try {
+      String jsonString = await _loadCredentials();
+      var jsonCredentials = jsonDecode(jsonString);
 
-      // Skips download if the file already exists.
-      if (await file.exists()) {
-        cache["${textToDownload}_$voicetype"] = filePath;
-        continue;
+      final accountCredentials =
+          ServiceAccountCredentials.fromJson(jsonCredentials);
+      AccessCredentials credentials =
+          await obtainAccessCredentialsViaServiceAccount(
+        accountCredentials,
+        [tts.TexttospeechApi.cloudPlatformScope],
+        http.Client(),
+      );
+
+      String url = "https://texttospeech.googleapis.com/v1/text:synthesize";
+      var body = json.encode({
+        "audioConfig": {"audioEncoding": "MP3", "pitch": 0, "speakingRate": 1},
+        "input": {"text": text},
+        "voice": {"languageCode": voicetype.substring(0, 5), "name": voicetype}
+      });
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${credentials.accessToken.data}"
+        },
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        String audioBase64 = jsonData['audioContent'];
+
+        // Decodes and saves the MP3 audio file.
+        Uint8List bytes = base64Decode(audioBase64);
+        await file.writeAsBytes(bytes);
+
+        // Updates cache with the downloaded file path.
+        cache[filename] = filePath;
+      } else {
+        throw Exception(
+            "Failed to get a valid response from the API: ${response.statusCode}");
       }
-
-      http.Client client = http.Client();
-      try {
-        String jsonString = await _loadCredentials();
-        var jsonCredentials = jsonDecode(jsonString);
-
-        final accountCredentials =
-            ServiceAccountCredentials.fromJson(jsonCredentials);
-        AccessCredentials credentials =
-            await obtainAccessCredentialsViaServiceAccount(
-          accountCredentials,
-          [tts.TexttospeechApi.cloudPlatformScope],
-          http.Client(),
-        );
-
-        String url = "https://texttospeech.googleapis.com/v1/text:synthesize";
-        var body = json.encode({
-          "audioConfig": {
-            "audioEncoding": "MP3",
-            "pitch": 0,
-            "speakingRate": 1
-          },
-          "input": {"text": textToDownload},
-          "voice": {
-            "languageCode": voicetype.substring(0, 5),
-            "name": voicetype
-          }
-        });
-
-        final response = await http.post(
-          Uri.parse(url),
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer ${credentials.accessToken.data}"
-          },
-          body: body,
-        );
-
-        if (response.statusCode == 200) {
-          var jsonData = jsonDecode(response.body);
-          String audioBase64 = jsonData['audioContent'];
-
-          // Decodes and saves the MP3 audio file.
-          Uint8List bytes = base64Decode(audioBase64);
-          await file.writeAsBytes(bytes);
-
-          // Updates cache with the downloaded file path.
-          cache["${textToDownload}_$voicetype"] = filePath;
-        } else {
-          throw Exception(
-              "Failed to get a valid response from the API: ${response.statusCode}");
-        }
-      } catch (e) {
-        print("Error in GoogleTTSUtil.downloadMP3: $e");
-        throw Exception("Error occurred in GoogleTTSUtil.downloadMP3: $e");
-      } finally {
-        client.close();
-      }
+    } catch (e) {
+      print("Error in GoogleTTSUtil.downloadMP3: $e");
+      throw Exception("Error occurred in GoogleTTSUtil.downloadMP3: $e");
+    } finally {
+      client.close();
     }
   }
 }
