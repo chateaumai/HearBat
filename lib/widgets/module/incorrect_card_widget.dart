@@ -29,9 +29,11 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
     super.initState();
   }
 
+  // Plays the audio for the given answer (incorrect or correct word).
+  // The `isQuestion` parameter is set to `false` to ensure the word is played normally.
   void playAnswer(Answer answer) {
     if (widget.isWord) {
-      googleTTSUtil.speak(answer.answer, widget.voiceType);
+      googleTTSUtil.speak(answer.answer, widget.voiceType, isQuestion: false); // Always play feedback normally
     } else {
       AudioUtil.playSound(answer.path!);
     }
