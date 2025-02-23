@@ -95,13 +95,11 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       print("Correct");
       widget.onCorrectAnswer();
       isAnswerTrue = true;
-      playAnswer(isQuestion: false); // Play feedback for correct answer
     } else {
       print("Incorrect");
       widget.onIncorrectAnswer(selectedWord!, correctWord);
       incorrectWord = selectedWord;
       isAnswerFalse = true;
-      playAnswer(isQuestion: false); // Play feedback for incorrect answer
     }
     if (answerGroups.isEmpty) readyForCompletion = true;
     isCheckingAnswer = false; // Time to go to the next pair
@@ -109,7 +107,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
     indexChange();
   }
 
-  // Plays the audio for the correct answer, either as a question or feedback.
+  // Plays the audio for the correct answer
   void playAnswer({bool isQuestion = false}) {
     if (widget.isWord) {
       googleTTSUtil.speak(correctWord.answer, widget.voiceType, isQuestion: isQuestion);
