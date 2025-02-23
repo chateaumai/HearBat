@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
+import 'package:hearbat/utils/audio_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:audioplayers/audioplayers.dart';
 import '../module/module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
+import 'package:hearbat/utils/background_noise_util.dart';
 
 class DifficultySelectionWidget extends StatefulWidget {
   final String moduleName;
@@ -19,10 +20,8 @@ class DifficultySelectionWidget extends StatefulWidget {
 
 class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   String _difficulty = 'Normal';
-  String _audioVolume = 'Low';
   final CacheWordsUtil cacheUtil = CacheWordsUtil();
   bool isCaching = false;
-  AudioPlayer audioPlayer = AudioPlayer();
   String? _voiceType;
 
   List<String> voiceTypes = [
@@ -52,16 +51,15 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
     super.initState();
     _loadPreferences();
     _loadVoiceType();
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    BackgroundNoiseUtil.initialize();
+    AudioUtil.initialize();
   }
 
   void _loadPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _audioVolume = prefs.getString('audioVolumePreference') ?? 'Low';
       _difficulty = prefs.getString('difficultyPreference') ?? 'Normal';
     });
-    _adjustVolume(_audioVolume);
   }
 
   void _loadVoiceType() async {
@@ -78,23 +76,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
   void _updatePreference(String key, String value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
-    if (key == 'audioVolumePreference') {
-      _adjustVolume(value);
-    }
     _loadPreferences();
-  }
-
-  void _adjustVolume(String volumeLevel) {
-    switch (volumeLevel) {
-      case 'Low':
-        audioPlayer.setVolume(0.2);
-      case 'Medium':
-        audioPlayer.setVolume(0.6);
-      case 'High':
-        audioPlayer.setVolume(1.0);
-      default:
-        audioPlayer.setVolume(0.3);
-    }
   }
 
   void _updateDifficulty(String? value) {

@@ -1,9 +1,28 @@
 import 'package:audioplayers/audioplayers.dart';
 
-// Utility for handling audio playback in Sound modules.
 class AudioUtil {
   static final AudioPlayer _soundAudioPlayer = AudioPlayer();
   static const double _defaultVolume = 1;
+
+  static Future<void> initialize() async {
+    await _soundAudioPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+    // Need this so that the audio doesn't get taken over from other audio players
+    await _soundAudioPlayer.setAudioContext(AudioContext(
+      android: AudioContextAndroid(
+        isSpeakerphoneOn: false,
+        stayAwake: false,
+        contentType: AndroidContentType.music,
+        usageType: AndroidUsageType.media,
+        audioFocus: AndroidAudioFocus.none,
+      ),
+      iOS: AudioContextIOS(
+        category: AVAudioSessionCategory.playback,
+        options: {
+          AVAudioSessionOptions.mixWithOthers,
+        },
+      ),
+    ));
+  }
 
   // used for Sound modules, word modules use google_tts_util
   static Future<void> playSound(String audioFilePath) async {

@@ -2,7 +2,28 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BackgroundNoiseUtil {
-  static final AudioPlayer _audioPlayer = AudioPlayer();
+  static final AudioPlayer _audioPlayer = AudioPlayer()
+    ..setReleaseMode(ReleaseMode.loop);
+
+  static Future<void> initialize() async {
+    await _audioPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+    // Need this so that the audio doesn't get taken over from other audio players
+    await _audioPlayer.setAudioContext(AudioContext(
+      android: AudioContextAndroid(
+        isSpeakerphoneOn: false,
+        stayAwake: false,
+        contentType: AndroidContentType.music,
+        usageType: AndroidUsageType.media,
+        audioFocus: AndroidAudioFocus.none,
+      ),
+      iOS: AudioContextIOS(
+        category: AVAudioSessionCategory.playback,
+        options: {
+          AVAudioSessionOptions.mixWithOthers,
+        },
+      ),
+    ));
+  }
 
   // Plays the saved background sound based on user preference.
   static Future<void> playSavedSound() async {

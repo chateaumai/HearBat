@@ -19,6 +19,27 @@ class GoogleTTSUtil {
 
   GoogleTTSUtil() {
     _loadDifficultyPreference();
+    initialize();
+  }
+
+  Future<void> initialize() async {
+    await audioPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+    // Need this so that the audio doesn't get taken over from other audio players
+    await audioPlayer.setAudioContext(AudioContext(
+      android: AudioContextAndroid(
+        isSpeakerphoneOn: false,
+        stayAwake: false,
+        contentType: AndroidContentType.music,
+        usageType: AndroidUsageType.media,
+        audioFocus: AndroidAudioFocus.none,
+      ),
+      iOS: AudioContextIOS(
+        category: AVAudioSessionCategory.playback,
+        options: {
+          AVAudioSessionOptions.mixWithOthers,
+        },
+      ),
+    ));
   }
 
   // Loads the difficulty preference to determine whether we are in Hard Mode.
