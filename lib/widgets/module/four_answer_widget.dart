@@ -55,17 +55,18 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
     setNextPair();
   }
 
+  // Loads the language preference from SharedPreferences.
   Future<void> _loadPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     language = prefs.getString('languagePreference') ?? 'English';
   }
 
+  // Sets the next pair of answers and initializes the state.
   void setNextPair() {
     if (answerGroups.isNotEmpty) {
       int index = Random().nextInt(answerGroups.length);
       currentGroup = answerGroups[index];
-      answerGroups
-          .removeAt(index); // So the randomly chosen pair doesn't repeat
+      answerGroups.removeAt(index); // So the randomly chosen pair doesn't repeat
 
       correctWord = currentGroup.getRandomAnswer(currentGroup);
       selectedWord = null;
@@ -75,17 +76,20 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       readyForCompletion = false;
     }
 
+    // Play the question audio after a delay.
     Future.delayed(Duration(seconds: 1), () {
-      playAnswer();
+      playAnswer(isQuestion: true); // Play the question
     });
   }
 
+  // Handles the selection of an answer by the user.
   void handleSelection(Answer word) {
     setState(() {
       selectedWord = word;
     });
   }
 
+  // Checks if the selected answer is correct and updates the state.
   void checkAnswer() {
     if (selectedWord!.answer == correctWord.answer) {
       print("Correct");
@@ -103,14 +107,16 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
     indexChange();
   }
 
-  void playAnswer() {
+  // Plays the audio for the correct answer
+  void playAnswer({bool isQuestion = false}) {
     if (widget.isWord) {
-      googleTTSUtil.speak(correctWord.answer, widget.voiceType);
+      googleTTSUtil.speak(correctWord.answer, widget.voiceType, isQuestion: isQuestion);
     } else {
       AudioUtil.playSound(correctWord.path!);
     }
   }
 
+  // Updates the progress bar in the parent widget.
   void indexChange() {
     widget.onProgressUpdate(currentIndex);
   }
@@ -123,8 +129,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                //SizedBox(height: 20),
-                // play button
+                // Play button and question text
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30.0, 20.0, 0.0, 20.0),
                   child: Align(
@@ -150,7 +155,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                       ),
                       minimumSize: Size(355, 90),
                     ),
-                    onPressed: () => playAnswer(),
+                    onPressed: () => playAnswer(isQuestion: true), // Play the question
                     icon: Icon(
                       Icons.volume_up,
                       color: Colors.white,
@@ -159,76 +164,76 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                     label: Text(''),
                   ),
                 ),
-                // space between play button and 4 cards
+                // Space between play button and 4 cards
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: !widget.isWord
                       ? GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 20, // horizontal spacing
-                            mainAxisSpacing: 15, // vertical spacing
-                            childAspectRatio: 150 / 180,
-                          ),
-                          itemCount: 4,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            Answer word;
-                            switch (index) {
-                              case 0:
-                                word = currentGroup.answer1;
-                              case 1:
-                                word = currentGroup.answer2;
-                              case 2:
-                                word = currentGroup.answer3;
-                              case 3:
-                                word = currentGroup.answer4;
-                              default:
-                                word = currentGroup.answer1;
-                            }
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: WordButton(
-                                word: word,
-                                isWord: widget.isWord,
-                                selectedWord: selectedWord,
-                                onSelected: handleSelection,
-                              ),
-                            );
-                          },
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 4,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            Answer word;
-                            switch (index) {
-                              case 0:
-                                word = currentGroup.answer1;
-                              case 1:
-                                word = currentGroup.answer2;
-                              case 2:
-                                word = currentGroup.answer3;
-                              case 3:
-                                word = currentGroup.answer4;
-                              default:
-                                word = currentGroup.answer1;
-                            }
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: WordButton(
-                                word: word,
-                                isWord: widget.isWord,
-                                selectedWord: selectedWord,
-                                onSelected: handleSelection,
-                              ),
-                            );
-                          },
+                    shrinkWrap: true,
+                    gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20, // horizontal spacing
+                      mainAxisSpacing: 15, // vertical spacing
+                      childAspectRatio: 150 / 180,
+                    ),
+                    itemCount: 4,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      Answer word;
+                      switch (index) {
+                        case 0:
+                          word = currentGroup.answer1;
+                        case 1:
+                          word = currentGroup.answer2;
+                        case 2:
+                          word = currentGroup.answer3;
+                        case 3:
+                          word = currentGroup.answer4;
+                        default:
+                          word = currentGroup.answer1;
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: WordButton(
+                          word: word,
+                          isWord: widget.isWord,
+                          selectedWord: selectedWord,
+                          onSelected: handleSelection,
                         ),
+                      );
+                    },
+                  )
+                      : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      Answer word;
+                      switch (index) {
+                        case 0:
+                          word = currentGroup.answer1;
+                        case 1:
+                          word = currentGroup.answer2;
+                        case 2:
+                          word = currentGroup.answer3;
+                        case 3:
+                          word = currentGroup.answer4;
+                        default:
+                          word = currentGroup.answer1;
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: WordButton(
+                          word: word,
+                          isWord: widget.isWord,
+                          selectedWord: selectedWord,
+                          onSelected: handleSelection,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
