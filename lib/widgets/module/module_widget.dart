@@ -44,9 +44,12 @@ class _ModulePageState extends State<ModuleWidget> {
     
     googleTTSUtil.initialize();
     AudioUtil.initialize();
-    BackgroundNoiseUtil.initialize().then((_) {
-      BackgroundNoiseUtil.playSavedSound();
-    });
+    
+    if (widget.isWord) {
+      BackgroundNoiseUtil.initialize().then((_) {
+        BackgroundNoiseUtil.playSavedSound();
+      });
+    }
   }
 
   @override
@@ -54,6 +57,13 @@ class _ModulePageState extends State<ModuleWidget> {
     BackgroundNoiseUtil.stopSound();
     AudioUtil.stop();
     _confettiController.dispose();
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('difficultyPreference', 'Normal');
+      prefs.setString('backgroundSoundPreference', 'None');
+      prefs.setString('audioVolumePreference', 'Low');
+    });
+    
     super.dispose();
   }
 
@@ -190,9 +200,14 @@ class _ModulePageState extends State<ModuleWidget> {
                 padding: const EdgeInsets.only(left: 18.0),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    SharedPreferences.getInstance().then((prefs) {
+                      prefs.setString('difficultyPreference', 'Normal');
+                      prefs.setString('backgroundSoundPreference', 'None');
+                      prefs.setString('audioVolumePreference', 'Low');
+                    });
                     BackgroundNoiseUtil.stopSound();
                     AudioUtil.stop();
+                    Navigator.of(context).pop();
                   },
                   icon: Icon(Icons.close, size: 40),
                 ),
