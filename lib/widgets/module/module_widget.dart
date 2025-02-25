@@ -286,6 +286,7 @@ class _ModulePageState extends State<ModuleWidget> {
                 size: 30,
               ),
               boxDecoration: gradientBoxDecoration,
+              total: widget.answerGroups.length, // editting
             ),
             ScoreWidget(
               context: context,
@@ -297,6 +298,7 @@ class _ModulePageState extends State<ModuleWidget> {
                 size: 30,
               ),
               boxDecoration: blueBoxDecoration,
+              total: widget.answerGroups.length, // editting
             ),
             Expanded(
               flex: 2,
@@ -377,6 +379,7 @@ var blueBoxDecoration = BoxDecoration(
   ],
 );
 
+
 class ScoreWidget extends StatelessWidget {
   const ScoreWidget(
       {super.key,
@@ -384,13 +387,15 @@ class ScoreWidget extends StatelessWidget {
       required this.correctAnswersCount,
       required this.subtitleText,
       required this.icon,
-      required this.boxDecoration});
+      required this.boxDecoration,
+      required this.total});
 
   final BuildContext context;
   final int correctAnswersCount;
   final String subtitleText;
   final Icon icon;
   final BoxDecoration boxDecoration;
+  final int total;
 
   @override
   Widget build(BuildContext context) {
@@ -408,7 +413,7 @@ class ScoreWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  '$correctAnswersCount / 10',
+                  '$correctAnswersCount / $total',
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w900,
