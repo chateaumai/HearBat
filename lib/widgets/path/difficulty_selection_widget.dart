@@ -270,6 +270,11 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
+                      SharedPreferences.getInstance().then((prefs) {
+                      prefs.setString('difficultyPreference', 'Normal');
+                      prefs.setString('backgroundSoundPreference', 'None');
+                      prefs.setString('audioVolumePreference', 'Low');
+                    });
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
