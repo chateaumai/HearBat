@@ -124,3 +124,8 @@ String stripNonAlphaCharacters(String input) {
   // Replace all non-alphabetic and non-space characters with an empty string
   return input.replaceAll(nonAlphaNonSpacePattern, '');
 }
+
+String capitalizeWord(String word) {
+  if (word.isEmpty) return "";
+  return word[0].toUpperCase() + word.substring(1).toLowerCase();
+}
