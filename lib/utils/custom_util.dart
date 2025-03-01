@@ -51,10 +51,10 @@ class CustomUtilState extends State<CustomUtil> {
   void _saveModule() async {
     List<AnswerGroup> answerGroups = [];
     for (int i = 0; i < _controllers.length; i += 4) {
-      String answer1 = _controllers[i].text.trim();
-      String answer2 = _controllers[i + 1].text.trim();
-      String answer3 = _controllers[i + 2].text.trim();
-      String answer4 = _controllers[i + 3].text.trim();
+      String answer1 = capitalizeWord(_controllers[i].text.trim());
+      String answer2 = capitalizeWord(_controllers[i + 1].text.trim());
+      String answer3 = capitalizeWord(_controllers[i + 2].text.trim());
+      String answer4 = capitalizeWord(_controllers[i + 3].text.trim());
 
       if (answer1.isNotEmpty &&
           answer2.isNotEmpty &&

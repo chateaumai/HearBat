@@ -270,6 +270,11 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
+                      SharedPreferences.getInstance().then((prefs) {
+                      prefs.setString('difficultyPreference', 'Normal');
+                      prefs.setString('backgroundSoundPreference', 'None');
+                      prefs.setString('audioVolumePreference', 'Low');
+                    });
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
@@ -319,6 +324,11 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
     super.initState();
     _loadSavedPreference();
   }
+  @override
+  void dispose() {
+    BackgroundNoiseUtil.stopSound();
+    super.dispose();
+  }
 
   void _loadSavedPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -330,12 +340,21 @@ class SoundOptionsWidgetState extends State<SoundOptionsWidget> {
     }
   }
 
-  void _handleTap(String value) {
+  Future<void> _handleTap(String value) async {
     setState(() {
       _selectedSound = value;
       widget.updatePreferenceCallback('backgroundSoundPreference', value);
     });
+
+    //Plays the selected background noise for 3 seconds as a preview
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? selectedSound = prefs.getString('backgroundSoundPreference');
+
+    if (selectedSound != null && selectedSound != "None") {
+      BackgroundNoiseUtil.playPreview();
+    }
   }
+
 
   Widget _buildOption(String sound, String value) {
     bool isSelected = _selectedSound == value;
@@ -407,6 +426,11 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
     super.initState();
     _loadSavedPreference();
   }
+  @override
+  void dispose() {
+    BackgroundNoiseUtil.stopSound();
+    super.dispose();
+  }
 
   void _loadSavedPreference() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -418,11 +442,19 @@ class VolumeOptionsWidgetState extends State<VolumeOptionsWidget> {
     }
   }
 
-  void _handleTap(String value) {
+  Future<void> _handleTap(String value) async {
     setState(() {
       _selectedVolume = value;
       widget.updatePreferenceCallback('audioVolumePreference', value);
     });
+
+    // Play the selected background noise for 3 seconds as a preview
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? selectedSound = prefs.getString('backgroundSoundPreference');
+
+    if (selectedSound != null && selectedSound != "None") {
+      BackgroundNoiseUtil.playPreview();
+    }
   }
 
   Widget _buildOption(String volume) {
