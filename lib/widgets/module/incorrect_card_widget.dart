@@ -69,7 +69,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 154, 107, 187),
+                backgroundColor: Colors.red,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -101,7 +101,7 @@ class IncorrectCardWidgetState extends State<IncorrectCardWidget> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 154, 107, 187),
+                backgroundColor: Colors.green,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
