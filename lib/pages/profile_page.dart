@@ -369,9 +369,18 @@ class ClearCacheWidgetState extends State<ClearCacheWidget> {
   }
 
   Future<void> _fetchSize() async {
-    final size = await getCacheSize() / 1024;
+    final units = ["B", "KiB", "MiB", "GiB"];
+
+    // Convert size to largest unit
+    double size = (await getCacheSize()).toDouble();
+    int unit = 0;
+    while (size >= 1024) {
+      size /= 1024;
+      unit++;
+    }
+
     setState(() {
-      _sizeText = "${size.toStringAsFixed(2)} KiB";
+      _sizeText = "${size.toStringAsFixed(2)} ${units[unit]}";
     });
   }
 
