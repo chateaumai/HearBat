@@ -32,6 +32,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   String _sentence = '';
   double _grade = 0.0;
   double _gradeSum = 0.0;
+  int _attempts = 0;
   String voiceType = '';
   bool _isSubmitted = false;
   bool _isCompleted = false;
@@ -136,7 +137,6 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
         setState(() {
           _transcription = transcription;
           _grade = grade;
-          _gradeSum += grade;
           _isSubmitted = true;
         });
       } catch (e) {
@@ -156,6 +156,8 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
 
   void _submitRecording() {
     setState(() {
+      _gradeSum += _grade;
+      _attempts++;
       _isCheckPressed = !_isCheckPressed;
       if (_isCheckPressed == false) {
         currentSentenceIndex++;
@@ -358,7 +360,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
             // Today's score
             ScoreWidget(
               context: context,
-              averageGrade: _gradeSum / 100.0,
+              averageGrade: (_gradeSum / _attempts).toStringAsFixed(2),
               subtitleText: "Score",
               icon: Icon(
                 Icons.star,
@@ -366,11 +368,11 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                 size: 30,
               ),
               boxDecoration: gradientBoxDecoration,
-              totalGrade: 100, // editting
+              totalGrade: 100, // editing
             ),
             ScoreWidget(
               context: context,
-              averageGrade: _gradeSum / 100.0,
+              averageGrade: (_gradeSum / _attempts).toStringAsFixed(2),
               subtitleText: "Highest Score",
               icon: Icon(
                 Icons.emoji_events,
@@ -378,7 +380,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
                 size: 30,
               ),
               boxDecoration: blueBoxDecoration,
-              totalGrade: 100, // editting
+              totalGrade: 100, // editing
             ),
             Padding(
               padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
@@ -511,7 +513,7 @@ class ScoreWidget extends StatelessWidget {
         required this.totalGrade});
 
   final BuildContext context;
-  final double averageGrade;
+  final String averageGrade;
   final String subtitleText;
   final Icon icon;
   final BoxDecoration boxDecoration;
