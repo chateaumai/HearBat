@@ -386,70 +386,31 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
               total: 100, // editing
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+              padding: const EdgeInsets.only(
+                  top: 40.0, bottom: 40.0, left: 20, right: 20),
               child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () =>
+                  Navigator.pop(context),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  backgroundColor: Color.fromARGB(255, 94, 224, 82),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  minimumSize: Size(400, 50),
+                  elevation: 5,
                 ),
-                child: AutoSizeText(
-                  'Return to Path',
-                  maxLines: 1,
+                child: Text(
+                  'CONTINUE',
                   style: TextStyle(
-                      fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
           ]
         )
-
-        //Center(
-        //  child: Column(
-        //    mainAxisAlignment: MainAxisAlignment.center,
-        //    children: [
-        //      Spacer(flex: 1),
-        //      Expanded(
-        //        child: Padding(
-        //          padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
-        //          child: AutoSizeText(
-        //            'Good Job Completing the Module!',
-        //            maxLines: 3,
-        //            style: TextStyle(
-        //                fontSize: 40,
-        //                fontWeight: FontWeight.bold,
-        //                color: Color.fromARGB(255, 7, 45, 78)),
-        //            textAlign: TextAlign.center,
-        //          ),
-        //        ),
-        //      ),
-        //      Padding(
-        //        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        //        child: Image.asset("assets/visuals/HBCompletion.png",
-        //            fit: BoxFit.contain),
-        //      ),
-        //      Padding(
-        //        padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
-        //        child: ElevatedButton(
-        //          onPressed: () => Navigator.pop(context),
-        //          style: ElevatedButton.styleFrom(
-        //            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        //            shape: RoundedRectangleBorder(
-        //                borderRadius: BorderRadius.circular(10.0)),
-        //          ),
-        //          child: AutoSizeText(
-        //            'Return to Path',
-        //            maxLines: 1,
-        //            style: TextStyle(
-        //                fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)),
-        //          ),
-        //        ),
-        //      ),
-        //    ],
-        //  ),
-        //),
       ],
     );
   }
