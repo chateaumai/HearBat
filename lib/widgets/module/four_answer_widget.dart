@@ -9,6 +9,8 @@ import '../../utils/audio_util.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:audioplayers/audioplayers.dart';
+
 class FourAnswerWidget extends StatefulWidget {
   final List<AnswerGroup> answerGroups;
   final VoidCallback onCompletion;
@@ -92,6 +94,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   // Checks if the selected answer is correct and updates the state.
   void checkAnswer() {
     if (selectedWord!.answer == correctWord.answer) {
+      playCorrectChime(); // Play a tune if the answer is correct
       print("Correct");
       widget.onCorrectAnswer();
       isAnswerTrue = true;
@@ -107,7 +110,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
     indexChange();
   }
 
-  // Plays the audio for the correct answer
+  // Plays the audio for the user to hear the correct answer
   void playAnswer({bool isQuestion = false}) {
     if (widget.isWord) {
       googleTTSUtil.speak(correctWord.answer, widget.voiceType, isQuestion: isQuestion);
@@ -115,6 +118,12 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       AudioUtil.playSound(correctWord.path!);
     }
   }
+
+  // Plays the audio that indicates the user selected the correct answer
+  void playCorrectChime() async {
+    final player = AudioPlayer();
+    await player.play(AssetSource("audio/sounds/feedback/correct answer chime.mp3"));
+}
 
   // Updates the progress bar in the parent widget.
   void indexChange() {
@@ -295,7 +304,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   begin: Offset(0, 1),
                   duration: 300.ms,
                   curve: Curves.easeInOutQuart),
-            if (isAnswerTrue)
+            if (isAnswerTrue)         
               Container(
                 width: double.infinity,
                 height: 150,
