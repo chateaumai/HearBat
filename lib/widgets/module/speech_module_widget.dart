@@ -31,6 +31,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
   String _transcription = '';
   String _sentence = '';
   double _grade = 0.0;
+  double _gradeSum = 0.0;
   String voiceType = '';
   bool _isSubmitted = false;
   bool _isCompleted = false;
@@ -135,6 +136,7 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
         setState(() {
           _transcription = transcription;
           _grade = grade;
+          _gradeSum += grade;
           _isSubmitted = true;
         });
       } catch (e) {
@@ -333,50 +335,116 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
             Colors.green
           ],
         ),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Spacer(flex: 1),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
-                  child: AutoSizeText(
-                    'Good Job Completing the Module!',
-                    maxLines: 3,
-                    style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 7, 45, 78)),
-                    textAlign: TextAlign.center,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding:
+                const EdgeInsets.only(left: 120.0, right: 120.0, top: 60.0),
+              child: Image.asset("assets/visuals/HBCompletion.png", fit: BoxFit.contain),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+              child: AutoSizeText(
+                'Lesson Complete!',
+                maxLines: 1,
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 7, 45, 78)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            // Today's score
+            ScoreWidget(
+              context: context,
+              averageGrade: _gradeSum / 100.0,
+              subtitleText: "Score",
+              icon: Icon(
+                Icons.star,
+                color: Color.fromARGB(255, 7, 45, 78),
+                size: 30,
+              ),
+              boxDecoration: gradientBoxDecoration,
+              totalGrade: 100, // editting
+            ),
+            ScoreWidget(
+              context: context,
+              averageGrade: _gradeSum / 100.0,
+              subtitleText: "Highest Score",
+              icon: Icon(
+                Icons.emoji_events,
+                color: Color.fromARGB(255, 255, 255, 255),
+                size: 30,
+              ),
+              boxDecoration: blueBoxDecoration,
+              totalGrade: 100, // editting
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                ),
+                child: AutoSizeText(
+                  'Return to Path',
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Image.asset("assets/visuals/HBCompletion.png",
-                    fit: BoxFit.contain),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                  ),
-                  child: AutoSizeText(
-                    'Return to Path',
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          ]
+        )
+
+        //Center(
+        //  child: Column(
+        //    mainAxisAlignment: MainAxisAlignment.center,
+        //    children: [
+        //      Spacer(flex: 1),
+        //      Expanded(
+        //        child: Padding(
+        //          padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
+        //          child: AutoSizeText(
+        //            'Good Job Completing the Module!',
+        //            maxLines: 3,
+        //            style: TextStyle(
+        //                fontSize: 40,
+        //                fontWeight: FontWeight.bold,
+        //                color: Color.fromARGB(255, 7, 45, 78)),
+        //            textAlign: TextAlign.center,
+        //          ),
+        //        ),
+        //      ),
+        //      Padding(
+        //        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        //        child: Image.asset("assets/visuals/HBCompletion.png",
+        //            fit: BoxFit.contain),
+        //      ),
+        //      Padding(
+        //        padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
+        //        child: ElevatedButton(
+        //          onPressed: () => Navigator.pop(context),
+        //          style: ElevatedButton.styleFrom(
+        //            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+        //            shape: RoundedRectangleBorder(
+        //                borderRadius: BorderRadius.circular(10.0)),
+        //          ),
+        //          child: AutoSizeText(
+        //            'Return to Path',
+        //            maxLines: 1,
+        //            style: TextStyle(
+        //                fontSize: 20, color: Color.fromARGB(255, 7, 45, 78)),
+        //          ),
+        //        ),
+        //      ),
+        //    ],
+        //  ),
+        //),
       ],
     );
   }
@@ -388,3 +456,111 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
     _confettiController.dispose();
   }
 }
+
+var gradientBoxDecoration = BoxDecoration(
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color.fromARGB(255, 248, 213, 245),
+      Color.fromARGB(255, 255, 192, 199),
+      Color.fromARGB(255, 213, 177, 239),
+    ],
+  ),
+  borderRadius: BorderRadius.circular(8.0),
+  border: Border.all(
+    color: Color.fromARGB(255, 7, 45, 78),
+    width: 3.0,
+  ),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.withAlpha((0.5 * 255).toInt()),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: Offset(0, 3),
+    ),
+  ],
+);
+
+var blueBoxDecoration = BoxDecoration(
+  color: Color.fromARGB(255, 7, 45, 78),
+  borderRadius: BorderRadius.circular(8.0),
+  border: Border.all(
+    color: Color.fromARGB(255, 7, 45, 78),
+    width: 3.0,
+  ),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.withAlpha((0.5 * 255).toInt()),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: Offset(0, 3),
+    ),
+  ],
+);
+
+
+class ScoreWidget extends StatelessWidget {
+  const ScoreWidget(
+      {super.key,
+        required this.context,
+        required this.averageGrade,
+        required this.subtitleText,
+        required this.icon,
+        required this.boxDecoration,
+        required this.totalGrade});
+
+  final BuildContext context;
+  final double averageGrade;
+  final String subtitleText;
+  final Icon icon;
+  final BoxDecoration boxDecoration;
+  final int totalGrade;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .90,
+      height: MediaQuery.of(context).size.height * .1,
+      margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
+      padding: EdgeInsets.all(8.0),
+      decoration: boxDecoration,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  '$averageGrade% / $totalGrade%',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                      color: subtitleText == "Highest Score"
+                          ? Colors.white
+                          : Color.fromARGB(255, 7, 45, 78)),
+                ),
+                AutoSizeText(
+                  subtitleText,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                      color: subtitleText == "Highest Score"
+                          ? Colors.white
+                          : Color.fromARGB(255, 7, 45, 78)),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: icon,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
