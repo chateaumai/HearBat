@@ -10,6 +10,7 @@ import 'module_progress_bar_widget.dart';
 import 'check_button_widget.dart';
 import 'package:confetti/confetti.dart';
 import 'dart:math';
+import 'score_widget.dart';
 
 class SpeechModuleWidget extends StatefulWidget {
   final String chapter;
@@ -360,27 +361,29 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
             // Today's score
             ScoreWidget(
               context: context,
-              averageGrade: (_gradeSum / _attempts).toStringAsFixed(2),
-              subtitleText: "Score",
+              type: ScoreType.average,
+              correctAnswersCount: (_gradeSum / _attempts).toStringAsFixed(2),
+              subtitleText: "Average Accuracy",
               icon: Icon(
                 Icons.star,
                 color: Color.fromARGB(255, 7, 45, 78),
                 size: 30,
               ),
               boxDecoration: gradientBoxDecoration,
-              totalGrade: 100, // editing
+              total: 100, // editing
             ),
             ScoreWidget(
               context: context,
-              averageGrade: (_gradeSum / _attempts).toStringAsFixed(2),
-              subtitleText: "Highest Score",
+              type: ScoreType.average,
+              correctAnswersCount: (_gradeSum / _attempts).toStringAsFixed(2),
+              subtitleText: "Highest Average Accuracy",
               icon: Icon(
                 Icons.emoji_events,
                 color: Color.fromARGB(255, 255, 255, 255),
                 size: 30,
               ),
               boxDecoration: blueBoxDecoration,
-              totalGrade: 100, // editing
+              total: 100, // editing
             ),
             Padding(
               padding: const EdgeInsets.only(top: 40.0, bottom: 40.0),
@@ -458,111 +461,3 @@ class SpeechModuleWidgetState extends State<SpeechModuleWidget> {
     _confettiController.dispose();
   }
 }
-
-var gradientBoxDecoration = BoxDecoration(
-  gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [
-      Color.fromARGB(255, 248, 213, 245),
-      Color.fromARGB(255, 255, 192, 199),
-      Color.fromARGB(255, 213, 177, 239),
-    ],
-  ),
-  borderRadius: BorderRadius.circular(8.0),
-  border: Border.all(
-    color: Color.fromARGB(255, 7, 45, 78),
-    width: 3.0,
-  ),
-  boxShadow: [
-    BoxShadow(
-      color: Colors.grey.withAlpha((0.5 * 255).toInt()),
-      spreadRadius: 5,
-      blurRadius: 7,
-      offset: Offset(0, 3),
-    ),
-  ],
-);
-
-var blueBoxDecoration = BoxDecoration(
-  color: Color.fromARGB(255, 7, 45, 78),
-  borderRadius: BorderRadius.circular(8.0),
-  border: Border.all(
-    color: Color.fromARGB(255, 7, 45, 78),
-    width: 3.0,
-  ),
-  boxShadow: [
-    BoxShadow(
-      color: Colors.grey.withAlpha((0.5 * 255).toInt()),
-      spreadRadius: 5,
-      blurRadius: 7,
-      offset: Offset(0, 3),
-    ),
-  ],
-);
-
-
-class ScoreWidget extends StatelessWidget {
-  const ScoreWidget(
-      {super.key,
-        required this.context,
-        required this.averageGrade,
-        required this.subtitleText,
-        required this.icon,
-        required this.boxDecoration,
-        required this.totalGrade});
-
-  final BuildContext context;
-  final String averageGrade;
-  final String subtitleText;
-  final Icon icon;
-  final BoxDecoration boxDecoration;
-  final int totalGrade;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .90,
-      height: MediaQuery.of(context).size.height * .1,
-      margin: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
-      padding: EdgeInsets.all(8.0),
-      decoration: boxDecoration,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  '$averageGrade% / $totalGrade%',
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w900,
-                      color: subtitleText == "Highest Score"
-                          ? Colors.white
-                          : Color.fromARGB(255, 7, 45, 78)),
-                ),
-                AutoSizeText(
-                  subtitleText,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                      color: subtitleText == "Highest Score"
-                          ? Colors.white
-                          : Color.fromARGB(255, 7, 45, 78)),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: icon,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
