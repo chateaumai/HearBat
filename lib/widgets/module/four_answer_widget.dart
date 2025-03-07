@@ -137,9 +137,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      language == 'English'
-                          ? "What do you hear?"
-                          : "Bạn nghe chữ gì?",
+                      "What do you hear?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
