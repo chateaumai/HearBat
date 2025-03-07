@@ -2,7 +2,6 @@ import "dart:math";
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import 'word_button_widget.dart';
-import 'check_button_widget.dart';
 import 'incorrect_card_widget.dart';
 import '../../utils/google_tts_util.dart';
 import '../../utils/audio_util.dart';
@@ -42,7 +41,6 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
   late Answer correctWord;
   Answer? incorrectWord;
   Answer? selectedWord;
-  bool isCheckingAnswer = true;
   bool isAnswerFalse = false;
   bool isAnswerTrue = false;
   bool readyForCompletion = false;
@@ -72,23 +70,30 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
 
       correctWord = currentGroup.getRandomAnswer(currentGroup);
       selectedWord = null;
-      isCheckingAnswer = true;
       isAnswerFalse = false;
       isAnswerTrue = false;
       readyForCompletion = false;
+    } else {
+      // If no more answer groups, trigger completion
+      Future.delayed(Duration(milliseconds: 500), () {
+        widget.onCompletion();
+      });
     }
 
     // Play the question audio after a delay.
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(milliseconds: 300), () {
       playAnswer(isQuestion: true); // Play the question
     });
   }
 
-  // Handles the selection of an answer by the user.
+  // Handles the selection of an answer by the user and automatically checks it.
   void handleSelection(Answer word) {
     setState(() {
       selectedWord = word;
     });
+    
+    // Automatically check the answer after selection
+    checkAnswer();
   }
 
   // Checks if the selected answer is correct and updates the state.
@@ -99,15 +104,9 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
       widget.onCorrectAnswer();
       isAnswerTrue = true;
     } else {
-      print("Incorrect");
-      widget.onIncorrectAnswer(selectedWord!, correctWord);
-      incorrectWord = selectedWord;
-      isAnswerFalse = true;
+      setNextPair();
+      setState(() {});
     }
-    if (answerGroups.isEmpty) readyForCompletion = true;
-    isCheckingAnswer = false; // Time to go to the next pair
-    ++currentIndex;
-    indexChange();
   }
 
   // Plays the audio for the user to hear the correct answer
@@ -146,7 +145,7 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                     child: Text(
                       language == 'English'
                           ? "What do you hear?"
-                          : "Bạn nghe chữ gì?",
+                          : "Bạn nghe chữ gì?",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
@@ -297,7 +296,36 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                           ),
                         ],
                       ),
-                    ), // .animate().slide(begin: Offset(0, 1)),
+                    ),
+                    // Continue button for incorrect answers
+                    Positioned(
+                      bottom: 20,
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        child: SizedBox(
+                          width: 350,
+                          height: 56,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 7, 45, 78),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: proceedToNext,
+                            child: Text(
+                              language == 'Vietnamese' ? 'Tiếp tục' : 'Continue',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ).animate(onPlay: (controller) => controller.forward()).slide(
@@ -307,15 +335,15 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
             if (isAnswerTrue)         
               Container(
                 width: double.infinity,
-                height: 150,
+                height: 100,
                 color: Color.fromARGB(255, 255, 255, 255),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 60),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
                       language == 'Vietnamese' ? 'Xuất Sắc' : 'Great',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -325,28 +353,6 @@ class _FourAnswerWidgetState extends State<FourAnswerWidget> {
                   begin: Offset(0, 1),
                   duration: 300.ms,
                   curve: Curves.easeInOutQuart),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: SizedBox(
-                width: 350,
-                height: 56,
-                child: CheckButtonWidget(
-                  isCheckingAnswer: isCheckingAnswer,
-                  isSelectedWordValid: selectedWord != null,
-                  onPressed: () {
-                    if (isCheckingAnswer) {
-                      checkAnswer();
-                    } else if (readyForCompletion) {
-                      widget.onCompletion();
-                    } else {
-                      setNextPair();
-                    }
-                    setState(() {});
-                  },
-                  language: language,
-                ),
-              ),
-            ),
           ],
         ),
       ],
