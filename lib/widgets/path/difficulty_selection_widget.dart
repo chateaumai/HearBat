@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
 import 'package:hearbat/utils/audio_util.dart';
+import 'package:hearbat/widgets/module/speech_module_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../module/module_widget.dart';
 import 'package:hearbat/utils/cache_words_util.dart';
@@ -9,9 +10,12 @@ import 'package:hearbat/utils/background_noise_util.dart';
 class DifficultySelectionWidget extends StatefulWidget {
   final String moduleName;
   final List<AnswerGroup> answerGroups;
+  final bool isWord; //determines if TTS is used
+  final List<String>? sentences; // Speech module specific
+  final String? voiceType; //Speech module specific
 
   DifficultySelectionWidget(
-      {required this.moduleName, required this.answerGroups});
+      {required this.moduleName, required this.answerGroups, required this.isWord, this.sentences, this.voiceType});
 
   @override
   DifficultySelectionWidgetState createState() =>
@@ -86,8 +90,8 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
     _updatePreference('difficultyPreference', _difficulty);
   }
 
-  Future<void> _cacheAndNavigate(
-      String moduleName, List<AnswerGroup> answerGroups) async {
+  Future<void> _cacheAndNavigate(String moduleName,
+      List<AnswerGroup> answerGroups) async {
     if (_voiceType == null) {
       print("Voice type not set. Unable to cache module words.");
       return;
@@ -110,23 +114,40 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
       },
     );
 
-    // Caching all words
-    await cacheUtil.cacheModuleWords(answerGroups, _voiceType!);
+    // Caching all words (only for word and sound modules)
+    if (widget.isWord || widget.sentences == null) {
+      await cacheUtil.cacheModuleWords(answerGroups, _voiceType!);
+    }
 
     // Check if the widget is still in the tree (mounted) after the async operation
     if (!mounted) return; // Early return if not mounted
 
-    Navigator.pop(context); // Close the loading dialog if still mounted
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ModuleWidget(
-          title: moduleName,
-          answerGroups: answerGroups,
-          isWord: true,
+    Navigator.pop(context); // Close the loading dialog if still
+
+    // Navigate to the appropriate widget based on module type
+    if (widget.sentences != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SpeechModuleWidget(
+            chapter: moduleName,
+            sentences: widget.sentences!,
+            voiceType: widget.voiceType!,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ModuleWidget(
+            title: moduleName,
+            answerGroups: answerGroups,
+            isWord: widget.isWord,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -141,6 +162,8 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20.0),
+                //only display difficulty setting for word module
+                if (widget.isWord)...[
                 Text(
                   "Difficulty",
                   textAlign: TextAlign.left,
@@ -176,6 +199,7 @@ class DifficultySelectionWidgetState extends State<DifficultySelectionWidget> {
                   ),
                 ),
                 SizedBox(height: 20.0),
+                ],
                 Text(
                   "Background Noise",
                   style: TextStyle(

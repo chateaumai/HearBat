@@ -45,12 +45,10 @@ class _ModulePageState extends State<ModuleWidget> {
     
     googleTTSUtil.initialize();
     AudioUtil.initialize();
-    
-    if (widget.isWord) {
+
       BackgroundNoiseUtil.initialize().then((_) {
         BackgroundNoiseUtil.playSavedSound();
-      });
-    }
+    });
   }
 
   @override
