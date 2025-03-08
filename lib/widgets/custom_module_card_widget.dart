@@ -3,14 +3,14 @@ class CustomModuleCard extends StatelessWidget {
   final String moduleName;
   final VoidCallback onStart;
   final VoidCallback onDelete;
-  final VoidCallback onEdit;
+  final VoidCallback onView;
   
   const CustomModuleCard({
     super.key,
     required this.moduleName,
     required this.onStart,
     required this.onDelete,
-    required this.onEdit,
+    required this.onView,
   });
   
   @override
@@ -68,7 +68,7 @@ class CustomModuleCard extends StatelessWidget {
                   SizedBox(
                     height: 36,
                     child: ElevatedButton(
-                      onPressed: onEdit,
+                      onPressed: onView,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 154, 187, 154),
                         foregroundColor: Colors.white,
@@ -76,7 +76,7 @@ class CustomModuleCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: Text('Edit', style: TextStyle(fontSize: 14)),
+                      child: Text('View', style: TextStyle(fontSize: 14)),
                     ),
                   ),
                   SizedBox(height: 8),

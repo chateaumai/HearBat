@@ -1,6 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:hearbat/widgets/edit_custom_module.dart';
+import 'package:hearbat/widgets/view_custom_module.dart';
 import 'package:hearbat/widgets/top_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hearbat/utils/custom_util.dart';
@@ -135,10 +135,10 @@ class CustomPathState extends State<CustomPath> {
                     moduleName: moduleName,
                     onStart: () => _showModule(moduleName),
                     onDelete: () => _deleteModule(moduleName),
-                    onEdit: () {
+                    onView: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => EditModuleScreen(
+                          builder: (context) => ViewModuleScreen(
                             moduleName: moduleName,
                           ),
                         ),
