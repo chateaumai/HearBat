@@ -5,8 +5,9 @@ import '../module/module_widget.dart';
 import 'sound_trangular_path_layout_widget.dart';
 
 class SoundModuleListWidget extends StatelessWidget {
-  final Map<String, List<AnswerGroup>> modules;
+  //final Map<String, List<AnswerGroup>> modules;
 
+  final Map<String, Module> modules;
   SoundModuleListWidget({super.key, required this.modules});
 
   @override
@@ -49,7 +50,7 @@ class SoundModuleListWidget extends StatelessWidget {
                 ),
                 AnimatedButton(
                     moduleName: module.key,
-                    answerGroups: module.value,
+                    answerGroups: module.value.answerGroups,
                     onButtonPressed: (String key, List<dynamic> value) {
                       navigate(key, value.cast<AnswerGroup>());
                     }),

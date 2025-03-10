@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hearbat/data/answer_pair.dart';
+import '../../../utils/data_service_util.dart';
 import '../../../utils/module_util.dart';
 import '../../../widgets/path/module_list_widget.dart';
 import '../../../widgets/top_bar_widget.dart';
@@ -18,8 +19,10 @@ class _WordPathState extends State<WordPath> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List<AnswerGroup>> modules =
-        getModulesForChapter(widget.chapter);
+    Chapter chapter = DataService().getWordChapter(widget.chapter);
+    Map<String, Module> modules = chapter.modules;
+    //Map<String, List<AnswerGroup>> modules =
+    //    getModulesForChapter(widget.chapter);
 
     return Scaffold(
       appBar: TopBar(

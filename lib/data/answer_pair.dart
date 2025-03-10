@@ -34,19 +34,16 @@ class AnswerGroup {
 
   Map<String, dynamic> toJson() {
     return {
-      'answer1': answer1.toJson(),
-      'answer2': answer2.toJson(),
-      'answer3': answer3.toJson(),
-      'answer4': answer4.toJson(),
+      'answers': [answer1.toJson(), answer2.toJson(), answer3.toJson(), answer4.toJson()]
     };
   }
 
   static AnswerGroup fromJson(Map<String, dynamic> json) {
     return AnswerGroup(
-      Answer.fromJson(json['answer1'] as Map<String, dynamic>),
-      Answer.fromJson(json['answer2'] as Map<String, dynamic>),
-      Answer.fromJson(json['answer3'] as Map<String, dynamic>),
-      Answer.fromJson(json['answer4'] as Map<String, dynamic>),
+      Answer.fromJson(json['answers'][0] as Map<String, dynamic>),
+      Answer.fromJson(json['answers'][1] as Map<String, dynamic>),
+      Answer.fromJson(json['answers'][2] as Map<String, dynamic>),
+      Answer.fromJson(json['answers'][3] as Map<String, dynamic>),
     );
   }
 
@@ -66,5 +63,42 @@ class AnswerGroup {
       default:
         return currentGroup.answer1;
     }
+  }
+}
+
+class Module {
+  final List<AnswerGroup> answerGroups;
+  Module(this.answerGroups);
+
+  static Module fromJson(Map<String, dynamic> json) {
+    return Module((json['answerGroups'] as List).map((item) => AnswerGroup.fromJson(item)).toList());
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'answerGroups': answerGroups.map((group) => group.toJson()).toList(),
+    };
+  }
+}
+
+class Chapter {
+  final Map<String, Module> modules;
+  Chapter(this.modules);
+
+  static final Chapter _empty = Chapter({});
+
+  factory Chapter.empty() {
+    return _empty;
+  }
+  static Chapter fromJson(Map<String, dynamic> json) {
+    return Chapter(
+      {for (var module in json['modules']) module['id'] : Module.fromJson(module) }
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'modules': modules.map((key, module) => MapEntry(key, module.toJson())),
+    };
   }
 }
